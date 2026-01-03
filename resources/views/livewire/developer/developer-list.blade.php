@@ -4,8 +4,8 @@
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-900">Développeurs</h2>
             <div class="flex space-x-4 text-sm">
-                <div class="bg-blue-50 px-3 py-1 rounded-full">
-                    <span class="text-blue-600 font-medium">{{ $stats['total'] }}</span>
+                <div class="bg-secondary/50 px-3 py-1 rounded-full">
+                    <span class="text-primary font-medium">{{ $stats['total'] }}</span>
                     <span class="text-blue-500">Total</span>
                 </div>
                 <div class="bg-green-50 px-3 py-1 rounded-full">
@@ -64,7 +64,7 @@
             
             <div class="flex items-end">
                 <label class="flex items-center">
-                    <input type="checkbox" wire:model.live="showVerifiedOnly" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
+                    <input type="checkbox" wire:model.live="showVerifiedOnly" class="rounded border-gray-300 text-primary focus:ring-blue-500">
                     <span class="ml-2 text-sm text-gray-700">Vérifiés seulement</span>
                 </label>
             </div>
@@ -172,7 +172,7 @@
                                     $displayedSkills = array_slice($skills, 0, 3);
                                 @endphp
                                 @foreach($displayedSkills as $skill)
-                                    <span class="inline-block px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded">
+                                    <span class="inline-block px-2 py-1 text-xs bg-secondary/10 text-black rounded">
                                         {{ $skill['name'] ?? $skill }}
                                     </span>
                                 @endforeach
@@ -187,10 +187,10 @@
                     
                     {{-- Actions --}}
                     <div class="flex space-x-2">
-                        <a href="{{ route('developers.profile', $developer) }}" class="flex-1 bg-blue-600 text-white text-center px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200">
+                        <a href="{{ route('developers.profile', $developer) }}" class="flex-1 bg-primary text-white text-center px-4 py-2 rounded-md hover:bg-primary/70 transition-colors duration-200">
                             Voir le profil
                         </a>
-                        <a href="#" class="flex-1 border border-blue-600 text-blue-600 text-center px-4 py-2 rounded-md hover:bg-blue-50 transition-colors duration-200">
+                        <a href="#" class="flex-1 border border-primary text-primary text-center px-4 py-2 rounded-md hover:bg-secondary/50 transition-colors duration-200">
                             Contacter
                         </a>
                     </div>

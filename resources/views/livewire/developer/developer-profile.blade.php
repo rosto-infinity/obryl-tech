@@ -89,7 +89,7 @@
                     <div>
                         <div class="flex items-center justify-between mb-2">
                             <span class="text-sm font-medium text-gray-900 dark:text-white">
-                                {{ is_array($skill['name']) ? json_encode($skill['name']) : $skill['name'] }}
+                                {{ $skill['name'] }}
                             </span>
                             <span class="text-sm text-gray-500">{{ $skill['level'] }}/5</span>
                         </div>

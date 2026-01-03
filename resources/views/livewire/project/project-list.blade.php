@@ -5,8 +5,8 @@
             <h2 class="text-2xl font-bold text-gray-900">Projets</h2>
             <div class="flex space-x-4 text-sm">
                 <div class="bg-blue-50 px-3 py-1 rounded-full">
-                    <span class="text-blue-600 font-medium">{{ $stats['total'] }}</span>
-                    <span class="text-blue-500">Total</span>
+                    <span class="text-secondary font-medium">{{ $stats['total'] }}</span>
+                    <span class="text-secondary">Total</span>
                 </div>
                 <div class="bg-green-50 px-3 py-1 rounded-full">
                     <span class="text-green-600 font-medium">{{ $stats['published'] }}</span>
@@ -182,7 +182,7 @@
                     @if($project->progress_percentage)
                         <div class="mb-4">
                             <div class="w-full bg-gray-200 rounded-full h-2">
-                                <div class="bg-blue-600 h-2 rounded-full" style="width: {{ $project->progress_percentage }}%"></div>
+                                <div class="bg-secondary h-2 rounded-full" style="width: {{ $project->progress_percentage }}%"></div>
                             </div>
                         </div>
                     @endif

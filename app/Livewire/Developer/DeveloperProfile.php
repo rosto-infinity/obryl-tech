@@ -56,8 +56,14 @@ class DeveloperProfile extends Component
         $skillLevels = [];
         
         foreach ($skills as $skill) {
-            // Ensure skill name is a string
-            $skillName = is_array($skill) ? json_encode($skill) : (string) $skill;
+            // Extract skill name properly
+            if (is_array($skill)) {
+                // If skill is an array with 'name' key
+                $skillName = $skill['name'] ?? json_encode($skill);
+            } else {
+                // If skill is already a string
+                $skillName = (string) $skill;
+            }
             
             $skillLevels[] = [
                 'name' => $skillName,
