@@ -91,10 +91,10 @@ class User extends Authenticatable
         return $this->hasMany(Commission::class, 'developer_id');
     }
 
-    // public function reviews(): HasMany
-    // {
-    //     return $this->hasMany(Review::class, 'developer_id');
-    // }
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class, 'developer_id');
+    }
 
     // public function articles(): HasMany
     // {

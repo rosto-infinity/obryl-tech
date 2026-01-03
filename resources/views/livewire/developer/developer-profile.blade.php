@@ -9,16 +9,18 @@
                 </div>
                 <div class="ml-6 mb-4">
                     <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $developer->name }}</h1>
-                    <p class="text-lg text-gray-600 dark:text-gray-300">{{ $developer->profile->specialization->label() }}</p>
+                    <p class="text-lg text-gray-600 dark:text-gray-300">
+                        {{ $developer->profile?->specialization?->label() ?? 'Développeur' }}
+                    </p>
                     <div class="flex items-center mt-2 space-x-4">
-                        @if($developer->profile->is_verified)
+                        @if($developer->profile?->is_verified)
                             <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
                                 ✓ Développeur vérifié
                             </span>
                         @endif
                         
                         <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
-                            @switch($developer->profile->availability)
+                            @switch($developer->profile?->availability)
                                 @case('available')
                                     bg-green-100 text-green-800
                                 @break
@@ -32,17 +34,17 @@
                                     bg-gray-100 text-gray-800
                             @endswitch
                         ">
-                            {{ $developer->profile->availability->label() }}
+                            {{ $developer->profile?->availability?->label() ?? 'Non disponible' }}
                         </span>
                     </div>
                 </div>
             </div>
             
             {{-- Bio --}}
-            @if($developer->profile->bio)
+            @if($developer->profile?->bio)
                 <div class="mb-6">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Bio</h3>
-                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">{{ $developer->profile->bio }}</p>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">{{ $developer->profile?->bio }}</p>
                 </div>
             @endif
             

@@ -237,7 +237,7 @@
                     
                     {{-- Actions --}}
                     <div class="flex space-x-2">
-                        <a href="#" class="flex-1 bg-blue-600 text-white text-center px-4 py-2 rounded-md hover:bg-blue-700 transition-colors duration-200">
+                        <a href="{{ route('projects.detail', $project->id) }}" class="flex-1 bg-primary text-white text-center px-4 py-2 rounded-md hover:bg-primary/80 transition-colors duration-200">
                             Voir le projet
                         </a>
                         @if($project->status === 'published')

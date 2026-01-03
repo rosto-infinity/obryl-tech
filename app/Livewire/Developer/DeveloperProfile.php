@@ -18,7 +18,7 @@ class DeveloperProfile extends Component
 
     public function mount(User $developer): void
     {
-        $this->developer = $developer->load(['profile', 'reviews']);
+        $this->developer = $developer->load(['profile']);
         $this->projects = $developer->projects()->with('client')->latest()->limit(6)->get();
         $this->reviews = $developer->reviews()->with('client')->latest()->limit(5)->get();
     }

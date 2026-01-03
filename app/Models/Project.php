@@ -1,10 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Enums\Project\ProjectStatus;
 use App\Enums\Project\ProjectType;
 use App\Enums\Project\ProjectPriority;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -84,6 +88,24 @@ class Project extends Model
     public function commissions(): HasMany
     {
         return $this->hasMany(Commission::class);
+    }
+
+    /**
+     * Get similar projects based on type and technologies.
+     */
+    public function getSimilarProjects(int $limit = 6): Collection
+    {
+        return Project::query()
+            ->where('id', '!=', $this->id)
+            ->where('status', 'published')
+            ->where(function ($query) {
+                $query->where('type', $this->type)
+                      ->orWhereJsonContains('technologies', collect($this->technologies ?? [])->first());
+            })
+            ->with(['client', 'developer.profile'])
+            ->inRandomOrder()
+            ->limit($limit)
+            ->get();
     }
 
     // public function tickets(): HasMany
