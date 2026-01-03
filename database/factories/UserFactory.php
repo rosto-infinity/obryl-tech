@@ -2,13 +2,12 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use App\Enums\Auth\UserType;
+use App\Enums\Auth\UserStatus;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
- */
 class UserFactory extends Factory
 {
     /**
@@ -26,12 +25,19 @@ class UserFactory extends Factory
         return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
+            'phone' => $this->faker->phoneNumber(),
+            'avatar' => $this->faker->optional()->imageUrl(200, 200, 'people'),
+            'user_type' => $this->faker->randomElement([
+                UserType::CLIENT->value,
+                UserType::DEVELOPER->value,
+            ]),
+            'status' => UserStatus::ACTIVE->value,
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
-            'two_factor_secret' => Str::random(10),
-            'two_factor_recovery_codes' => Str::random(10),
-            'two_factor_confirmed_at' => now(),
+            'two_factor_secret' => null,  // ✅ FIXÉ : null au lieu de Str::random
+            'two_factor_recovery_codes' => null,  // ✅ FIXÉ : null au lieu de Str::random
+            'two_factor_confirmed_at' => null,  // ✅ FIXÉ : null au lieu de now()
         ];
     }
 
@@ -54,6 +60,68 @@ class UserFactory extends Factory
             'two_factor_secret' => null,
             'two_factor_recovery_codes' => null,
             'two_factor_confirmed_at' => null,
+        ]);
+    }
+
+    /**
+     * Créer un utilisateur client
+     */
+    public function client(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'user_type' => UserType::CLIENT->value,
+        ]);
+    }
+
+    /**
+     * Créer un utilisateur développeur
+     */
+    public function developer(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'user_type' => UserType::DEVELOPER->value,
+        ]);
+    }
+
+    /**
+     * Créer un administrateur
+     * ✅ FIXÉ : Génère un email unique au lieu de forcer 'adminrosto@gmail.com'
+     */
+    public function admin(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'user_type' => UserType::ADMIN->value,
+            'email' => fake()->unique()->safeEmail(),  // ✅ Email unique généré
+        ]);
+    }
+
+    /**
+     * Créer un utilisateur actif
+     */
+    public function active(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => UserStatus::ACTIVE->value,
+        ]);
+    }
+
+    /**
+     * Créer un utilisateur inactif
+     */
+    public function inactive(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => UserStatus::INACTIVE->value,
+        ]);
+    }
+
+    /**
+     * Créer un utilisateur suspendu
+     */
+    public function suspended(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => UserStatus::SUSPENDED->value,
         ]);
     }
 }

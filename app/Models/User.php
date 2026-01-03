@@ -3,11 +3,19 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Review;
+use App\Models\Profile;
+use App\Models\Project;
+use App\Models\Commission;
+use Illuminate\Support\Str;
+use App\Enums\Auth\UserType;
+use App\Enums\Auth\UserStatus;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Illuminate\Support\Str;
-use Laravel\Fortify\TwoFactorAuthenticatable;
 
 class User extends Authenticatable
 {
@@ -23,6 +31,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'avatar',
+        'user_type',
+        'status',
     ];
 
     /**
@@ -47,6 +59,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'user_type' => UserType::class,
+        'status' => UserStatus::class,
         ];
     }
 
@@ -60,5 +74,61 @@ class User extends Authenticatable
             ->take(2)
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
+    }
+     // Relations
+    public function profile(): HasOne
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    public function projects(): HasMany
+    {
+        return $this->hasMany(Project::class, 'client_id');
+    }
+
+    public function commissions(): HasMany
+    {
+        return $this->hasMany(Commission::class, 'developer_id');
+    }
+
+    // public function reviews(): HasMany
+    // {
+    //     return $this->hasMany(Review::class, 'developer_id');
+    // }
+
+    // public function articles(): HasMany
+    // {
+    //     return $this->hasMany(Article::class, 'author_id');
+    // }
+
+    // public function tickets(): HasMany
+    // {
+    //     return $this->hasMany(SupportTicket::class, 'user_id');
+    // }
+
+    // public function notifications(): HasMany
+    // {
+    //     return $this->hasMany(Notification::class);
+    // }
+
+    // Helpers
+    public function isDeveloper(): bool
+    {
+        return $this->user_type === UserType::DEVELOPER;
+    }
+
+    public function isClient(): bool
+    {
+        return $this->user_type === UserType::CLIENT;
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->user_type === UserType::ADMIN;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->status === UserStatus::ACTIVE;
     }
 }
