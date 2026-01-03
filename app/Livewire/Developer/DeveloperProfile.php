@@ -41,12 +41,26 @@ class DeveloperProfile extends Component
      */
     public function getSkillsWithLevelsProperty(): array
     {
-        $skills = $this->developer->profile->skills ?? [];
+        $skills = $this->developer->profile?->skills ?? '[]';
+        
+        // Handle JSON string
+        if (is_string($skills)) {
+            $skills = json_decode($skills, true) ?? [];
+        }
+        
+        // Ensure it's an array
+        if (!is_array($skills)) {
+            $skills = [];
+        }
+        
         $skillLevels = [];
         
         foreach ($skills as $skill) {
+            // Ensure skill name is a string
+            $skillName = is_array($skill) ? json_encode($skill) : (string) $skill;
+            
             $skillLevels[] = [
-                'name' => $skill,
+                'name' => $skillName,
                 'level' => rand(3, 5), // Simulated skill level
             ];
         }
