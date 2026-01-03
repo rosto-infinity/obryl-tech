@@ -14,6 +14,18 @@
             <flux:navlist variant="outline">
                 <flux:navlist.group :heading="__('Platform')" class="grid">
                     <flux:navlist.item icon="home" :href="route('dashboard')" :current="request()->routeIs('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:navlist.item>
+                    
+                    {{-- Projets --}}
+                    <flux:navlist.item icon="folder-open" :href="route('projects.list')" :current="request()->routeIs('projects.*')" wire:navigate>{{ __('Projets') }}</flux:navlist.item>
+                    
+                    {{-- Développeurs --}}
+                    <flux:navlist.item icon="users" :href="route('developers.list')" :current="request()->routeIs('developers.*')" wire:navigate>{{ __('Développeurs') }}</flux:navlist.item>
+                    
+                    {{-- Commissions --}}
+                    <flux:navlist.item icon="users" :href="route('commissions.dashboard')" :current="request()->routeIs('commissions.*')" wire:navigate>{{ __('Commissions') }}</flux:navlist.item>
+                    
+                    {{-- Portfolio --}}
+                    <flux:navlist.item icon="photo" :href="route('portfolio.gallery')" :current="request()->routeIs('portfolio.*')" wire:navigate>{{ __('Portfolio') }}</flux:navlist.item>
                 </flux:navlist.group>
             </flux:navlist>
 

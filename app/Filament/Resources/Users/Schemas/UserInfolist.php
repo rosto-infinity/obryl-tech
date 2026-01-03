@@ -43,7 +43,7 @@ class UserInfolist
                     ->badge(),
                 TextEntry::make('deleted_at')
                     ->dateTime()
-                    ->visible(fn (User $record): bool => $record->trashed()),
+                   
             ]);
     }
 }

@@ -1,13 +1,64 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Developer;
 
+use App\Models\User;
+use App\Models\Project;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\View\View;
 use Livewire\Component;
 
 class DeveloperProfile extends Component
 {
-    public function render()
+    public User $developer;
+    public Collection $projects;
+    public Collection $reviews;
+
+    public function mount(User $developer): void
     {
-        return view('livewire.developer.developer-profile');
+        $this->developer = $developer->load(['profile', 'reviews']);
+        $this->projects = $developer->projects()->with('client')->latest()->limit(6)->get();
+        $this->reviews = $developer->reviews()->with('client')->latest()->limit(5)->get();
+    }
+
+    /**
+     * Get developer statistics.
+     */
+    public function getStatsProperty(): array
+    {
+        return [
+            'completed_projects' => $this->developer->projects()->where('status', 'completed')->count(),
+            'total_earnings' => $this->developer->commissions()->where('status', 'paid')->sum('amount'),
+            'average_rating' => $this->developer->reviews()->avg('rating') ?: 0,
+            'total_reviews' => $this->developer->reviews()->count(),
+        ];
+    }
+
+    /**
+     * Get skills with levels.
+     */
+    public function getSkillsWithLevelsProperty(): array
+    {
+        $skills = $this->developer->profile->skills ?? [];
+        $skillLevels = [];
+        
+        foreach ($skills as $skill) {
+            $skillLevels[] = [
+                'name' => $skill,
+                'level' => rand(3, 5), // Simulated skill level
+            ];
+        }
+        
+        return $skillLevels;
+    }
+
+    public function render(): View
+    {
+        return view('livewire.developer.developer-profile', [
+            'stats' => $this->stats,
+            'skillsWithLevels' => $this->skillsWithLevels,
+        ]);
     }
 }

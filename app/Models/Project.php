@@ -71,6 +71,11 @@ class Project extends Model
         return $this->belongsTo(User::class, 'client_id');
     }
 
+    public function developer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'developer_id');
+    }
+
     public function reviews(): HasMany
     {
         return $this->hasMany(Review::class);

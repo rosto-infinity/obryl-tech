@@ -9,7 +9,9 @@ use App\Models\User;
 use App\Enums\Commission\CommissionStatus;
 use App\Enums\Commission\CommissionType;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -64,7 +66,7 @@ class CommissionDashboard extends Component
     /**
      * Get filtered commissions.
      */
-    public function getCommissionsProperty(): Collection
+    public function getCommissionsProperty(): LengthAwarePaginator
     {
         $query = Commission::query()
             ->with(['project.client', 'developer.profile', 'approvedBy'])
@@ -98,7 +100,7 @@ class CommissionDashboard extends Component
         
         $this->authorize('approve', $commission);
         
-        $commission->markAsApproved(auth()->user()?->id ?? 0);
+        $commission->markAsApproved(Auth::id());
         
         $this->dispatch('commission-approved', commissionId: $commissionId);
     }
