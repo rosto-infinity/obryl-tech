@@ -58,6 +58,37 @@ class ProjectResource extends Resource
         ];
     }
 
+    // Protection des permissions
+    public static function canViewAny(): bool
+    {
+        return auth()->user()->can('viewAnyProject');
+    }
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()->can('createProject');
+    }
+
+    public static function canEdit($record): bool
+    {
+        return auth()->user()->can('updateProject', $record);
+    }
+
+    public static function canDelete($record): bool
+    {
+        return auth()->user()->can('deleteProject', $record);
+    }
+
+    public static function canRestoreAny(): bool
+    {
+        return auth()->user()->can('restoreAnyProject');
+    }
+
+    public static function canForceDeleteAny(): bool
+    {
+        return auth()->user()->can('forceDeleteAnyProject');
+    }
+
     public static function getRecordRouteBindingEloquentQuery(): Builder
     {
         return parent::getRecordRouteBindingEloquentQuery()
