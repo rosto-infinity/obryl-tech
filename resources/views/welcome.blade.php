@@ -15,92 +15,15 @@
         
         <!-- Styles -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @fluxAppearance
     </head>
     <body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
         <!-- Navigation -->
-        <nav class="bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700 sticky top-0 z-50">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div class="flex justify-between items-center h-16">
-                    <!-- Logo -->
-                    <div class="flex items-center">
-                        <div class="flex-shrink-0">
-                            <h1 class="text-2xl font-bold text-primary">OBRYL TECH</h1>
-                        </div>
-                    </div>
-                    
-                    <!-- Navigation Desktop -->
-                    <div class="hidden md:block">
-                        <div class="ml-10 flex items-baseline space-x-8">
-                            <a href="{{ route('projects.list') }}" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                                Projets
-                            </a>
-                            <a href="{{ route('developers.list') }}" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                                Développeurs
-                            </a>
-                            <a href="{{ route('commissions.dashboard') }}" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                                Commissions
-                            </a>
-                            <a href="{{ route('portfolio.gallery') }}" class="text-gray-700 dark:text-gray-300 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200">
-                                Portfolio
-                            </a>
-                            
-                            @auth
-                                <a href="{{ route('dashboard') }}" class="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/80 transition-colors duration-200">
-                                    Dashboard
-                                </a>
-                            @else
-                                <a href="{{ route('login') }}" class="bg-secondary text-gray-900 px-4 py-2 rounded-md text-sm font-medium hover:bg-secondary/80 transition-colors duration-200">
-                                    Connexion
-                                </a>
-                                <a href="{{ route('register') }}" class="border border-primary text-primary px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/10 transition-colors duration-200 ml-4">
-                                    Inscription
-                                </a>
-                            @endif
-                        </div>
-                    </div>
-                    
-                    <!-- Mobile menu button -->
-                    <div class="md:hidden">
-                        <button type="button" class="text-gray-700 dark:text-gray-300 hover:text-primary p-2" id="mobile-menu-button">
-                            <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Mobile menu -->
-            <div class="md:hidden hidden" id="mobile-menu">
-                <div class="px-2 pt-2 pb-3 space-y-1">
-                    <a href="{{ route('projects.list') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
-                        Projets
-                    </a>
-                    <a href="{{ route('developers.list') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
-                        Développeurs
-                    </a>
-                    <a href="{{ route('commissions.dashboard') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
-                        Commissions
-                    </a>
-                    <a href="{{ route('portfolio.gallery') }}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-primary hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
-                        Portfolio
-                    </a>
-                    
-                    @auth
-                        <a href="{{ route('dashboard') }}" class="block bg-primary text-white px-3 py-2 rounded-md text-base font-medium hover:bg-primary/80 transition-colors duration-200">
-                            Dashboard
-                        </a>
-                    @else
-                        <a href="{{ route('login') }}" class="block bg-secondary text-gray-900 px-3 py-2 rounded-md text-base font-medium hover:bg-secondary/80 transition-colors duration-200">
-                            Connexion
-                        </a>
-                        <a href="{{ route('register') }}" class="block border border-primary text-primary px-3 py-2 rounded-md text-base font-medium hover:bg-primary/10 transition-colors duration-200 mt-2">
-                            Inscription
-                        </a>
-                    @endif
-                </div>
-            </div>
-        </nav>
+        {{-- resources/views/components/layouts/public/navbar.blade.php --}}
+        <!-- Navigation -->
+        @include('components.layouts.public.navbar')
+        
+       
         
         <!-- Hero Section -->
         <main class="flex-1">
@@ -284,6 +207,33 @@
                     mobileMenu.classList.toggle('hidden');
                 });
             }
+            
+            // Dark mode functionality
+            function updateTheme() {
+                const theme = localStorage.getItem('theme') || 'system';
+                const html = document.documentElement;
+                
+                if (theme === 'dark') {
+                    html.classList.add('dark');
+                } else if (theme === 'light') {
+                    html.classList.remove('dark');
+                } else {
+                    // System preference
+                    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                        html.classList.add('dark');
+                    } else {
+                        html.classList.remove('dark');
+                    }
+                }
+            }
+            
+            // Initialize theme on page load
+            updateTheme();
+            
+            // Listen for system theme changes
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateTheme);
         </script>
+        
+        @fluxScripts
     </body>
 </html>

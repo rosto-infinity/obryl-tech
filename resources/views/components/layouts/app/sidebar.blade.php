@@ -17,7 +17,6 @@
                     
                     {{-- Projets --}}
                     <flux:navlist.item icon="folder-open" :href="route('projects.list')" :current="request()->routeIs('projects.*')" wire:navigate>{{ __('Projets') }}</flux:navlist.item>
-                    
                     {{-- Développeurs --}}
                     <flux:navlist.item icon="users" :href="route('developers.list')" :current="request()->routeIs('developers.*')" wire:navigate>{{ __('Développeurs') }}</flux:navlist.item>
                     

@@ -17,30 +17,52 @@ class ProjectDetail extends Component
     public EloquentCollection $similarProjects;
     public SupportCollection $teamMembers;
     
-    // Computed properties for Livewire 3
     public array $stats = [];
     public array $milestoneProgress = [];
 
     public function mount(Project $project): void
     {
-        $this->project = $project->load(['client', 'developer.profile', 'reviews']);
+        // 1. Charger les relations
+        $this->project = $project->load(['client', 'developer', 'reviews']);
+        
+        // 2. Récupérer les projets similaires
         $this->similarProjects = $project->getSimilarProjects(6);
         
-        // Initialize computed properties
+        // --- CORRECTION : NORMALISATION DES CHAMPS JSON ---
+        // On s'assure que Milestones, Technologies et Collaborators sont des tableaux PHP
+        // Cela résout l'erreur "count(): Argument must be... string given" dans la Vue
+        
+        $this->project->milestones = $this->toArray($this->project->milestones);
+        $this->project->technologies = $this->toArray($this->project->technologies);
+        $this->project->collaborators = $this->toArray($this->project->collaborators);
+        // -----------------------------------------------
+
+        // 3. Initialiser les stats (ces méthodes recevront désormais de vrais tableaux)
         $this->stats = $this->getStatsProperty();
         $this->milestoneProgress = $this->getMilestoneProgressProperty();
         
-        // Handle collaborators JSON field
-        $collaborators = $project->collaborators ?? [];
-        if (is_string($collaborators)) {
-            $collaborators = json_decode($collaborators, true) ?? [];
-        }
-        $this->teamMembers = collect($collaborators);
+        // 4. Gérer les membres de l'équipe
+        $collaborators = $this->project->collaborators; // Maintenant garanti être un tableau
+        
+        $this->teamMembers = collect($collaborators)
+            ->map(fn ($id) => User::find($id))
+            ->filter()
+            ->values();
     }
 
     /**
-     * Get project statistics.
+     * Helper pour convertir les JSON strings en tableau PHP proprement.
      */
+    private function toArray($value): array
+    {
+        if (is_string($value)) {
+            $decoded = json_decode($value, true);
+            return is_array($decoded) ? $decoded : [];
+        }
+        
+        return is_array($value) ? $value : [];
+    }
+
     public function getStatsProperty(): array
     {
         return [
@@ -51,17 +73,10 @@ class ProjectDetail extends Component
         ];
     }
 
-    /**
-     * Get milestone progress.
-     */
     public function getMilestoneProgressProperty(): array
     {
+        // Maintenant $this->project->milestones est garanti être un tableau grâce au mount()
         $milestones = $this->project->milestones ?? [];
-        
-        // Handle JSON string
-        if (is_string($milestones)) {
-            $milestones = json_decode($milestones, true) ?? [];
-        }
         
         $completed = collect($milestones)->where('status', 'completed')->count();
         $total = count($milestones);
@@ -69,22 +84,15 @@ class ProjectDetail extends Component
         return [
             'completed' => $completed,
             'total' => $total,
-            'percentage' => $total > 0 ? ($completed / $total) * 100 : 0,
+            'percentage' => $total > 0 ? round(($completed / $total) * 100, 1) : 0,
         ];
     }
 
-    /**
-     * Like the project.
-     */
     public function likeProject(): void
     {
-        // Logic to toggle like
         $this->dispatch('projectLiked');
     }
 
-    /**
-     * Share the project.
-     */
     public function shareProject(): void
     {
         $this->dispatch('projectShared');

@@ -6,14 +6,23 @@
                 <div>
                     <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $project->title }}</h1>
                     <div class="flex items-center mt-2 space-x-4">
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
-                            {{ $project->type->label() }}
-                        </span>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $project->status->color() }}">
-                            {{ $project->status->label() }}
-                        </span>
+                        {{-- Type --}}
+                        @if($project->type)
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary/10 text-primary border border-primary/20">
+                                {{ $project->type->label() }}
+                            </span>
+                        @endif
+                        
+                        {{-- Status --}}
+                        @if($project->status)
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $project->status->color() }}">
+                                {{ $project->status->label() }}
+                            </span>
+                        @endif
+                        
+                        {{-- Created Date --}}
                         <span class="text-sm text-gray-500">
-                            Créé le {{ $project->created_at->format('d/m/Y') }}
+                            Créé le {{ $project->created_at }}
                         </span>
                     </div>
                 </div>
@@ -51,54 +60,40 @@
                 </div>
 
                 {{-- Technologies --}}
-                @if($project->technologies)
-                    @php
-                        $technologies = is_string($project->technologies) 
-                            ? json_decode($project->technologies, true) ?? [] 
-                            : $project->technologies;
-                    @endphp
-                    @if(count($technologies) > 0)
-                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-                            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Technologies utilisées</h2>
-                            <div class="flex flex-wrap gap-3">
-                                @foreach($technologies as $tech)
-                                    <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20">
-                                        {{ $tech }}
-                                    </span>
-                                @endforeach
-                            </div>
+                @if($project->technologies && count($project->technologies) > 0)
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Technologies utilisées</h2>
+                        <div class="flex flex-wrap gap-3">
+                            @foreach($project->technologies as $tech)
+                                <span class="inline-flex items-center px-4 py-2 rounded-full text-sm font-medium bg-primary/10 text-primary border border-primary/20">
+                                    {{ $tech }}
+                                </span>
+                            @endforeach
                         </div>
-                    @endif
+                    </div>
                 @endif
 
                 {{-- Milestones --}}
-                @if($project->milestones)
-                    @php
-                        $milestones = is_string($project->milestones) 
-                            ? json_decode($project->milestones, true) ?? [] 
-                            : $project->milestones;
-                    @endphp
-                    @if(count($milestones) > 0)
-                        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-                            <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Jalons du projet</h2>
-                            <div class="space-y-4">
-                                @foreach($milestones as $milestone)
-                                    <div class="flex items-start space-x-4">
-                                        <div class="flex-shrink-0 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
-                                            <span class="text-primary font-semibold text-xs">{{ $loop->iteration }}</span>
-                                        </div>
-                                        <div class="flex-1">
-                                            <h3 class="text-lg font-medium text-gray-900 dark:text-white">{{ $milestone['title'] ?? 'Jalon ' . $loop->iteration }}</h3>
-                                            <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">{{ $milestone['description'] ?? 'Description du jalon' }}</p>
-                                            @if(isset($milestone['deadline']))
-                                                <p class="text-xs text-gray-500 mt-2">Date limite: {{ $milestone['deadline'] }}</p>
-                                            @endif
-                                        </div>
+                @if($project->milestones && count($project->milestones) > 0)
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white mb-4">Jalons du projet</h2>
+                        <div class="space-y-4">
+                            @foreach($project->milestones as $milestone)
+                                <div class="flex items-start space-x-4">
+                                    <div class="flex-shrink-0 w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center">
+                                        <span class="text-primary font-semibold text-xs">{{ $loop->iteration }}</span>
                                     </div>
-                                @endforeach
-                            </div>
+                                    <div class="flex-1">
+                                        <h3 class="text-lg font-medium text-gray-900 dark:text-white">{{ $milestone['title'] ?? 'Jalon ' . $loop->iteration }}</h3>
+                                        <p class="text-gray-600 dark:text-gray-400 text-sm mt-1">{{ $milestone['description'] ?? 'Description du jalon' }}</p>
+                                        @if(isset($milestone['deadline']))
+                                            <p class="text-xs text-gray-500 mt-2">Date limite: {{ $milestone['deadline'] }}</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
-                    @endif
+                    </div>
                 @endif
 
                 {{-- Reviews --}}
@@ -149,7 +144,7 @@
                     <div class="space-y-4">
                         <div>
                             <p class="text-sm text-gray-500">Budget</p>
-                            <p class="text-xl font-bold text-primary">{{ number_format($project->budget, 0, ',', ' ') }} XAF</p>
+                            <p class="text-xl font-bold text-primary">{{ number_format($project->budget ?? 0, 0, ',', ' ') }} XAF</p>
                         </div>
                         @if($project->deadline)
                             <div>
@@ -157,17 +152,19 @@
                                 <p class="text-lg font-medium text-gray-900 dark:text-white">{{ $project->deadline->format('d/m/Y') }}</p>
                             </div>
                         @endif
-                        <div>
-                            <p class="text-sm text-gray-500">Priorité</p>
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $project->priority->color() }}">
-                                {{ $project->priority->label() }}
-                            </span>
-                        </div>
+                        @if($project->priority)
+                            <div>
+                                <p class="text-sm text-gray-500">Priorité</p>
+                                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $project->priority->color() }}">
+                                    {{ $project->priority->label() }}
+                                </span>
+                            </div>
+                        @endif
                     </div>
                 </div>
 
                 {{-- Developer Info --}}
-                @if($project->developer)
+                @if($project->developer && $project->developer->profile)
                     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
                         <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Développeur</h3>
                         <div class="flex items-center space-x-4">
@@ -176,35 +173,43 @@
                             </div>
                             <div>
                                 <p class="font-medium text-gray-900 dark:text-white">{{ $project->developer->name }}</p>
-                                <p class="text-sm text-gray-500">{{ $project->developer->profile->specialization->label() }}</p>
+                                @if($project->developer->profile->specialization)
+                                    <p class="text-sm text-gray-500">{{ $project->developer->profile->specialization->label() }}</p>
+                                @endif
                             </div>
                         </div>
                         <div class="mt-4 space-y-2">
-                            <div class="flex justify-between text-sm">
-                                <span class="text-gray-500">Disponibilité</span>
-                                <span class="text-green-500 font-medium">{{ $project->developer->profile->availability->label() }}</span>
-                            </div>
-                            <div class="flex justify-between text-sm">
-                                <span class="text-gray-500">Niveau</span>
-                                <span class="text-primary font-medium">{{ $project->developer->profile->skill_level->label() }}</span>
-                            </div>
+                            @if($project->developer->profile->availability)
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">Disponibilité</span>
+                                    <span class="text-green-500 font-medium">{{ $project->developer->profile->availability->label() }}</span>
+                                </div>
+                            @endif
+                            @if($project->developer->profile->skill_level)
+                                <div class="flex justify-between text-sm">
+                                    <span class="text-gray-500">Niveau</span>
+                                    <span class="text-primary font-medium">{{ $project->developer->profile->skill_level->label() }}</span>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 @endif
 
                 {{-- Client Info --}}
-                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-                    <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Client</h3>
-                    <div class="flex items-center space-x-4">
-                        <div class="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center">
-                            <span class="text-secondary font-semibold text-lg">{{ $project->client->initials() }}</span>
-                        </div>
-                        <div>
-                            <p class="font-medium text-gray-900 dark:text-white">{{ $project->client->name }}</p>
-                            <p class="text-sm text-gray-500">{{ $project->client->email }}</p>
+                @if($project->client)
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Client</h3>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center">
+                                <span class="text-secondary font-semibold text-lg">{{ $project->client->initials() }}</span>
+                            </div>
+                            <div>
+                                <p class="font-medium text-gray-900 dark:text-white">{{ $project->client->name }}</p>
+                                <p class="text-sm text-gray-500">{{ $project->client->email }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
 
                 {{-- Stats --}}
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
@@ -246,7 +251,7 @@
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Actions</h3>
                     <div class="space-y-3">
-                        <a href="{{ route('projects.progress', $project->id) }}" 
+                          <a href="{{ route('projects.progress', $project->id) }}" 
                            class="block w-full bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/80 transition-colors duration-200 text-center">
                             Suivre la progression
                         </a>

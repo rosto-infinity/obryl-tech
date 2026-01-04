@@ -1,19 +1,17 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Models;
 
-use App\Enums\Project\ProjectStatus;
+
+
 use App\Enums\Project\ProjectType;
+use App\Enums\Project\ProjectStatus;
 use App\Enums\Project\ProjectPriority;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Project extends Model
 {
@@ -25,6 +23,7 @@ class Project extends Model
         'description',
         'slug',
         'client_id',
+        'developer_id',
         'type',
         'status',
         'priority',
@@ -90,29 +89,6 @@ class Project extends Model
         return $this->hasMany(Commission::class);
     }
 
-    /**
-     * Get similar projects based on type and technologies.
-     */
-    public function getSimilarProjects(int $limit = 6): Collection
-    {
-        return Project::query()
-            ->where('id', '!=', $this->id)
-            ->where('status', 'published')
-            ->where(function ($query) {
-                $query->where('type', $this->type)
-                      ->orWhereJsonContains('technologies', collect($this->technologies ?? [])->first());
-            })
-            ->with(['client', 'developer.profile'])
-            ->inRandomOrder()
-            ->limit($limit)
-            ->get();
-    }
-
-    // public function tickets(): HasMany
-    // {
-    //     return $this->hasMany(SupportTicket::class);
-    // }
-
     // Helpers
     public function isCompleted(): bool
     {
@@ -126,16 +102,61 @@ class Project extends Model
 
     public function getMilestonesAttribute()
     {
-        return $this->attributes['milestones'] ? json_decode($this->attributes['milestones'], true) : [];
+        $milestones = $this->attributes['milestones'] ?? null;
+        
+        if ($milestones === null) {
+            return [];
+        }
+        
+        if (is_string($milestones)) {
+            return json_decode($milestones, true) ?? [];
+        }
+        
+        return is_array($milestones) ? $milestones : [];
     }
 
     public function getTasksAttribute()
     {
-        return $this->attributes['tasks'] ? json_decode($this->attributes['tasks'], true) : [];
+        $tasks = $this->attributes['tasks'] ?? null;
+        
+        if ($tasks === null) {
+            return [];
+        }
+        
+        if (is_string($tasks)) {
+            return json_decode($tasks, true) ?? [];
+        }
+        
+        return is_array($tasks) ? $tasks : [];
     }
 
     public function getCollaboratorsAttribute()
     {
-        return $this->attributes['collaborators'] ? json_decode($this->attributes['collaborators'], true) : [];
+        $collaborators = $this->attributes['collaborators'] ?? null;
+        
+        if ($collaborators === null) {
+            return [];
+        }
+        
+        if (is_string($collaborators)) {
+            return json_decode($collaborators, true) ?? [];
+        }
+        
+        return is_array($collaborators) ? $collaborators : [];
     }
+
+  public function getSimilarProjects(int $limit = 6)
+{
+    return Project::where('id', '!=', $this->id)
+        ->where('status', ProjectStatus::PUBLISHED->value)
+        ->where(function ($query) {
+            // FIX ICI : utilisation de ?-> pour éviter le crash si $this->type est null
+            $query->where('type', $this->type?->value)
+                  ->orWhereRaw("JSON_CONTAINS(technologies, ?)", [json_encode($this->technologies)]);
+        })
+        ->where('deleted_at', null)
+        ->orderByRaw('RAND()')
+        ->limit($limit)
+        ->get();
+}
 }
