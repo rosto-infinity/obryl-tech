@@ -27,7 +27,7 @@ Route::get('/', function () {
 
 // Routes publiques pour consultation (visiteurs)
 Route::get('projects', function() { return view('projects'); })->name('projects.list');
-// Route::get('projects/{project}', function() { return view('project-detail'); })->name('projects.detail');
+
 Route::get('projects/{project}', ProjectDetail::class)->name('projects.detail');
 Route::get('projects/filter', ProjectFilter::class)->name('projects.filter');
 

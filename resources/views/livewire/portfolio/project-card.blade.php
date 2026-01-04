@@ -147,7 +147,7 @@
                     <button class="flex-1 bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/80 transition-colors duration-200">
                         Contacter le développeur
                     </button>
-                    <a href="{{ route('projects.detail', $project->id) }}" 
+                    <a href="{{ route('projects.detail', $project->slug) }}" 
                        class="flex-1 border border-primary text-primary px-4 py-2 rounded-lg hover:bg-primary/10 transition-colors duration-200 text-center">
                         Voir le projet complet
                     </a>
