@@ -27,8 +27,8 @@
             @yield('content')
         </main>
         
-        <!-- Footer Public -->
-        <x-layouts.public.footer />
+        <!-- Footer -->
+        <x-footer />
         
         @stack('scripts')
     </body>

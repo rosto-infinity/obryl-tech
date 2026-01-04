@@ -7,6 +7,7 @@ enum UserType: string
     case CLIENT = 'client';
     case DEVELOPER = 'developer';
     case ADMIN = 'admin';
+    case SURPER_ADMIN ='super_admin';
 
     public function label(): string
     {
@@ -14,6 +15,7 @@ enum UserType: string
             self::CLIENT => 'Client',
             self::DEVELOPER => 'Développeur',
             self::ADMIN => 'Administrateur',
+            self::SURPER_ADMIN => 'super_admin',
         };
     }
 
@@ -23,6 +25,8 @@ enum UserType: string
             self::CLIENT => 'blue',
             self::DEVELOPER => 'green',
             self::ADMIN => 'red',
+            self::SURPER_ADMIN => 'yellow',
+
         };
     }
 }

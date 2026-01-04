@@ -47,6 +47,7 @@
                     {{-- Featured Image --}}
                     @if($project->featured_image)
                         <div class="relative">
+                            
                             <img src="{{ $project->featured_image }}" 
                                  alt="{{ $project->title }}" 
                                  class="w-full h-96 object-cover">
@@ -80,7 +81,7 @@
                                             <img src="{{ $image }}" 
                                                  alt="{{ $project->title }} - Image {{ $index + 1 }}" 
                                                  class="w-full h-32 object-cover rounded-lg transition-transform duration-200 group-hover:scale-105">
-                                            <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity duration-200 rounded-lg flex items-center justify-center">
+                                            <div class="absolute inset-0 bg-black/10 group-hover:bg-opacity-30 transition-opacity duration-200 rounded-lg flex items-center justify-center">
                                                 <svg class="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 18v-3m0 0h3"/>
                                                 </svg>

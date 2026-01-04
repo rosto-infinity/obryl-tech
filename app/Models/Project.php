@@ -8,7 +8,9 @@ use App\Enums\Project\ProjectType;
 use App\Enums\Project\ProjectStatus;
 use App\Enums\Project\ProjectPriority;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -60,13 +62,13 @@ class Project extends Model
         'milestones' => 'json',
         'tasks' => 'json',
         'collaborators' => 'json',
-        'gallery_images' => 'json',
+        'gallery_images' => 'array', // On caste en array directement, pas besoin de getter complexe
         'is_published' => 'boolean',
         'is_featured' => 'boolean',
         'deadline' => 'datetime',
         'started_at' => 'datetime',
         'completed_at' => 'datetime',
-        'featured_image' => 'json',
+        // 'featured_image' => 'json',
     ];
 
     /**
@@ -247,25 +249,40 @@ class Project extends Model
         return [];
     }
 
-    public function getGalleryImagesAttribute($value)
+    /**
+     * ACCESSOR POUR LA GALERIE
+     * Comme 'gallery_images' est casté en 'array' plus haut,
+     * Laravel nous donne déjà un tableau. On doit juste convertir chaque chemin en URL.
+     */
+ protected function galleryImages(): Attribute
     {
-        if (is_null($value)) {
-            return [];
-        }
-        
-        // Si c'est déjà un tableau, retourner directement
-        if (is_array($value)) {
-            return $value;
-        }
-        
-        // Si c'est une chaîne, essayer de décoder du JSON
-        if (is_string($value) && !empty($value)) {
-            $decoded = json_decode($value, true);
-            return is_array($decoded) ? $decoded : [];
-        }
-        
-        return [];
+        return Attribute::make(
+            get: function ($value) {
+                // 1. Si la valeur est vide ou nulle, on retourne un tableau vide
+                if (empty($value)) {
+                    return [];
+                }
+
+                // 2. Si c'est déjà un tableau (ex: cast 'json' a fonctionné), on l'utilise
+                if (is_array($value)) {
+                    return array_map(fn ($item) => Storage::url($item), $value);
+                }
+
+                // 3. Si c'est une chaîne (JSON brut de la base de données), on la décode
+                if (is_string($value)) {
+                    $decoded = json_decode($value, true);
+                    // Si le décodage réussit et donne un tableau, on mappe les URLs
+                    if (is_array($decoded)) {
+                        return array_map(fn ($item) => Storage::url($item), $decoded);
+                    }
+                }
+
+                // 4. Fallback : si ça a échoué, on retourne un tableau vide
+                return [];
+            },
+        );
     }
+
 
   public function getSimilarProjects(int $limit = 6)
 {
@@ -281,4 +298,15 @@ class Project extends Model
         ->limit($limit)
         ->get();
 }
+
+/**
+     * ACCESSOR MODERNE (Laravel 9/10/11+)
+     * Transforme le chemin de la base de données en URL complète accessible.
+     */
+    protected function featuredImage(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? Storage::url($value) : null,
+     );
+    }     
 }

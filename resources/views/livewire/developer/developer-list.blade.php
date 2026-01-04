@@ -168,7 +168,8 @@
                         <div class="mb-4">
                             <div class="flex flex-wrap gap-1">
                                 @php
-                                    $skills = json_decode($developer->profile->skills, true) ?? [];
+                                    // $skills = json_decode($developer->profile->skills, true) ?? [];
+                                    $skills = $developer->profile->skills;
                                     $displayedSkills = array_slice($skills, 0, 3);
                                 @endphp
                                 @foreach($displayedSkills as $skill)

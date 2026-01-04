@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Project;
 use Laravel\Fortify\Features;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\Password;
@@ -44,6 +45,11 @@ Route::get('portfolio', PortfolioGallery::class)->name('portfolio.gallery');
 Route::get('portfolio/project-card', ProjectCard::class)->name('portfolio.project-card');
 Route::get('portfolio/project-like', ProjectLike::class)->name('portfolio.project-like');
 
+// Routes légales (publiques)
+Route::view('legal/mentions-legales', 'legal.mentions-legales')->name('legal.mentions');
+Route::view('legal/politique-confidentialite', 'legal.politique-confidentialite')->name('legal.privacy');
+Route::view('legal/cgu', 'legal.cgu')->name('legal.cgu');
+
 // Routes protégées (nécessitent une authentification)
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
@@ -65,7 +71,25 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     // Routes de progression (nécessitent authentification)
     Route::get('projects/{project}/progress', ProjectProgress::class)->name('projects.progress');
-    
+// Route pour servir les images privées
+Route::get('/storage/private/{path}', function ($path) {
+    $fullPath = storage_path('app/private/' . $path);
+
+    if (!file_exists($fullPath)) {
+        abort(404, 'Image non trouvée');
+    }
+
+    return response()->file($fullPath, [
+        'Cache-Control' => 'public, max-age=31536000',
+    ]);
+})->where('path', '.*')->name('storage.private');
+
+    //  Route::get('projects/{project}/upload-images', function (Project $project) {
+    //     return view('livewire/project.upload-images', ['project' => $project]);
+    // })->name('projects.upload-images');
+
+
+
     // Routes des commissions (nécessitent authentification)
     Route::get('commissions', CommissionDashboard::class)->name('commissions.dashboard');
     Route::get('commissions/history', CommissionHistory::class)->name('commissions.history');

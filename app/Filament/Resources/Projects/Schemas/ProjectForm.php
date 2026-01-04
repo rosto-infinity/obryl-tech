@@ -5,20 +5,21 @@ namespace App\Filament\Resources\Projects\Schemas;
 use Filament\Forms;
 use App\Models\User;
 use Filament\Forms\Form;
+use Illuminate\Support\Str;
 use Filament\Schemas\Schema;
 use App\Enums\Project\ProjectType;
 use Filament\Infolists\Components;
 use Illuminate\Support\HtmlString;
-use Filament\Forms\Components\Grid;
 
+use Filament\Forms\Components\Grid;
 use App\Enums\Project\ProjectStatus;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Tabs;
-use App\Enums\Project\ProjectPriority;
 
+use App\Enums\Project\ProjectPriority;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Columns\TextColumn;
@@ -63,7 +64,7 @@ class ProjectForm
                                             ->required()
                                             ->maxLength(255)
                                             ->live(onBlur: true)
-                                            ->afterStateUpdated(fn ($state, callable $set) => $set('slug', \Str::slug($state))),
+                                            ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
                                         
                                         TextInput::make('slug')
                                             ->label('URL du projet')
@@ -307,11 +308,12 @@ class ProjectForm
                                     ->columns(2)
                                     ->schema([
                                         FileUpload::make('featured_image')
+                                        ->disk('public')->directory('projects')
                                             ->label('Image principale')
                                             ->placeholder('Télécharger l\'image principale')
                                             ->image()
-                                            ->imageEditor()
-                                            ->directory('projects/featured')
+                                            // ->imageEditor()
+                                            // ->directory('projects/featured')
                                             // ->visibility('public')
                                             ->maxSize(2048)
                                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
@@ -324,8 +326,7 @@ class ProjectForm
                                             ->reorderable()
                                             ->image()
                                             ->imageEditor()
-                                            ->directory('projects/gallery')
-                                            
+                                            ->disk('public')->directory('projects/gallery')
                                             ->maxSize(1024)
                                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                             ->default([])
