@@ -23,7 +23,7 @@ use App\Livewire\Commission\CommissionDashboard;
 
 // Routes publiques (sans authentification)
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 })->name('home');
 
 // Routes publiques pour consultation (visiteurs)

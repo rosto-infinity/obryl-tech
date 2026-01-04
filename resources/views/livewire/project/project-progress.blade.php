@@ -128,9 +128,6 @@
                             <div class="mt-4 space-y-3">
                                 @php
                                     $milestones = $project->milestones ?? [];
-                                    if (is_string($milestones)) {
-                                        $milestones = json_decode($milestones, true) ?? [];
-                                    }
                                 @endphp
                                 @foreach($milestones as $milestone)
                                     <div class="flex items-start space-x-3 p-3 rounded-lg border {{ $milestone['status'] === 'completed' ? 'bg-green-50 border-green-200' : ($milestone['status'] === 'in_progress' ? 'bg-blue-50 border-blue-200' : 'bg-gray-50 border-gray-200') }}">

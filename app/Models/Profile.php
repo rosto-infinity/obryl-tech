@@ -63,4 +63,110 @@ class Profile extends Model
     {
         return $this->belongsTo(User::class, 'verified_by');
     }
+
+    // Accesseurs JSON simplifiés pour éviter les boucles infinies
+    public function getSkillsAttribute($value)
+    {
+        if (is_null($value)) {
+            return [];
+        }
+        
+        // Si c'est déjà un tableau, retourner directement
+        if (is_array($value)) {
+            return $value;
+        }
+        
+        // Si c'est une chaîne, essayer de décoder du JSON
+        if (is_string($value) && !empty($value)) {
+            // Gérer le cas où le JSON est mal formé (manque des accolades)
+            $cleaned = trim($value, '"');
+            
+            // Si la chaîne ne commence pas par [ ou {, l'envelopper dans un tableau
+            if (!str_starts_with($cleaned, '[') && !str_starts_with($cleaned, '{')) {
+                // Essayer de réparer le JSON mal formé
+                $cleaned = '[' . $cleaned . ']';
+            }
+            
+            $decoded = json_decode($cleaned, true);
+            if (is_array($decoded)) {
+                return $decoded;
+            }
+            
+            // Si ça échoue, essayer stripslashes
+            $cleaned = stripslashes($value);
+            $cleaned = trim($cleaned, '"');
+            if (!str_starts_with($cleaned, '[') && !str_starts_with($cleaned, '{')) {
+                $cleaned = '[' . $cleaned . ']';
+            }
+            $decoded = json_decode($cleaned, true);
+            if (is_array($decoded)) {
+                return $decoded;
+            }
+            
+            // Si ce n'est pas du JSON, traiter comme une liste simple
+            return array_filter(array_map('trim', explode("\n", $value)));
+        }
+        
+        return [];
+    }
+
+    public function getCertificationsAttribute($value)
+    {
+        if (is_null($value)) {
+            return [];
+        }
+        
+        // Si c'est déjà un tableau, retourner directement
+        if (is_array($value)) {
+            return $value;
+        }
+        
+        // Si c'est une chaîne, essayer de décoder du JSON
+        if (is_string($value) && !empty($value)) {
+            $decoded = json_decode($value, true);
+            return is_array($decoded) ? $decoded : [];
+        }
+        
+        return [];
+    }
+
+    public function getExperiencesAttribute($value)
+    {
+        if (is_null($value)) {
+            return [];
+        }
+        
+        // Si c'est déjà un tableau, retourner directement
+        if (is_array($value)) {
+            return $value;
+        }
+        
+        // Si c'est une chaîne, essayer de décoder du JSON
+        if (is_string($value) && !empty($value)) {
+            $decoded = json_decode($value, true);
+            return is_array($decoded) ? $decoded : [];
+        }
+        
+        return [];
+    }
+
+    public function getSocialLinksAttribute($value)
+    {
+        if (is_null($value)) {
+            return [];
+        }
+        
+        // Si c'est déjà un tableau, retourner directement
+        if (is_array($value)) {
+            return $value;
+        }
+        
+        // Si c'est une chaîne, essayer de décoder du JSON
+        if (is_string($value) && !empty($value)) {
+            $decoded = json_decode($value, true);
+            return is_array($decoded) ? $decoded : [];
+        }
+        
+        return [];
+    }
 }

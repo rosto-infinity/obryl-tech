@@ -168,7 +168,7 @@
                         <div class="mb-4">
                             <div class="flex flex-wrap gap-1">
                                 @php
-                                    $skills = json_decode($developer->profile->skills, true) ?? [];
+                                    $skills = $developer->profile->skills ?? [];
                                     $displayedSkills = array_slice($skills, 0, 3);
                                 @endphp
                                 @foreach($displayedSkills as $skill)
@@ -186,6 +186,7 @@
                     @endif
                     
                     {{-- Actions --}}
+                    
                     <div class="flex space-x-2">
                         <a href="{{ route('developers.profile', $developer->id) }}" class="flex-1 bg-primary text-white text-center px-4 py-2 rounded-md hover:bg-primary/70 transition-colors duration-200">
                             Voir le profil
@@ -194,6 +195,8 @@
                             Contacter
                         </a>
                     </div>
+
+
                 </div>
             </div>
         @empty

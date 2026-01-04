@@ -109,49 +109,162 @@ class Project extends Model
         return $this->status === ProjectStatus::IN_PROGRESS;
     }
 
-    public function getMilestonesAttribute()
+    // Accesseurs JSON simplifiés pour éviter les boucles infinies
+    public function getTechnologiesAttribute($value)
     {
-        $milestones = $this->attributes['milestones'] ?? null;
-        
-        if ($milestones === null) {
+        if (is_null($value)) {
             return [];
         }
         
-        if (is_string($milestones)) {
-            return json_decode($milestones, true) ?? [];
+        // Si c'est déjà un tableau, retourner directement
+        if (is_array($value)) {
+            return $value;
         }
         
-        return is_array($milestones) ? $milestones : [];
+        // Si c'est une chaîne, essayer de décoder du JSON
+        if (is_string($value) && !empty($value)) {
+            // Gérer le cas où le JSON est mal formé (manque des accolades)
+            $cleaned = trim($value, '"');
+            
+            // Si la chaîne ne commence pas par [ ou {, l'envelopper dans un tableau
+            if (!str_starts_with($cleaned, '[') && !str_starts_with($cleaned, '{')) {
+                // Essayer de réparer le JSON mal formé
+                $cleaned = '[' . $cleaned . ']';
+            }
+            
+            $decoded = json_decode($cleaned, true);
+            if (is_array($decoded)) {
+                return $decoded;
+            }
+            
+            // Si ça échoue, essayer stripslashes
+            $cleaned = stripslashes($value);
+            $cleaned = trim($cleaned, '"');
+            if (!str_starts_with($cleaned, '[') && !str_starts_with($cleaned, '{')) {
+                $cleaned = '[' . $cleaned . ']';
+            }
+            $decoded = json_decode($cleaned, true);
+            if (is_array($decoded)) {
+                return $decoded;
+            }
+            
+            // Si ce n'est pas du JSON, traiter comme une liste simple
+            return array_filter(array_map('trim', explode("\n", $value)));
+        }
+        
+        return [];
     }
 
-    public function getTasksAttribute()
+    public function getAttachmentsAttribute($value)
     {
-        $tasks = $this->attributes['tasks'] ?? null;
-        
-        if ($tasks === null) {
+        if (is_null($value)) {
             return [];
         }
         
-        if (is_string($tasks)) {
-            return json_decode($tasks, true) ?? [];
+        // Si c'est déjà un tableau, retourner directement
+        if (is_array($value)) {
+            return $value;
         }
         
-        return is_array($tasks) ? $tasks : [];
+        // Si c'est une chaîne, essayer de décoder du JSON
+        if (is_string($value) && !empty($value)) {
+            $decoded = json_decode($value, true);
+            return is_array($decoded) ? $decoded : [];
+        }
+        
+        return [];
     }
 
-    public function getCollaboratorsAttribute()
+    public function getMilestonesAttribute($value)
     {
-        $collaborators = $this->attributes['collaborators'] ?? null;
-        
-        if ($collaborators === null) {
+        if (is_null($value)) {
             return [];
         }
         
-        if (is_string($collaborators)) {
-            return json_decode($collaborators, true) ?? [];
+        // Si c'est déjà un tableau, retourner directement
+        if (is_array($value)) {
+            return $value;
         }
         
-        return is_array($collaborators) ? $collaborators : [];
+        // Si c'est une chaîne, essayer de décoder du JSON
+        if (is_string($value) && !empty($value)) {
+            $decoded = json_decode($value, true);
+            if (is_array($decoded)) {
+                return $decoded;
+            }
+            // Si ce n'est pas du JSON, traiter comme une liste simple
+            return array_filter(array_map('trim', explode("\n", $value)));
+        }
+        
+        return [];
+    }
+
+    public function getTasksAttribute($value)
+    {
+        if (is_null($value)) {
+            return [];
+        }
+        
+        // Si c'est déjà un tableau, retourner directement
+        if (is_array($value)) {
+            return $value;
+        }
+        
+        // Si c'est une chaîne, essayer de décoder du JSON
+        if (is_string($value) && !empty($value)) {
+            $decoded = json_decode($value, true);
+            if (is_array($decoded)) {
+                return $decoded;
+            }
+            // Si ce n'est pas du JSON, traiter comme une liste simple
+            return array_filter(array_map('trim', explode("\n", $value)));
+        }
+        
+        return [];
+    }
+
+    public function getCollaboratorsAttribute($value)
+    {
+        if (is_null($value)) {
+            return [];
+        }
+        
+        // Si c'est déjà un tableau, retourner directement
+        if (is_array($value)) {
+            return $value;
+        }
+        
+        // Si c'est une chaîne, essayer de décoder du JSON
+        if (is_string($value) && !empty($value)) {
+            $decoded = json_decode($value, true);
+            if (is_array($decoded)) {
+                return $decoded;
+            }
+            // Si ce n'est pas du JSON, traiter comme une liste simple
+            return array_filter(array_map('trim', explode("\n", $value)));
+        }
+        
+        return [];
+    }
+
+    public function getGalleryImagesAttribute($value)
+    {
+        if (is_null($value)) {
+            return [];
+        }
+        
+        // Si c'est déjà un tableau, retourner directement
+        if (is_array($value)) {
+            return $value;
+        }
+        
+        // Si c'est une chaîne, essayer de décoder du JSON
+        if (is_string($value) && !empty($value)) {
+            $decoded = json_decode($value, true);
+            return is_array($decoded) ? $decoded : [];
+        }
+        
+        return [];
     }
 
   public function getSimilarProjects(int $limit = 6)

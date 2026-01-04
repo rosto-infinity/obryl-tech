@@ -218,7 +218,7 @@
                         <div class="mb-4">
                             <div class="flex flex-wrap gap-1">
                                 @php
-                                    $technologies = json_decode($project->technologies, true) ?? [];
+                                    $technologies = $project->technologies;
                                     $displayedTechs = array_slice($technologies, 0, 3);
                                 @endphp
                                 @foreach($displayedTechs as $tech)
