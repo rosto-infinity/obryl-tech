@@ -63,10 +63,19 @@ class Project extends Model
         'gallery_images' => 'json',
         'is_published' => 'boolean',
         'is_featured' => 'boolean',
-        'deadline' => 'date',
-        'started_at' => 'date',
-        'completed_at' => 'date',
+        'deadline' => 'datetime',
+        'started_at' => 'datetime',
+        'completed_at' => 'datetime',
+        'featured_image' => 'json',
     ];
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
 
     // Relations
     public function client(): BelongsTo

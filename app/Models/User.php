@@ -35,6 +35,7 @@ class User extends Authenticatable
         'avatar',
         'user_type',
         'status',
+        'slug',
     ];
 
     /**
@@ -130,5 +131,13 @@ class User extends Authenticatable
     public function isActive(): bool
     {
         return $this->status === UserStatus::ACTIVE;
+    }
+
+    /**
+     * Get the route key for the model.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'id'; // Temporairement, utiliser l'ID
     }
 }

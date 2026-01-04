@@ -251,7 +251,7 @@
                 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Actions</h3>
                     <div class="space-y-3">
-                          <a href="{{ route('projects.progress', $project->id) }}" 
+                          <a href="{{ route('projects.progress', $project->slug) }}" 
                            class="block w-full bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/80 transition-colors duration-200 text-center">
                             Suivre la progression
                         </a>

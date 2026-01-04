@@ -1,24 +1,25 @@
 <?php
 
-use App\Livewire\Settings\Appearance;
-use App\Livewire\Settings\Password;
+use App\Models\User;
+use Laravel\Fortify\Features;
 use App\Livewire\Settings\Profile;
+use App\Livewire\Settings\Password;
 use App\Livewire\Settings\TwoFactor;
-use App\Livewire\Commission\CommissionDashboard;
-use App\Livewire\Commission\CommissionHistory;
-use App\Livewire\Developer\DeveloperList;
-use App\Livewire\Developer\DeveloperProfile;
-use App\Livewire\Developer\DeveloperSearch;
-use App\Livewire\Developer\DeveloperFilter;
 use App\Livewire\Project\ProjectList;
-use App\Livewire\Project\ProjectDetail;
-use App\Livewire\Project\ProjectFilter;
-use App\Livewire\Project\ProjectProgress;
-use App\Livewire\Portfolio\PortfolioGallery;
+use App\Livewire\Settings\Appearance;
+use Illuminate\Support\Facades\Route;
 use App\Livewire\Portfolio\ProjectCard;
 use App\Livewire\Portfolio\ProjectLike;
-use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\Features;
+use App\Livewire\Project\ProjectDetail;
+use App\Livewire\Project\ProjectFilter;
+use App\Livewire\Developer\DeveloperList;
+use App\Livewire\Project\ProjectProgress;
+use App\Livewire\Developer\DeveloperFilter;
+use App\Livewire\Developer\DeveloperSearch;
+use App\Livewire\Developer\DeveloperProfile;
+use App\Livewire\Portfolio\PortfolioGallery;
+use App\Livewire\Commission\CommissionHistory;
+use App\Livewire\Commission\CommissionDashboard;
 
 // Routes publiques (sans authentification)
 Route::get('/', function () {
@@ -27,16 +28,19 @@ Route::get('/', function () {
 
 // Routes publiques pour consultation (visiteurs)
 Route::get('projects', function() { return view('projects'); })->name('projects.list');
-
 Route::get('projects/{project}', ProjectDetail::class)->name('projects.detail');
+Route::get('projects/by-id/{id}', function($id) { 
+    $project = App\Models\Project::findOrFail($id); 
+    return redirect()->route('projects.detail', $project->slug);
+})->name('projects.detail.by-id');
 Route::get('projects/filter', ProjectFilter::class)->name('projects.filter');
 
 Route::get('developers', function() { return view('developers'); })->name('developers.list');
 Route::get('developers/search', DeveloperSearch::class)->name('developers.search');
 Route::get('developers/filter', DeveloperFilter::class)->name('developers.filter');
-Route::get('developers/{developer}', function() { return view('developer-profile'); })->name('developers.profile');
+Route::get('developers/{developer}', DeveloperProfile::class)->name('developers.profile');
 
-Route::get('portfolio', function() { return view('portfolio'); })->name('portfolio.gallery');
+Route::get('portfolio', PortfolioGallery::class)->name('portfolio.gallery');
 Route::get('portfolio/project-card', ProjectCard::class)->name('portfolio.project-card');
 Route::get('portfolio/project-like', ProjectLike::class)->name('portfolio.project-like');
 
