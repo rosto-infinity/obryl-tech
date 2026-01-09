@@ -19,60 +19,79 @@ class ArticlesTable
     {
         return $table
             ->columns([
-                TextColumn::make('author.name')
-                    ->searchable(),
+                ImageColumn::make('featured_image')
+                    ->label('Image')
+                    ->circular(),
+                
                 TextColumn::make('title')
-                    ->searchable(),
-                TextColumn::make('slug')
-                    ->searchable(),
-                ImageColumn::make('featured_image'),
-                TextColumn::make('status')
-                    ->badge()
-                    ->searchable(),
+                    ->label('Titre')
+                    ->searchable()
+                    ->sortable()
+                    ->wrap()
+                    ->description(fn ($record) => $record->slug),
+                
+                TextColumn::make('author.name')
+                    ->label('Auteur')
+                    ->searchable()
+                    ->sortable()
+                    ->toggleable(),
+                
                 TextColumn::make('category')
+                    ->label('Catégorie')
                     ->badge()
-                    ->searchable(),
+                    ->sortable(),
+                
+                TextColumn::make('status')
+                    ->label('Statut')
+                    ->badge()
+                    ->sortable(),
+                
                 TextColumn::make('published_at')
-                    ->dateTime()
-                    ->sortable(),
-                TextColumn::make('scheduled_at')
-                    ->dateTime()
-                    ->sortable(),
+                    ->label('Publié le')
+                    ->dateTime('d/m/Y H:i')
+                    ->sortable()
+                    ->toggleable(),
+                
                 TextColumn::make('views_count')
+                    ->label('Vues')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->alignCenter(),
+                
                 TextColumn::make('likes_count')
+                    ->label('Likes')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+                    ->alignCenter(),
+                
                 TextColumn::make('comments_count')
+                    ->label('Comms')
                     ->numeric()
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('deleted_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->alignCenter(),
             ])
             ->filters([
+                \Filament\Tables\Filters\SelectFilter::make('category')
+                    ->label('Catégorie')
+                    ->options(\App\Enums\Blog\ArticleCategory::class),
+                
+                \Filament\Tables\Filters\SelectFilter::make('status')
+                    ->label('Statut')
+                    ->options(\App\Enums\Blog\ArticleStatus::class),
+                
                 TrashedFilter::make(),
             ])
-            ->recordActions([
+            ->actions([
                 ViewAction::make(),
                 EditAction::make(),
             ])
-            ->toolbarActions([
+            ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 }

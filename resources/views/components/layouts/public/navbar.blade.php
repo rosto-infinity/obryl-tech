@@ -29,6 +29,11 @@
                         :current="request()->routeIs('portfolio.*')" wire:navigate>Portfolio
                     </flux:navlist.item>
 
+                    <!-- Blog -->
+                    <flux:navlist.item href="{{ route('blog.index') }}"
+                        :current="request()->routeIs('blog.*')" wire:navigate>Blog
+                    </flux:navlist.item>
+
                
 
 
@@ -86,6 +91,10 @@
                 <!-- Portfolio -->
                 <flux:navlist.item href="{{ route('portfolio.gallery') }}"
                     :current="request()->routeIs('portfolio.*')" wire:navigate>Portfolio</flux:navlist.item>
+
+                <!-- Blog -->
+                <flux:navlist.item href="{{ route('blog.index') }}" :current="request()->routeIs('blog.*')"
+                    wire:navigate>Blog</flux:navlist.item>
 
                 <!-- Legal Mobile -->
                 <div class="px-3 py-2">

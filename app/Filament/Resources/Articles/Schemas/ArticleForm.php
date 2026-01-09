@@ -10,6 +10,10 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Schemas\Schema;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Components\Tabs\Tab;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Grid;
 
 class ArticleForm
 {
@@ -17,43 +21,128 @@ class ArticleForm
     {
         return $schema
             ->components([
-                Select::make('author_id')
-                    ->relationship('author', 'name')
-                    ->required(),
-                TextInput::make('title')
-                    ->required(),
-                TextInput::make('slug')
-                    ->required(),
-                Textarea::make('excerpt')
+                Tabs::make('Article')
+                    ->tabs([
+                        Tab::make('Contenu')
+                            ->icon('heroicon-o-document-text')
+                            ->schema([
+                                Select::make('author_id')
+                                    ->relationship('author', 'name')
+                                    ->default(auth()->id())
+                                    ->required()
+                                    ->searchable(),
+                                
+                                TextInput::make('title')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->live(onBlur: true)
+                                    ->afterStateUpdated(fn (string $operation, $state, \Filament\Schemas\Components\Utilities\Set $set) => 
+                                        $operation === 'create' ? $set('slug', \Illuminate\Support\Str::slug($state)) : null
+                                    ),
+                                
+                                TextInput::make('slug')
+                                    ->required()
+                                    ->maxLength(255)
+                                    ->unique(ignoreRecord: true),
+                                
+                                Textarea::make('excerpt')
+                                    ->label('Résumé')
+                                    ->rows(3)
+                                    ->columnSpanFull(),
+                                
+                                \Filament\Forms\Components\MarkdownEditor::make('content')
+                                    ->label('Contenu Markdown')
+                                    ->required()
+                                    ->columnSpanFull()
+                                    ->fileAttachmentsDisk('public')
+                                    ->fileAttachmentsDirectory('articles/attachments'),
+                            ]),
+                        
+                        Tab::make('Médias & Taxonomie')
+                            ->icon('heroicon-o-tag')
+                            ->schema([
+                                FileUpload::make('featured_image')
+                                    ->label('Image à la une')
+                                    ->image()
+                                    ->imageEditor()
+                                    ->directory('articles/featured')
+                                    ->visibility('public')
+                                    ->columnSpanFull(),
+                                
+                                Select::make('category')
+                                    ->label('Catégorie')
+                                    ->options(ArticleCategory::class)
+                                    ->required()
+                                    ->native(false),
+                                
+                                \Filament\Forms\Components\TagsInput::make('tags')
+                                    ->label('Tags')
+                                    ->placeholder('Nouveau tag')
+                                    ->separator(','),
+                            ]),
+                        
+                        Tab::make('Statut & SEO')
+                            ->icon('heroicon-o-cog-6-tooth')
+                            ->schema([
+                               Grid::make(2)
+                                    ->schema([
+                                        Select::make('status')
+                                            ->options(ArticleStatus::class)
+                                            ->default(ArticleStatus::DRAFT)
+                                            ->required()
+                                            ->native(false),
+                                        
+                                        DateTimePicker::make('published_at')
+                                            ->label('Date de publication'),
+                                        
+                                        DateTimePicker::make('scheduled_at')
+                                            ->label('Programmé pour'),
+                                    ]),
+                                
+                                Section::make('SEO')
+                                    ->description('Métadonnées pour les moteurs de recherche')
+                                    ->collapsed()
+                                    ->schema([
+                                        \Filament\Forms\Components\KeyValue::make('seo')
+                                            ->label('Données SEO')
+                                            ->keyLabel('Propriété (meta_description, keywords, etc.)')
+                                            ->valueLabel('Valeur')
+                                            ->addActionLabel('Ajouter une métadonnée'),
+                                    ]),
+                            ]),
+                        
+                        Tab::make('Commentaires')
+                            ->icon('heroicon-o-chat-bubble-left-right')
+                            ->schema([
+                                \Filament\Forms\Components\Repeater::make('comments')
+                                    ->label('Gestion des commentaires')
+                                    ->schema([
+                                        TextInput::make('user_name')
+                                            ->label('Utilisateur')
+                                            ->required(),
+                                        Textarea::make('content')
+                                            ->label('Commentaire')
+                                            ->required(),
+                                        Select::make('status')
+                                            ->options([
+                                                'pending' => 'En attente',
+                                                'approved' => 'Approuvé',
+                                                'rejected' => 'Rejeté',
+                                            ])
+                                            ->default('pending')
+                                            ->required(),
+                                        DateTimePicker::make('created_at')
+                                            ->label('Date')
+                                            ->default(now()),
+                                    ])
+                                    ->itemLabel(fn (array $state): ?string => $state['user_name'] ?? null)
+                                    ->collapsible()
+                                    ->collapsed()
+                                    ->grid(2)
+                                    ->columnSpanFull(),
+                            ]),
+                    ])
                     ->columnSpanFull(),
-                Textarea::make('content')
-                    ->required()
-                    ->columnSpanFull(),
-                FileUpload::make('featured_image')
-                    ->image(),
-                Select::make('status')
-                    ->options(ArticleStatus::class)
-                    ->default('draft')
-                    ->required(),
-                TextInput::make('tags'),
-                Select::make('category')
-                    ->options(ArticleCategory::class),
-                TextInput::make('seo'),
-                DateTimePicker::make('published_at'),
-                DateTimePicker::make('scheduled_at'),
-                TextInput::make('views_count')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
-                TextInput::make('likes_count')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
-                TextInput::make('comments_count')
-                    ->required()
-                    ->numeric()
-                    ->default(0),
-                TextInput::make('comments'),
             ]);
     }
 }

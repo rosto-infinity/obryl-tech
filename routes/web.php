@@ -21,6 +21,8 @@ use App\Livewire\Developer\DeveloperProfile;
 use App\Livewire\Portfolio\PortfolioGallery;
 use App\Livewire\Commission\CommissionHistory;
 use App\Livewire\Commission\CommissionDashboard;
+use App\Livewire\Blog\ArticleList;
+use App\Livewire\Blog\ArticleDetail;
 
 // Routes publiques (sans authentification)
 Route::get('/', function () {
@@ -44,6 +46,10 @@ Route::get('developers/{developer}', DeveloperProfile::class)->name('developers.
 Route::get('portfolio', PortfolioGallery::class)->name('portfolio.gallery');
 Route::get('portfolio/project-card', ProjectCard::class)->name('portfolio.project-card');
 Route::get('portfolio/project-like', ProjectLike::class)->name('portfolio.project-like');
+
+// Routes du Blog
+Route::get('blog', ArticleList::class)->name('blog.index');
+Route::get('blog/{article:slug}', ArticleDetail::class)->name('blog.show');
 
 // Routes légales (publiques)
 Route::view('legal/mentions-legales', 'legal.mentions-legales')->name('legal.mentions');
