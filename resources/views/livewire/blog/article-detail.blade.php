@@ -154,7 +154,7 @@
                         
                         <div class="flex flex-col sm:flex-row items-center justify-between gap-8">
                             <p class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] max-w-sm">
-                                Moderation active : Votre expertise technique sera validée avant publication.
+                                Votre expertise technique est partagée instantanément avec la communauté.
                             </p>
                             <button 
                                 type="submit" 
