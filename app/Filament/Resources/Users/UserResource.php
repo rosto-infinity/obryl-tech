@@ -55,35 +55,4 @@ class UserResource extends Resource
             'edit' => EditUser::route('/{record}/edit'),
         ];
     }
-
-    // Protection des permissions
-    public static function canViewAny(): bool
-    {
-        return auth()->user()->can('viewAnyUser');
-    }
-
-    public static function canCreate(): bool
-    {
-        return auth()->user()->can('createUser');
-    }
-
-    public static function canEdit($record): bool
-    {
-        return auth()->user()->can('updateUser', $record);
-    }
-
-    public static function canDelete($record): bool
-    {
-        return auth()->user()->can('deleteUser', $record);
-    }
-
-    public static function canRestoreAny(): bool
-    {
-        return auth()->user()->can('restoreAnyUser');
-    }
-
-    public static function canForceDeleteAny(): bool
-    {
-        return auth()->user()->can('forceDeleteAnyUser');
-    }
 }

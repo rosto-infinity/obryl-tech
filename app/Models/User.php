@@ -67,6 +67,46 @@ class User extends Authenticatable
     }
 
     /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Générer automatiquement le slug à partir du nom
+        static::creating(function ($user) {
+            if (empty($user->slug)) {
+                $user->slug = Str::slug($user->name);
+                
+                // S'assurer que le slug est unique
+                $originalSlug = $user->slug;
+                $counter = 1;
+                
+                while (static::where('slug', $user->slug)->exists()) {
+                    $user->slug = $originalSlug . '-' . $counter;
+                    $counter++;
+                }
+            }
+        });
+
+        // Mettre à jour le slug si le nom change
+        static::updating(function ($user) {
+            if ($user->isDirty('name') && empty($user->slug)) {
+                $user->slug = Str::slug($user->name);
+                
+                // S'assurer que le slug est unique
+                $originalSlug = $user->slug;
+                $counter = 1;
+                
+                while (static::where('slug', $user->slug)->where('id', '!=', $user->id)->exists()) {
+                    $user->slug = $originalSlug . '-' . $counter;
+                    $counter++;
+                }
+            }
+        });
+    }
+
+    /**
      * Get the user's initials
      */
     public function initials(): string

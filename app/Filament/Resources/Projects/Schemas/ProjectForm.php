@@ -53,10 +53,10 @@ class ProjectForm
                                         TextInput::make('code')
                                             ->label('Code du projet')
                                             ->placeholder('Ex: PROJ-2024-001')
-                                            ->required()
-                                            ->unique(ignoreRecord: true)
-                                            ->maxLength(20)
-                                            ->helperText('Code unique pour identifier le projet'),
+                                            ->default(fn () => 'PROJ-' . date('Ym') . '-' . strtoupper(Str::random(6)))
+                                            ->disabled()
+                                            ->dehydrated(false)
+                                            ->helperText('Code unique généré automatiquement (format: PROJ-YYYYMM-XXXXXX)'),
                                         
                                         TextInput::make('title')
                                             ->label('Titre du projet')
@@ -69,10 +69,9 @@ class ProjectForm
                                         TextInput::make('slug')
                                             ->label('URL du projet')
                                             ->placeholder('url-du-projet')
-                                            ->required()
-                                            ->unique(ignoreRecord: true)
-                                            ->maxLength(255)
-                                            ->helperText('URL unique pour le projet (généré automatiquement)'),
+                                            ->disabled()
+                                            ->dehydrated(false)
+                                            ->helperText('URL unique générée automatiquement depuis le titre'),
                                     ]),
                                 
                                 Section::make('Description')
@@ -119,7 +118,8 @@ class ProjectForm
                                                 $client = User::create([
                                                     'name' => $data['name'],
                                                     'email' => $data['email'],
-                                                    'user_type' => 'client',
+                                                    'user_type' => \App\Enums\Auth\UserType::CLIENT,
+                                                    'status' => \App\Enums\Auth\UserStatus::ACTIVE,
                                                     'password' => bcrypt('password'),
                                                 ]);
                                                 return $client->id;
@@ -264,13 +264,10 @@ class ProjectForm
                                         
                                         ToggleButtons::make('is_published')
                                             ->label('Publication')
-                                            ->required()
+                                            ->boolean()
                                             ->default(false)
                                             ->inline()
-                                            ->options([
-                                                'published' => 'Publié',
-                                                'draft' => 'Brouillon',
-                                            ])
+                                            ->grouped()
                                             ->helperText('Rendre le projet visible publiquement'),
                                     ]),
                                 
@@ -308,16 +305,15 @@ class ProjectForm
                                     ->columns(2)
                                     ->schema([
                                         FileUpload::make('featured_image')
-                                        ->disk('public')->directory('projects')
-                                            ->label('Image principale')
-                                            ->placeholder('Télécharger l\'image principale')
-                                            ->image()
-                                            // ->imageEditor()
-                                            // ->directory('projects/featured')
-                                            // ->visibility('public')
-                                            ->maxSize(2048)
-                                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                                            ->helperText('Image principale du projet (max 2MB, formats: JPG, PNG, WebP)'),
+                                        ->disk('public')
+                                        ->directory('projects')
+                                        ->label('Image principale')
+                                        ->placeholder('Télécharger l\'image principale')
+                                        ->image()
+                                        ->maxSize(2048)
+                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                                        ->helperText('Image principale du projet (max 2MB, formats: JPG, PNG, WebP)')
+                                        ->visibility('public'),
                                         
                                         FileUpload::make('gallery_images')
                                             ->label('Galerie d\'images')
@@ -325,12 +321,13 @@ class ProjectForm
                                             ->multiple()
                                             ->reorderable()
                                             ->image()
-                                            ->imageEditor()
-                                            ->disk('public')->directory('projects/gallery')
+                                            ->disk('public')
+                                            ->directory('projects/gallery')
                                             ->maxSize(1024)
                                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
                                             ->default([])
-                                            ->helperText('Images additionnelles pour la galerie (max 1MB par image)'),
+                                            ->helperText('Images additionnelles pour la galerie (max 1MB par image)')
+                                            ->visibility('public'),
                                     ]),
                                 
                                 Section::make('Visibilité et Promotion')
@@ -430,9 +427,8 @@ class ProjectForm
     public static function getValidationRules(): array
     {
         return [
-            'code' => ['required', 'string', 'max:20', 'unique:projects,code,{{recordId}}'],
             'title' => ['required', 'string', 'max:255'],
-            'slug' => ['required', 'string', 'max:255', 'unique:projects,slug,{{recordId}}'],
+            'slug' => ['nullable', 'string', 'max:255', 'unique:projects,slug,{{recordId}}'],
             'description' => ['required', 'string', 'min:10'],
             'client_id' => ['required', 'exists:users,id'],
             'developer_id' => ['nullable', 'exists:users,id'],
@@ -457,15 +453,10 @@ class ProjectForm
     public static function getValidationMessages(): array
     {
         return [
-            'code.required' => 'Le code du projet est obligatoire.',
-            'code.unique' => 'Ce code de projet existe déjà.',
-            'code.max' => 'Le code du projet ne peut pas dépasser 20 caractères.',
-            
             'title.required' => 'Le titre du projet est obligatoire.',
             'title.max' => 'Le titre du projet ne peut pas dépasser 255 caractères.',
             
-            'slug.required' => 'L\'URL du projet est obligatoire.',
-            'slug.unique' => 'Cette URL existe déjà. Veuillez en choisir une autre.',
+            'slug.unique' => 'Cette URL de projet existe déjà.',
             'slug.max' => 'L\'URL du projet ne peut pas dépasser 255 caractères.',
             
             'description.required' => 'La description du projet est obligatoire.',

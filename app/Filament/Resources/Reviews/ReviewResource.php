@@ -55,35 +55,4 @@ class ReviewResource extends Resource
             'edit' => EditReview::route('/{record}/edit'),
         ];
     }
-
-    // Protection des permissions
-    public static function canViewAny(): bool
-    {
-        return auth()->user()->can('viewAnyReview');
-    }
-
-    public static function canCreate(): bool
-    {
-        return auth()->user()->can('createReview');
-    }
-
-    public static function canEdit($record): bool
-    {
-        return auth()->user()->can('updateReview', $record);
-    }
-
-    public static function canDelete($record): bool
-    {
-        return auth()->user()->can('deleteReview', $record);
-    }
-
-    public static function canRestoreAny(): bool
-    {
-        return auth()->user()->can('restoreAnyReview');
-    }
-
-    public static function canForceDeleteAny(): bool
-    {
-        return auth()->user()->can('forceDeleteAnyReview');
-    }
 }

@@ -9,6 +9,7 @@ use App\Enums\Project\ProjectStatus;
 use App\Enums\Project\ProjectPriority;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -53,6 +54,13 @@ class Project extends Model
         'gallery_images',
     ];
 
+    // Attributs calculés à inclure automatiquement
+    protected $appends = [
+        'url',
+        'admin_url',
+        'formatted_code',
+    ];
+
     protected $casts = [
         'type' => ProjectType::class,
         'status' => ProjectStatus::class,
@@ -72,11 +80,136 @@ class Project extends Model
     ];
 
     /**
+     * Boot the model.
+     */
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Générer automatiquement le slug à partir du titre
+        static::creating(function ($project) {
+            if (empty($project->slug)) {
+                $project->slug = Str::slug($project->title);
+                
+                // S'assurer que le slug est unique
+                $originalSlug = $project->slug;
+                $counter = 1;
+                
+                while (static::where('slug', $project->slug)->exists()) {
+                    $project->slug = $originalSlug . '-' . $counter;
+                    $counter++;
+                }
+            }
+        });
+
+        // Mettre à jour le slug si le titre change
+        static::updating(function ($project) {
+            if ($project->isDirty('title') && empty($project->slug)) {
+                $project->slug = Str::slug($project->title);
+                
+                // S'assurer que le slug est unique
+                $originalSlug = $project->slug;
+                $counter = 1;
+                
+                while (static::where('slug', $project->slug)->where('id', '!=', $project->id)->exists()) {
+                    $project->slug = $originalSlug . '-' . $counter;
+                    $counter++;
+                }
+            }
+        });
+
+        // Générer automatiquement le code du projet si non fourni
+        static::creating(function ($project) {
+            if (empty($project->code)) {
+                // Générer un code plus lisible et professionnel
+                $year = date('Y');
+                $month = date('m');
+                $random = strtoupper(Str::random(6));
+                $project->code = "PROJ-{$year}{$month}-{$random}";
+                
+                // S'assurer que le code est unique
+                while (static::where('code', $project->code)->exists()) {
+                    $random = strtoupper(Str::random(6));
+                    $project->code = "PROJ-{$year}{$month}-{$random}";
+                }
+            }
+        });
+
+        // Gérer automatiquement is_published en fonction du statut
+        static::saving(function ($project) {
+            if ($project->isDirty('status')) {
+                $publishedStatuses = ['published', 'completed'];
+                $project->is_published = in_array($project->status, $publishedStatuses);
+            }
+        });
+    }
+
+    /**
      * Get the route key for the model.
      */
     public function getRouteKeyName(): string
     {
         return 'slug';
+    }
+
+    /**
+     * Get the project's URL.
+     */
+    public function getUrlAttribute(): string
+    {
+        return route('projects.detail', $this->slug);
+    }
+
+    /**
+     * Get the project's admin URL.
+     */
+    public function getAdminUrlAttribute(): string
+    {
+        return route('filament.admin.resources.projects.edit', $this->id);
+    }
+
+    /**
+     * Get formatted project code.
+     */
+    public function getFormattedCodeAttribute(): string
+    {
+        return strtoupper($this->code);
+    }
+
+    /**
+     * Set the is_published attribute.
+     * Convertit les valeurs de chaîne en booléens.
+     */
+    public function setIsPublishedAttribute($value)
+    {
+        if (is_string($value)) {
+            $this->attributes['is_published'] = in_array(strtolower($value), ['published', 'true', '1', 'yes']);
+        } else {
+            $this->attributes['is_published'] = (bool) $value;
+        }
+    }
+
+    /**
+     * Set the featured image attribute.
+     */
+    public function setFeaturedImageAttribute($value)
+    {
+        if (is_array($value)) {
+            $this->attributes['featured_image'] = $value[0] ?? null;
+        } else {
+            $this->attributes['featured_image'] = $value;
+        }
+    }
+
+    /**
+     * Get the featured image URL.
+     */
+    public function getFeaturedImageUrlAttribute(): string
+    {
+        if ($this->featured_image) {
+            return Storage::disk('public')->url($this->featured_image);
+        }
+        return asset('images/placeholder.jpg');
     }
 
     // Relations
@@ -254,7 +387,7 @@ class Project extends Model
      * Comme 'gallery_images' est casté en 'array' plus haut,
      * Laravel nous donne déjà un tableau. On doit juste convertir chaque chemin en URL.
      */
- protected function galleryImages(): Attribute
+  protected function galleryImages(): Attribute
     {
         return Attribute::make(
             get: function ($value) {
@@ -265,7 +398,7 @@ class Project extends Model
 
                 // 2. Si c'est déjà un tableau (ex: cast 'json' a fonctionné), on l'utilise
                 if (is_array($value)) {
-                    return array_map(fn ($item) => Storage::url($item), $value);
+                    return array_map(fn ($item) => Storage::disk('public')->url($item), $value);
                 }
 
                 // 3. Si c'est une chaîne (JSON brut de la base de données), on la décode
@@ -273,7 +406,7 @@ class Project extends Model
                     $decoded = json_decode($value, true);
                     // Si le décodage réussit et donne un tableau, on mappe les URLs
                     if (is_array($decoded)) {
-                        return array_map(fn ($item) => Storage::url($item), $decoded);
+                        return array_map(fn ($item) => Storage::disk('public')->url($item), $decoded);
                     }
                 }
 
@@ -306,7 +439,7 @@ class Project extends Model
     protected function featuredImage(): Attribute
     {
         return Attribute::make(
-            get: fn ($value) => $value ? Storage::url($value) : null,
+            get: fn ($value) => $value ? Storage::disk('public')->url($value) : null,
      );
     }     
 }

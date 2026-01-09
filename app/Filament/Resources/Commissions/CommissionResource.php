@@ -55,35 +55,4 @@ class CommissionResource extends Resource
             'edit' => EditCommission::route('/{record}/edit'),
         ];
     }
-
-    // Protection des permissions
-    public static function canViewAny(): bool
-    {
-        return auth()->user()->can('viewAnyCommission');
-    }
-
-    public static function canCreate(): bool
-    {
-        return auth()->user()->can('createCommission');
-    }
-
-    public static function canEdit($record): bool
-    {
-        return auth()->user()->can('updateCommission', $record);
-    }
-
-    public static function canDelete($record): bool
-    {
-        return auth()->user()->can('deleteCommission', $record);
-    }
-
-    public static function canRestoreAny(): bool
-    {
-        return auth()->user()->can('restoreAnyCommission');
-    }
-
-    public static function canForceDeleteAny(): bool
-    {
-        return auth()->user()->can('forceDeleteAnyCommission');
-    }
 }
