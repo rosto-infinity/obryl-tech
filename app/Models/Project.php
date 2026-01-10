@@ -161,11 +161,71 @@ class Project extends Model
     }
 
     /**
-     * Get the project's admin URL.
+     * Get the admin URL.
      */
     public function getAdminUrlAttribute(): string
     {
         return route('filament.admin.resources.projects.edit', $this->id);
+    }
+
+    /**
+     * Check if project can be automatically assigned.
+     */
+    public function canBeAutoAssigned(): bool
+    {
+        return in_array($this->status, ['pending', 'accepted']) 
+            && is_null($this->developer_id);
+    }
+
+    /**
+     * Get the best available developer for this project.
+     */
+    public function getBestAvailableDeveloper(): ?User
+    {
+        $assignmentService = app(\App\Services\ProjectAssignmentService::class);
+        return $assignmentService->assignProject($this);
+    }
+
+    /**
+     * Calculate total commission breakdown for this project.
+     */
+    public function calculateTotalCommission(): array
+    {
+        if (!$this->developer_id) {
+            return [
+                'total' => 0,
+                'breakdown' => [],
+                'currency' => $this->currency
+            ];
+        }
+        
+        $calculationService = app(\App\Services\CommissionCalculationService::class);
+        return $calculationService->calculateProjectCommission($this, $this->developer);
+    }
+
+    /**
+     * Auto-assign to best available developer.
+     */
+    public function autoAssign(): bool
+    {
+        if (!$this->canBeAutoAssigned()) {
+            return false;
+        }
+
+        $bestDeveloper = $this->getBestAvailableDeveloper();
+        
+        if (!$bestDeveloper) {
+            return false;
+        }
+
+        $this->update(['developer_id' => $bestDeveloper->id]);
+        
+        // Update developer workload
+        if ($bestDeveloper->workload) {
+            $bestDeveloper->workload->calculateWorkload();
+        }
+
+        return true;
     }
 
     /**

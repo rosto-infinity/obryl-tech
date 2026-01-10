@@ -18,12 +18,12 @@
         @livewireStyles
         @livewireScripts
     </head>
-    <body class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
+    <body class=" bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
         <!-- Navigation Publique -->
         <x-layouts.public.navbar />
         
         <!-- Contenu Principal -->
-        <main class="min-h-screen">
+        <main class="w-7xl mx-auto ">
             {{ $slot ?? '' }}
             @yield('content')
         </main>

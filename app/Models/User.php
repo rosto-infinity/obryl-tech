@@ -7,6 +7,8 @@ use App\Models\Review;
 use App\Models\Profile;
 use App\Models\Project;
 use App\Models\Commission;
+use App\Models\WorkloadManagement;
+use App\Models\ExternalDeveloperCommission;
 use Illuminate\Support\Str;
 use App\Enums\Auth\UserType;
 use App\Enums\Auth\UserStatus;
@@ -172,6 +174,73 @@ class User extends Authenticatable
     public function isActive(): bool
     {
         return $this->status === UserStatus::ACTIVE;
+    }
+
+    /**
+     * Get the workload management record for this developer.
+     */
+    public function workload(): HasOne
+    {
+        return $this->hasOne(WorkloadManagement::class, 'developer_id');
+    }
+
+    /**
+     * Get external commissions for this developer.
+     */
+    public function externalCommissions(): HasMany
+    {
+        return $this->hasMany(ExternalDeveloperCommission::class, 'external_developer_id');
+    }
+
+    /**
+     * Get current workload information.
+     */
+    public function getCurrentWorkload(): array
+    {
+        if (!$this->workload) {
+            return [
+                'active_projects' => 0,
+                'max_capacity' => 3,
+                'workload_percentage' => 0,
+                'availability_status' => 'available'
+            ];
+        }
+
+        return $this->workload->calculateWorkload();
+    }
+
+    /**
+     * Check if developer is available for new projects.
+     */
+    public function isAvailableForWork(): bool
+    {
+        if (!$this->isDeveloper() || !$this->isActive()) {
+            return false;
+        }
+
+        if (!$this->workload) {
+            return true;
+        }
+
+        return $this->workload->isAvailable();
+    }
+
+    /**
+     * Get developer's commission rate based on skill level.
+     */
+    public function getCommissionRate(): float
+    {
+        if (!$this->profile) {
+            return 10.0;
+        }
+
+        return match($this->profile->skill_level) {
+            'junior' => 8.0,
+            'intermediate' => 10.0,
+            'senior' => 12.0,
+            'expert' => 15.0,
+            default => 10.0
+        };
     }
 
     /**

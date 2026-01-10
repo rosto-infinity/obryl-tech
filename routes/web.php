@@ -1,30 +1,33 @@
 <?php
 
-use App\Livewire\Home;
-
 use App\Models\User;
+
+use App\Livewire\Home;
 use App\Models\Project;
 use Laravel\Fortify\Features;
+use App\Livewire\Blog\ArticleList;
 use App\Livewire\Settings\Profile;
 use App\Livewire\Settings\Password;
+use App\Livewire\Blog\ArticleDetail;
 use App\Livewire\Settings\TwoFactor;
-use App\Livewire\Project\ProjectList;
 use App\Livewire\Settings\Appearance;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Portfolio\ProjectCard;
 use App\Livewire\Portfolio\ProjectLike;
+use App\Livewire\Project\ProjectList;
 use App\Livewire\Project\ProjectDetail;
 use App\Livewire\Project\ProjectFilter;
-use App\Livewire\Developer\DeveloperList;
 use App\Livewire\Project\ProjectProgress;
+use App\Livewire\Admin\WorkloadDashboard;
+use App\Livewire\Developer\DeveloperList;
 use App\Livewire\Developer\DeveloperFilter;
 use App\Livewire\Developer\DeveloperSearch;
 use App\Livewire\Developer\DeveloperProfile;
 use App\Livewire\Portfolio\PortfolioGallery;
 use App\Livewire\Commission\CommissionHistory;
 use App\Livewire\Commission\CommissionDashboard;
-use App\Livewire\Blog\ArticleList;
-use App\Livewire\Blog\ArticleDetail;
+use App\Http\Controllers\Admin\WorkloadController;
+use App\Livewire\Admin\WorkloadDashboardWrapper;
 
 // Routes publiques (sans authentification)
 Route::get('/', Home::class)->name('home');
@@ -99,4 +102,13 @@ Route::get('/storage/private/{path}', function ($path) {
     // Routes des commissions (nécessitent authentification)
     Route::get('commissions', CommissionDashboard::class)->name('commissions.dashboard');
     Route::get('commissions/history', CommissionHistory::class)->name('commissions.history');
+    
+ 
+Route::middleware(['auth'])->prefix('workload')->group(function () {
+    Route::get('/', WorkloadDashboardWrapper::class)->name('workload.dashboard');
+    Route::post('/handle-overload', [WorkloadController::class, 'handleOverload'])->name('workload.handle-overload');
+    Route::get('/statistics', [WorkloadController::class, 'getStatistics'])->name('workload.statistics');
+    Route::get('/available-developers', [WorkloadController::class, 'getAvailableDevelopers'])->name('workload.available-developers');
+    Route::post('/assign-project/{project}', [WorkloadController::class, 'assignProject'])->name('workload.assign-project');
+});
 });
