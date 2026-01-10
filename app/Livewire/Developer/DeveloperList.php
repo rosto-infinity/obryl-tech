@@ -168,6 +168,6 @@ class DeveloperList extends Component
             'specializations' => $this->specializations,
             'availabilityOptions' => $this->availabilityOptions,
             'stats' => $this->stats,
-        ]);
+        ])->extends('components.layouts.public')->section('content');
     }
 }

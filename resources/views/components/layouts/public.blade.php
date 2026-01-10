@@ -24,6 +24,7 @@
         
         <!-- Contenu Principal -->
         <main class="min-h-screen">
+            {{ $slot ?? '' }}
             @yield('content')
         </main>
         

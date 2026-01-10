@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\Home;
+
 use App\Models\User;
 use App\Models\Project;
 use Laravel\Fortify\Features;
@@ -25,12 +27,10 @@ use App\Livewire\Blog\ArticleList;
 use App\Livewire\Blog\ArticleDetail;
 
 // Routes publiques (sans authentification)
-Route::get('/', function () {
-    return view('home');
-})->name('home');
+Route::get('/', Home::class)->name('home');
 
 // Routes publiques pour consultation (visiteurs)
-Route::get('projects', function() { return view('projects'); })->name('projects.list');
+Route::get('projects', ProjectList::class)->name('projects.list');
 Route::get('projects/{project}', ProjectDetail::class)->name('projects.detail');
 Route::get('projects/by-id/{id}', function($id) { 
     $project = App\Models\Project::findOrFail($id); 
@@ -38,7 +38,7 @@ Route::get('projects/by-id/{id}', function($id) {
 })->name('projects.detail.by-id');
 Route::get('projects/filter', ProjectFilter::class)->name('projects.filter');
 
-Route::get('developers', function() { return view('developers'); })->name('developers.list');
+Route::get('developers', DeveloperList::class)->name('developers.list');
 Route::get('developers/search', DeveloperSearch::class)->name('developers.search');
 Route::get('developers/filter', DeveloperFilter::class)->name('developers.filter');
 Route::get('developers/{developer}', DeveloperProfile::class)->name('developers.profile');

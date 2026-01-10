@@ -8,6 +8,6 @@ class DeveloperSearch extends Component
 {
     public function render()
     {
-        return view('livewire.developer.developer-search');
+        return view('livewire.developer.developer-search')->extends('components.layouts.public');
     }
 }

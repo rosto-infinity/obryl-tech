@@ -113,6 +113,6 @@ class ProjectProgress extends Component
 
     public function render(): View
     {
-        return view('livewire.project.project-progress');
+        return view('livewire.project.project-progress')->extends('components.layouts.public');
     }
 }

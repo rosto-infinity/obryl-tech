@@ -163,6 +163,6 @@ class ProjectList extends Component
             'projectStatuses' => $this->projectStatuses,
             'priorities' => $this->priorities,
             'stats' => $this->stats,
-        ]);
+        ])->extends('components.layouts.public');
     }
 }

@@ -73,6 +73,6 @@ class ProjectCard extends Component
     {
         return view('livewire.portfolio.project-card', [
             'stats' => $this->stats,
-        ]);
+        ])->extends('components.layouts.public');
     }
 }

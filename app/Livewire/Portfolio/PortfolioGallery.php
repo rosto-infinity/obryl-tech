@@ -122,6 +122,6 @@ class PortfolioGallery extends Component
             'projects' => $this->projects,
             'categories' => $this->categories,
             'technologies' => $this->technologies,
-        ]);
+        ])->extends('components.layouts.public');
     }
 }

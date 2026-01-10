@@ -145,6 +145,21 @@ class Article extends Model
     }
 
     /**
+     * Get the featured image URL (helper for blade/templates).
+     */
+    public function getFeaturedImageUrlAttribute(): string
+    {
+        if ($this->featured_image) {
+            // Si c'est déjà une URL complète (via l'accesseur), on la retourne
+            if (filter_var($this->featured_image, FILTER_VALIDATE_URL)) {
+                return $this->featured_image;
+            }
+            return Storage::disk('public')->url($this->featured_image);
+        }
+        return asset('images/placeholder-blog.jpg');
+    }
+
+    /**
      * Get the tags attribute.
      */
     public function getTagsAttribute($value): array

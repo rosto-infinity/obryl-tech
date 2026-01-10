@@ -79,6 +79,6 @@ class DeveloperProfile extends Component
         return view('livewire.developer.developer-profile', [
             'stats' => $this->stats,
             'skillsWithLevels' => $this->skillsWithLevels,
-        ]);
+        ])->extends('components.layouts.public');
     }
 }
