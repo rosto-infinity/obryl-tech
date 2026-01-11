@@ -108,12 +108,17 @@ class DeveloperList extends Component
                 });
             });
 
-        // Apply sorting
+        // Apply sorting with proper joins
         match ($this->sortBy) {
             'name' => $query->orderBy('name', $this->sortDirection),
-            'rating' => $query->orderByDesc('profile.average_rating'),
-            'experience' => $query->orderByDesc('profile.years_experience'),
-            'projects' => $query->orderByDesc('profile.completed_projects_count'),
+            'rating' => $query->leftJoin('profiles', 'profiles.user_id', '=', 'users.id')
+                           ->orderBy('profiles.average_rating', $this->sortDirection),
+            'experience' => $query->leftJoin('profiles', 'profiles.user_id', '=', 'users.id')
+                               ->orderBy('profiles.years_experience', $this->sortDirection),
+            'projects' => $query->leftJoin('profiles', 'profiles.user_id', '=', 'users.id')
+                           ->orderBy('profiles.completed_projects_count', $this->sortDirection),
+            'hourly_rate' => $query->leftJoin('profiles', 'profiles.user_id', '=', 'users.id')
+                               ->orderBy('profiles.hourly_rate', $this->sortDirection),
             'created_at' => $query->orderBy('created_at', $this->sortDirection),
             default => $query->orderBy('name', 'asc')
         };
@@ -159,7 +164,7 @@ class DeveloperList extends Component
         ];
     }
     /**
-     * Render the component.
+     * Render component.
      */
     public function render(): View
     {

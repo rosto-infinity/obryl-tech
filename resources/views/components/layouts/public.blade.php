@@ -23,7 +23,7 @@
         <x-layouts.public.navbar />
         
         <!-- Contenu Principal -->
-        <main class="w-7xl mx-auto ">
+        <main class="w-[90rem] mx-auto ">
             {{ $slot ?? '' }}
             @yield('content')
         </main>

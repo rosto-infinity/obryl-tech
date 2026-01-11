@@ -30,12 +30,19 @@ class ArticleForm
                                     ->relationship('author', 'name')
                                     ->default(auth()->id())
                                     ->required()
-                                    ->searchable(),
+                                    ->searchable()
+                                    ->validationMessages([
+                                        'required' => 'L\'auteur est obligatoire.',
+                                    ]),
                                 
                                 TextInput::make('title')
                                     ->required()
                                     ->maxLength(255)
                                     ->live(onBlur: true)
+                                    ->validationMessages([
+                                        'required' => 'Le titre est obligatoire.',
+                                        'max_length' => 'Le titre ne peut pas dépasser 255 caractères.',
+                                    ])
                                     ->afterStateUpdated(fn (string $operation, $state, \Filament\Schemas\Components\Utilities\Set $set) => 
                                         $operation === 'create' ? $set('slug', \Illuminate\Support\Str::slug($state)) : null
                                     ),
@@ -43,7 +50,12 @@ class ArticleForm
                                 TextInput::make('slug')
                                     ->required()
                                     ->maxLength(255)
-                                    ->unique(ignoreRecord: true),
+                                    ->unique(ignoreRecord: true)
+                                    ->validationMessages([
+                                        'required' => 'Le slug est obligatoire.',
+                                        'max_length' => 'Le slug ne peut pas dépasser 255 caractères.',
+                                        'unique' => 'Ce slug existe déjà.',
+                                    ]),
                                 
                                 Textarea::make('excerpt')
                                     ->label('Résumé')
@@ -55,7 +67,10 @@ class ArticleForm
                                     ->required()
                                     ->columnSpanFull()
                                     ->fileAttachmentsDisk('public')
-                                    ->fileAttachmentsDirectory('articles/attachments'),
+                                    ->fileAttachmentsDirectory('articles/attachments')
+                                    ->validationMessages([
+                                        'required' => 'Le contenu est obligatoire.',
+                                    ]),
                             ]),
                         
                         Tab::make('Médias & Taxonomie')
@@ -73,7 +88,10 @@ class ArticleForm
                                     ->label('Catégorie')
                                     ->options(ArticleCategory::class)
                                     ->required()
-                                    ->native(false),
+                                    ->native(false)
+                                    ->validationMessages([
+                                        'required' => 'La catégorie est obligatoire.',
+                                    ]),
                                 
                                 \Filament\Forms\Components\TagsInput::make('tags')
                                     ->label('Tags')
@@ -90,7 +108,10 @@ class ArticleForm
                                             ->options(ArticleStatus::class)
                                             ->default(ArticleStatus::DRAFT)
                                             ->required()
-                                            ->native(false),
+                                            ->native(false)
+                                            ->validationMessages([
+                                                'required' => 'Le statut est obligatoire.',
+                                            ]),
                                         
                                         DateTimePicker::make('published_at')
                                             ->label('Date de publication'),
@@ -119,10 +140,16 @@ class ArticleForm
                                     ->schema([
                                         TextInput::make('user_name')
                                             ->label('Utilisateur')
-                                            ->required(),
+                                            ->required()
+                                            ->validationMessages([
+                                                'required' => 'Le nom d\'utilisateur est obligatoire.',
+                                            ]),
                                         Textarea::make('content')
                                             ->label('Commentaire')
-                                            ->required(),
+                                            ->required()
+                                            ->validationMessages([
+                                                'required' => 'Le commentaire est obligatoire.',
+                                            ]),
                                         Select::make('status')
                                             ->options([
                                                 'pending' => 'En attente',
@@ -130,7 +157,10 @@ class ArticleForm
                                                 'rejected' => 'Rejeté',
                                             ])
                                             ->default('pending')
-                                            ->required(),
+                                            ->required()
+                                            ->validationMessages([
+                                                'required' => 'Le statut du commentaire est obligatoire.',
+                                            ]),
                                         DateTimePicker::make('created_at')
                                             ->label('Date')
                                             ->default(now()),

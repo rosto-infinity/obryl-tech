@@ -1,0 +1,127 @@
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 ">
+    @forelse($projects as $project)
+    <div wire:key="project-{{ $project->id }}"
+         class="bg-white rounded-xl shadow-lg hover:shadow-xl transition overflow-hidden">
+
+        <!-- Desktop Horizontal / Mobile Vertical -->
+        <div class="flex flex-col md:flex-row">
+
+            <!-- IMAGE -->
+            @if($project->featured_image)
+            <div class="md:w-2/5 h-48 md:h-auto bg-gray-200 overflow-hidden">
+                <img src="{{ $project->featured_image }}"
+                     alt="{{ $project->title }}"
+                     class="w-full h-full object-cover">
+            </div>
+            @endif
+
+            <!-- CONTENT -->
+            <div class="p-5 md:w-3/5 flex flex-col justify-between">
+
+                <!-- HEADER (Title + Badges) -->
+                <div class="space-y-2">
+                    <div class="flex items-center gap-2">
+                        @if($project->is_featured)
+                        <span class="text-xs font-semibold bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
+                            ⭐ En vedette
+                        </span>
+                        @endif
+
+                        @switch($project->status)
+                            @case('in_progress')
+                                <span class="text-xs font-semibold bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
+                                    ⚙️ En cours
+                                </span>
+                                @break
+                            @case('completed')
+                                <span class="text-xs font-semibold bg-green-100 text-green-800 px-2 py-1 rounded-full">
+                                    ✅ Complété
+                                </span>
+                                @break
+                            @case('published')
+                                <span class="text-xs font-semibold bg-purple-100 text-purple-800 px-2 py-1 rounded-full">
+                                    📢 Publié
+                                </span>
+                                @break
+                        @endswitch
+                    </div>
+
+                    <h3 class="text-lg font-bold text-gray-900">{{ $project->title }}</h3>
+                    <p class="text-sm text-gray-500">{{ $project->code }}</p>
+
+                    <p class="text-sm text-gray-700 line-clamp-3">
+                        {{ Str::limit($project->description, 150) }}
+                    </p>
+                </div>
+
+                <!-- INFOS -->
+                <div class="mt-3 text-sm text-gray-600 space-y-1">
+                    <div class="flex justify-between">
+                        <span>Client:</span>
+                        <span class="font-medium text-gray-900">{{ $project->client?->name ?? 'N/A' }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Budget:</span>
+                        <span class="font-medium text-gray-900">{{ number_format($project->budget, 0, ',', ' ') }} FCFA</span>
+                    </div>
+                    @if($project->deadline)
+                    <div class="flex justify-between">
+                        <span>Date limite:</span>
+                        <span class="font-medium {{ $project->deadline->isPast() ? 'text-red-500' : 'text-gray-900' }}">
+                            {{ $project->deadline->format('d/m/Y') }}
+                        </span>
+                    </div>
+                    @endif
+                    <div class="flex justify-between">
+                        <span>Progression:</span>
+                        <span class="font-medium text-gray-900">{{ $project->progress_percentage }}%</span>
+                    </div>
+                </div>
+
+                <!-- FOOTER ACTIONS -->
+                <div class="mt-4 flex items-center justify-between">
+
+                    <a href="{{ route('projects.detail', $project->slug) }}"
+                        class="flex-1 text-center bg-primary text-white font-semibold py-2 rounded-lg hover:bg-primary/80 transition">
+                        Voir le projet
+                    </a>
+
+                    @if($project->status === 'published')
+                    <button class="ml-3 text-red-500 hover:text-red-700 text-xl">
+                        ❤️
+                    </button>
+                    @endif
+                </div>
+
+                <!-- STATS -->
+                <div class="mt-3 flex items-center justify-between text-sm text-gray-600">
+                    <div class="flex items-center gap-2">
+                        @if($project->average_rating > 0)
+                        <span class="text-yellow-400">★</span>
+                        <span>{{ number_format($project->average_rating, 1) }}</span>
+                        <span class="text-gray-400">({{ $project->reviews_count }})</span>
+                        @else
+                        <span>Pas encore noté</span>
+                        @endif
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-1">
+                            <span class="text-red-500">❤️</span>
+                            <span>{{ $project->likes_count }}</span>
+                        </div>
+                        <div class="flex items-center gap-1">
+                            <span class="text-blue-500">👁️</span>
+                            <span>{{ $project->views_count }}</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @empty
+    <div class="col-span-full text-center py-10 text-gray-400">
+        Aucun projet trouvé.
+    </div>
+    @endforelse
+</div>
