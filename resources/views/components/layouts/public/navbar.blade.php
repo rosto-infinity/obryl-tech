@@ -60,9 +60,96 @@
                 </div>
             </div>
 
-            <!-- Mobile menu button -->
-            <div class="md:hidden">
-                <button type="button" class="text-gray-700 dark:text-gray-300 hover:text-primary p-2"
+            <!-- Appearance & Mobile menu button -->
+            <div class="flex items-center gap-4">
+                <!-- Appearance Selector -->
+                <div x-data="{ open: false, appearance: localStorage.getItem('theme') || 'system' }" class="relative">
+                    <!-- Button -->
+                    <button @click="open = !open" type="button"
+                        class="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200">
+                        <svg x-show="appearance === 'light' || (appearance === 'system' && !window.matchMedia('(prefers-color-scheme: dark)').matches)"
+                            class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 3v1m0 16v1m9-9h-1m-16 0H1m15.657 5.657l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                        <svg x-show="appearance === 'dark'" class="h-5 w-5" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        </svg>
+                        <svg x-show="appearance === 'system'" class="h-5 w-5" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9.75 17L9 20m0 0l-.75 3M9 20H5m4 0h4m7-4v6m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM15 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown Menu -->
+                    <div x-show="open" @click.outside="open = false"
+                        class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
+
+                        <!-- Light Option -->
+                        <button @click="
+                            appearance = 'light';
+                            localStorage.setItem('theme', 'light');
+                            document.documentElement.classList.remove('dark');
+                            open = false;
+                        " :class="appearance === 'light' ? 'bg-primary/10' : ''"
+                            class="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center gap-3">
+                            <svg class="h-5 w-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 3v1m0 16v1m9-9h-1m-16 0H1m15.657 5.657l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">Light</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Bright and clean</p>
+                            </div>
+                        </button>
+
+                        <!-- Dark Option -->
+                        <button @click="
+                            appearance = 'dark';
+                            localStorage.setItem('theme', 'dark');
+                            document.documentElement.classList.add('dark');
+                            open = false;
+                        " :class="appearance === 'dark' ? 'bg-primary/10' : ''"
+                            class="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center gap-3">
+                            <svg class="h-5 w-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                            </svg>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">Dark</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Easy on the eyes</p>
+                            </div>
+                        </button>
+
+                        <!-- System Option -->
+                        <button @click="
+                            appearance = 'system';
+                            localStorage.setItem('theme', 'system');
+                            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                                document.documentElement.classList.add('dark');
+                            } else {
+                                document.documentElement.classList.remove('dark');
+                            }
+                            open = false;
+                        " :class="appearance === 'system' ? 'bg-primary/10' : ''"
+                            class="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center gap-3">
+                            <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9.75 17L9 20m0 0l-.75 3M9 20H5m4 0h4m7-4v6m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM15 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                            </svg>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900 dark:text-white">System</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">Follow OS settings</p>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button type="button" class="text-gray-700 dark:text-gray-300 hover:text-primary p-2 md:hidden"
                     id="mobile-menu-button" onclick="toggleMobileMenu()">
                     <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -119,35 +206,7 @@
                     </div>
                 </div>
 
-                <!-- Dark Mode Toggle Mobile -->
-                <div x-data="{ theme: localStorage.getItem('theme') || 'system' }" class="px-3 py-2">
-                    <div class="flex rounded-lg bg-zinc-800/5 dark:bg-white/10 p-1 w-full">
-                        <button @click="theme = 'light'; localStorage.setItem('theme', 'light'); updateTheme()"
-                            :class="theme === 'light' ? 'bg-white dark:bg-zinc-800 shadow-sm' : ''"
-                            class="p-2 rounded-md transition-colors duration-200 flex-1">
-                            <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-                        </button>
-                        <button @click="theme = 'dark'; localStorage.setItem('theme', 'dark'); updateTheme()"
-                            :class="theme === 'dark' ? 'bg-white dark:bg-zinc-800 shadow-sm' : ''"
-                            class="p-2 rounded-md transition-colors duration-200 flex-1">
-                            <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                            </svg>
-                        </button>
-                        <button @click="theme = 'system'; localStorage.setItem('theme', 'system'); updateTheme()"
-                            :class="theme === 'system' ? 'bg-white dark:bg-zinc-800 shadow-sm' : ''"
-                            class="p-2 rounded-md transition-colors duration-200 flex-1">
-                            <svg class="w-4 h-4 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+               
 
                 <!-- Actions utilisateur mobile -->
                 @auth

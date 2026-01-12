@@ -11,70 +11,160 @@
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
+    /* Couleurs pour le thème clair */
     --color-primary: #359a69;
+    --color-primary-light: #4bb085;
+    --color-primary-dark: #2a7a54;
+    
     --color-secondary: #f7b100;
+    --color-secondary-light: #fac238;
+    --color-secondary-dark: #e6a100;
     
     --color-zinc-50: #fafafa;
     --color-zinc-100: #f5f5f5;
     --color-zinc-200: #e5e5e5;
+    --color-zinc-900: #121212;
 }
 
+/* Thème clair (mode par défaut) */
+:root {
+    color-scheme: light;
+}
+
+/* Thème sombre avec .dark class */
+.dark {
+    color-scheme: dark;
+    
+    --color-primary: #10b981;
+    --color-primary-light: #34d399;
+    --color-primary-dark: #059669;
+    
+    --color-secondary: #facc15;
+    --color-secondary-light: #fde047;
+    --color-secondary-dark: #eab308;
+    
+    --color-accent: #ffffff;
+    --color-accent-content: #ffffff;
+    --color-accent-foreground: #1f2937;
+}
+
+/* Respecter les préférences système */
 @media (prefers-color-scheme: dark) {
     :root {
-        --color-primary: #10b981;
-        --color-secondary: #facc15;
-        --color-accent: var(--color-white);
-        --color-accent-content: var(--color-white);
-        --color-accent-foreground: var(--color-neutral-800);
+        color-scheme: dark;
     }
 }
 
 @layer utilities {
+    /* Texte */
     .text-primary {
         color: var(--color-primary);
-         .bg-primary { background-color: var(--color-primary); }
-    .border-primary { border-color: var(--color-primary); }
-    .text-secondary { color: var(--color-secondary); }
-    .bg-secondary { background-color: var(--color-secondary); }
-    .border-secondary { border-color: var(--color-secondary); }
-    .hover\:bg-primary:hover { background-color: var(--color-primary); }
-    .focus\:ring-primary:focus { --tw-ring-color: var(--color-primary); }
     }
     
-    .bg-primary {
-        background-color: var(--color-primary);
-    }
-    
-    .border-primary {
-        border-color: var(--color-primary);
+    .dark .text-primary {
+        color: var(--color-primary);
     }
     
     .text-secondary {
         color: var(--color-secondary);
     }
     
+    .dark .text-secondary {
+        color: var(--color-secondary);
+    }
+    
+    /* Fond */
+    .bg-primary {
+        background-color: var(--color-primary);
+    }
+    
+    .dark .bg-primary {
+        background-color: var(--color-primary);
+    }
+    
     .bg-secondary {
         background-color: var(--color-secondary);
+    }
+    
+    .dark .bg-secondary {
+        background-color: var(--color-secondary);
+    }
+    
+    /* Bordure */
+    .border-primary {
+        border-color: var(--color-primary);
+    }
+    
+    .dark .border-primary {
+        border-color: var(--color-primary);
     }
     
     .border-secondary {
         border-color: var(--color-secondary);
     }
     
+    .dark .border-secondary {
+        border-color: var(--color-secondary);
+    }
+    
+    /* Hover */
     .hover\:bg-primary:hover {
-        background-color: var(--color-primary);
+        background-color: var(--color-primary-light);
+    }
+    
+    .dark .hover\:bg-primary:hover {
+        background-color: var(--color-primary-dark);
     }
     
     .hover\:bg-secondary:hover {
-        background-color: var(--color-secondary);
+        background-color: var(--color-secondary-light);
     }
     
+    .dark .hover\:bg-secondary:hover {
+        background-color: var(--color-secondary-dark);
+    }
+    
+    /* Ring / Focus */
     .focus\:ring-primary:focus {
+        --tw-ring-color: var(--color-primary);
+    }
+    
+    .dark .focus\:ring-primary:focus {
         --tw-ring-color: var(--color-primary);
     }
     
     .focus\:ring-secondary:focus {
         --tw-ring-color: var(--color-secondary);
+    }
+    
+    .dark .focus\:ring-secondary:focus {
+        --tw-ring-color: var(--color-secondary);
+    }
+    
+    /* Dégradés */
+    .bg-gradient-primary {
+        @apply bg-gradient-to-r from-primary to-primary-light;
+    }
+    
+    .dark .bg-gradient-primary {
+        @apply bg-gradient-to-r from-primary to-primary-light;
+    }
+    
+    /* Texte avec fond */
+    .text-primary-on-secondary {
+        color: #1f2937;
+    }
+    
+    .dark .text-primary-on-secondary {
+        color: #1f2937;
+    }
+    
+    .text-secondary-on-primary {
+        color: #fff;
+    }
+    
+    .dark .text-secondary-on-primary {
+        color: #fff;
     }
 }
 
@@ -86,6 +176,16 @@
     ::backdrop,
     ::file-selector-button {
         border-color: var(--color-gray-200, currentColor);
+        @apply transition-colors duration-300;
+    }
+    
+    /* Smooth color transitions on theme change */
+    html {
+        @apply transition-colors duration-300;
+    }
+    
+    body {
+        @apply bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-50 transition-colors duration-300;
     }
 }
 
@@ -94,13 +194,35 @@
 }
 
 [data-flux-label] {
-    @apply  !mb-0 !leading-tight;
+    @apply !mb-0 !leading-tight;
+}
+
+/* Flux components dark mode */
+[data-flux-field] {
+    @apply dark:text-gray-100;
+}
+
+[data-flux-control] {
+    @apply dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100;
+}
+
+[data-flux-control]:focus {
+    @apply dark:ring-primary dark:border-primary;
 }
 
 input:focus[data-flux-control],
 textarea:focus[data-flux-control],
 select:focus[data-flux-control] {
-    @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
+    @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground dark:ring-primary dark:ring-offset-gray-800;
+}
+
+/* Navlist dark mode */
+[data-flux-navlist-item] {
+    @apply dark:hover:bg-gray-800 dark:text-gray-200 dark:hover:text-white;
+}
+
+[data-flux-navlist-item][aria-current="page"] {
+    @apply dark:bg-gray-800 dark:text-white;
 }
 
 /* \[:where(&)\]:size-4 {
