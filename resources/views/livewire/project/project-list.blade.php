@@ -33,13 +33,13 @@
                 <div>
                     <label class="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Recherche</label>
                     <input type="text" wire:model.live="search" placeholder="Titre, description..."
-                        class="max-w-lg min-w-[22rem] px-2.5 md:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition" />
+                        class="w-full px-2.5 md:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition" />
                 </div>
 
                 <div>
                     <label class="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Statut</label>
                     <select wire:model.live="statusFilter"
-                        class="max-w-lg min-w-[22rem] px-2.5 md:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition">
+                        class="w-full px-2.5 md:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition">
                         <option value="all">Tous</option>
                         @foreach ($projectStatuses as $status)
                             <option value="{{ $status['value'] }}">{{ $status['label'] }}</option>
@@ -50,7 +50,7 @@
                 <div>
                     <label class="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Type</label>
                     <select wire:model.live="typeFilter"
-                        class="max-w-lg min-w-[22rem] px-2.5 md:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition">
+                        class="w-full px-2.5 md:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition">
                         <option value="all">Tous</option>
                         @foreach ($projectTypes as $type)
                             <option value="{{ $type['value'] }}">{{ $type['label'] }}</option>
@@ -64,7 +64,7 @@
                 <div>
                     <label class="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Priorité</label>
                     <select wire:model.live="priorityFilter"
-                        class="max-w-lg min-w-[22rem] px-2.5 md:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition">
+                        class="w-full px-2.5 md:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition">
                         <option value="all">Toutes</option>
                         @foreach ($priorities as $priority)
                             <option value="{{ $priority['value'] }}">{{ $priority['label'] }}</option>
@@ -75,7 +75,7 @@
                 <div>
                     <label class="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Trier par</label>
                     <select wire:model.live="sortBy"
-                        class="max-w-lg min-w-[22rem] px-2.5 md:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition">
+                        class="w-full px-2.5 md:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition">
                         <option value="created_at">Date de création</option>
                         <option value="title">Titre</option>
                         <option value="budget">Budget</option>
