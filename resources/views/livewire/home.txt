@@ -1,308 +1,477 @@
 <div>
-    <section class="relative bg-white pt-20 md:pt-32 pb-20 md:pb-32 overflow-hidden">
+    <!-- Hero Section OBRYL TECH -->
+    <section class="relative min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 pt-20 pb-16 md:pt-32 md:pb-24 overflow-hidden">
 
-        <div class="absolute inset-0 z-0">
-            <div class="absolute inset-0 bg-[linear-gradient(to_right,#10b9811a_1px,transparent_1px),linear-gradient(to_bottom,#10b9811a_1px,transparent_1px)] bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_70%,transparent_100%)]"></div>
+        <!-- Animated Grid Background -->
+        <div class="absolute inset-0 opacity-5">
+            <div class="absolute inset-0"
+                style="background-image: 
+            linear-gradient(0deg, transparent 24%, rgba(16, 185, 129, 0.1) 25%, rgba(16, 185, 129, 0.1) 26%, transparent 27%, transparent 74%, rgba(16, 185, 129, 0.1) 75%, rgba(16, 185, 129, 0.1) 76%, transparent 77%, transparent),
+            linear-gradient(90deg, transparent 24%, rgba(16, 185, 129, 0.1) 25%, rgba(16, 185, 129, 0.1) 26%, transparent 27%, transparent 74%, rgba(16, 185, 129, 0.1) 75%, rgba(16, 185, 129, 0.1) 76%, transparent 77%, transparent);
+            background-size: 50px 50px;">
+            </div>
         </div>
 
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full z-0 pointer-events-none">
-            <div class="absolute top-20 left-10 w-72 h-72 bg-primary/20 rounded-full blur-[100px] mix-blend-multiply animate-blob"></div>
-            <div class="absolute top-20 right-10 w-72 h-72 bg-secondary/15 rounded-full blur-[100px] mix-blend-multiply animate-blob animation-delay-2000"></div>
+        <!-- Floating Particles Background -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute animate-float-up"
+                style="left: 10%; bottom: -50px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 70%); border-radius: 50%; filter: blur(40px);">
+            </div>
+            <div class="absolute animate-float-up"
+                style="left: 50%; bottom: -50px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(249, 115, 22, 0.08) 0%, transparent 70%); border-radius: 50%; filter: blur(40px); animation-delay: 1s;">
+            </div>
+            <div class="absolute animate-float-up"
+                style="left: 80%; bottom: -50px; width: 90px; height: 90px; background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%); border-radius: 50%; filter: blur(40px); animation-delay: 2s;">
+            </div>
         </div>
 
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-                <div class="text-left">
-                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-primary/5 border border-primary/20 mb-6 md:mb-8 animate-slide-down backdrop-blur-sm">
-                        <div class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></div>
-                        <span class="text-xs font-bold uppercase tracking-widest text-primary">Système Obryl Tech v2.0</span>
+                <!-- Left Content -->
+                <div class="text-left space-y-8">
+                    <!-- Badge -->
+                    <div class="inline-flex items-center gap-2 animate-in fade-in slide-in-from-top-4 duration-500">
+                        <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                        <span class="text-xs md:text-sm font-semibold uppercase tracking-wider text-emerald-600">{{ $heroSection['badge'] ?? 'Bienvenue à OBRYL TECH' }}</span>
                     </div>
 
-                    <h1 class="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight text-gray-900 mb-6 leading-[1.1] animate-slide-down"
-                        style="animation-delay: 0.1s;">
-                        L'INGÉNIERIE <br/>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary/60">DIGITALE</span>
-                    </h1>
+                    <!-- Main Title -->
+                    <div class="space-y-4">
+                        <h1 class="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight text-slate-900 leading-tight animate-in fade-in slide-in-from-top-6 duration-700 delay-100">
+                            <span class="block">{{ $heroSection['title_part1'] ?? 'OBRYL' }}</span>
+                            <span class="relative inline-block text-emerald-600">{{ $heroSection['title_part2'] ?? 'TECH' }}</span>
+                        </h1>
 
-                    <p class="text-lg text-gray-600 mb-8 md:mb-10 max-w-xl leading-relaxed animate-slide-down border-l-4 border-secondary/50 pl-6"
-                        style="animation-delay: 0.2s;">
-                        Une architecture d'élite où l'innovation rencontre l'expertise technique. Connectez vos ambitions aux meilleurs développeurs du marché.
+                        <!-- Subtitle -->
+                        <p class="text-xl md:text-2xl font-light text-slate-700 animate-in fade-in slide-in-from-top-6 duration-700 delay-200">
+                            {{ $heroSection['subtitle'] ?? "L'INGÉNIERIE DE L'EXCELLENCE DIGITALE" }}
+                        </p>
+                    </div>
+
+                    <!-- Description -->
+                    <p class="text-base md:text-lg text-slate-600 max-w-2xl leading-relaxed animate-in fade-in slide-in-from-top-6 duration-700 delay-300">
+                        {{ $heroSection['description'] ?? "Plateforme d'élite où l'innovation rencontre l'expertise technique. Connectez-vous avec les meilleurs développeurs et transformez vos idées en réalité." }}
                     </p>
 
-                    <div class="flex flex-col sm:flex-row gap-4 animate-slide-down" style="animation-delay: 0.3s;">
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4 animate-in fade-in slide-in-from-top-6 duration-700 delay-400">
                         <a href="{{ route('projects.list') }}" wire:navigate
-                            class="group inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-primary hover:bg-primary/90 rounded-lg transition-all duration-300 shadow-[0_10px_20px_-10px_rgba(16,185,129,0.5)] hover:shadow-[0_20px_20px_-10px_rgba(16,185,129,0.6)] hover:-translate-y-1 focus:ring-4 focus:ring-primary/30">
-                            Explorer les Projets
-                            <svg class="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            class="inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-white bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                            {{ $heroSection['cta_primary'] ?? 'Explorer les Projets' }}
+                            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
                             </svg>
                         </a>
 
                         <a href="{{ route('developers.list') }}" wire:navigate
-                            class="inline-flex items-center justify-center px-8 py-4 text-base font-bold text-gray-700 bg-white border border-gray-200 hover:border-primary/50 hover:text-primary hover:bg-gray-50 rounded-lg transition-all duration-300 focus:ring-4 focus:ring-gray-100">
-                            Trouver un Expert
+                            class="inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-emerald-600 bg-white border-2 border-emerald-600 hover:bg-emerald-50 active:bg-emerald-100 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2">
+                            {{ $heroSection['cta_secondary'] ?? 'Trouver un Expert' }}
                         </a>
                     </div>
 
-                    <div class="grid grid-cols-3 gap-6 mt-16 pt-8 border-t border-gray-200/60">
-                        <div class="animate-slide-down" style="animation-delay: 0.4s;">
-                            <div class="text-3xl font-black text-gray-900">500<span class="text-primary">+</span></div>
-                            <div class="text-xs font-mono uppercase text-gray-500 mt-1">Projets Déployés</div>
+                    <!-- Stats Row -->
+                    <div class="grid grid-cols-3 gap-8 pt-12 border-t border-slate-200 animate-in fade-in slide-in-from-top-6 duration-700 delay-500">
+                        <div class="space-y-2">
+                            <div class="text-3xl md:text-4xl font-black text-emerald-600">{{ $stats['projects'] ?? '500+' }}</div>
+                            <p class="text-sm text-slate-600">{{ $stats['projects_label'] ?? 'Projets' }}</p>
                         </div>
-                        <div class="animate-slide-down" style="animation-delay: 0.5s;">
-                            <div class="text-3xl font-black text-gray-900">150<span class="text-secondary">+</span></div>
-                            <div class="text-xs font-mono uppercase text-gray-500 mt-1">Experts Certifiés</div>
+                        <div class="space-y-2">
+                            <div class="text-3xl md:text-4xl font-black text-orange-500">{{ $stats['developers'] ?? '150+' }}</div>
+                            <p class="text-sm text-slate-600">{{ $stats['developers_label'] ?? 'Experts' }}</p>
                         </div>
-                        <div class="animate-slide-down" style="animation-delay: 0.6s;">
-                            <div class="text-3xl font-black text-gray-900">98<span class="text-primary">%</span></div>
-                            <div class="text-xs font-mono uppercase text-gray-500 mt-1">Satisfaction Client</div>
+                        <div class="space-y-2">
+                            <div class="text-3xl md:text-4xl font-black text-emerald-600">{{ $stats['satisfaction'] ?? '98%' }}</div>
+                            <p class="text-sm text-slate-600">{{ $stats['satisfaction_label'] ?? 'Satisfaction' }}</p>
                         </div>
                     </div>
                 </div>
 
-                <div class="hidden lg:block relative h-[600px] w-full">
-                    <div class="absolute top-10 right-0 w-80 h-96 bg-gray-900 rounded-2xl shadow-2xl p-6 border border-gray-800 rotate-3 hover:rotate-0 transition-all duration-500 z-20">
-                        <div class="flex justify-between items-center mb-6">
-                            <div class="flex gap-2">
-                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
-                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                            </div>
-                            <div class="text-xs text-gray-500 font-mono">dev_mode: on</div>
-                        </div>
-                        <div class="space-y-3">
-                            <div class="h-2 bg-gray-800 rounded w-3/4"></div>
-                            <div class="h-2 bg-gray-800 rounded w-1/2"></div>
-                            <div class="h-24 bg-gray-800/50 rounded-lg border border-gray-700/50 mt-4 p-4 flex items-center justify-center">
-                                <span class="text-primary font-mono text-sm">Initializing...</span>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2 mt-4">
-                                <div class="h-16 bg-primary/10 rounded border border-primary/20"></div>
-                                <div class="h-16 bg-secondary/10 rounded border border-secondary/20"></div>
+                <!-- Right Visual Elements -->
+                <div class="hidden lg:flex items-center justify-center relative h-96">
+                    <div class="absolute inset-0 space-y-8">
+                        <!-- Card 1 - Innovation -->
+                        <div class="absolute top-0 right-0 w-56 bg-white border border-emerald-200 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:border-emerald-400 transition-all duration-300 group cursor-pointer">
+                            <div class="flex items-start justify-between mb-3">
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-2">{{ $heroCards[0]['title'] ?? 'Innovation' }}</p>
+                                    <p class="text-sm text-slate-700 leading-relaxed">{{ $heroCards[0]['description'] ?? 'Solutions technologiques avancées' }}</p>
+                                </div>
+                                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0"></div>
                             </div>
                         </div>
-                    </div>
 
-                    <div class="absolute bottom-20 left-10 w-72 h-64 bg-white rounded-2xl shadow-xl border border-gray-100 p-6 -rotate-6 hover:rotate-0 transition-all duration-500 z-10">
-                        <div class="flex items-center gap-3 mb-4">
-                            <div class="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
-                                <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
-                            </div>
-                            <div>
-                                <div class="font-bold text-gray-900">Performance</div>
-                                <div class="text-xs text-gray-500">Optimisation max</div>
+                        <!-- Card 2 - Excellence -->
+                        <div class="absolute bottom-20 left-0 w-56 bg-white border border-orange-200 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:border-orange-400 transition-all duration-300 group cursor-pointer">
+                            <div class="flex items-start justify-between mb-3">
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-wider text-orange-600 mb-2">{{ $heroCards[1]['title'] ?? 'Excellence' }}</p>
+                                    <p class="text-sm text-slate-700 leading-relaxed">{{ $heroCards[1]['description'] ?? 'Qualité sans compromis' }}</p>
+                                </div>
+                                <div class="w-2 h-2 rounded-full bg-orange-500 animate-pulse flex-shrink-0"></div>
                             </div>
                         </div>
-                        <div class="w-full bg-gray-100 rounded-full h-2 mb-4">
-                            <div class="bg-primary h-2 rounded-full" style="width: 92%"></div>
-                        </div>
-                        <div class="flex justify-between text-sm text-gray-600 font-mono">
-                            <span>Score</span>
-                            <span class="font-bold text-primary">98/100</span>
+
+                        <!-- Card 3 - Expertise -->
+                        <div class="absolute top-1/2 right-1/4 w-56 bg-white border border-emerald-200 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:border-emerald-400 transition-all duration-300 group cursor-pointer">
+                            <div class="flex items-start justify-between mb-3">
+                                <div>
+                                    <p class="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-2">{{ $heroCards[2]['title'] ?? 'Expertise' }}</p>
+                                    <p class="text-sm text-slate-700 leading-relaxed">{{ $heroCards[2]['description'] ?? 'Équipe de professionnels' }}</p>
+                                </div>
+                                <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse flex-shrink-0"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+            </svg>
+        </div>
     </section>
 
-    <section class="py-20 md:py-24 bg-gray-50 border-y border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
-                <div>
-                    <h2 class="text-sm font-bold tracking-[0.2em] text-secondary uppercase mb-3 animate-slide-up">Portfolio</h2>
-                    <h3 class="text-3xl md:text-4xl font-black text-gray-900 animate-slide-up">RÉALISATIONS <span class="text-primary">TECH</span></h3>
+    <!-- Projects Section -->
+    <section id="projets" class="py-20 md:py-32 bg-slate-50">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="mb-16 space-y-4">
+                <div class="inline-flex items-center gap-2">
+                    <div class="w-1 h-6 bg-emerald-600 rounded-full"></div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-600">{{ $projectsSection['label'] ?? 'Portfolio' }}</span>
                 </div>
-                <a href="{{ route('projects.list') }}" wire:navigate class="group flex items-center gap-2 text-sm font-bold text-gray-600 hover:text-primary transition-colors">
-                    VOIR TOUT
-                    <span class="block w-8 h-[2px] bg-primary scale-x-50 group-hover:scale-x-100 transition-transform origin-left"></span>
-                </a>
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900">{{ $projectsSection['title'] ?? 'RÉALISATIONS D\'EXCEPTION' }}</h2>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Projects Grid : STRICT 2 COLUMNS (lg:grid-cols-2) et DESIGN HORIZONTAL -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                
                 @forelse($latestProjects as $project)
-                    <div class="group bg-white rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100 hover:border-primary/20">
-                        <div class="relative aspect-video overflow-hidden bg-gray-900">
-                            @if ($project->featured_image)
-                                <img src="{{ $project->featured_image }}" alt="{{ $project->title }}"
-                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100">
+                    <!-- PROJECT CARD -->
+                    <article class="group bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 flex flex-col lg:flex-row h-full">
+                        
+                        <!-- Image Section (Left on Desktop, Top on Mobile) -->
+                        <div class="lg:w-5/12 h-48 lg:h-auto relative overflow-hidden bg-slate-100">
+                            @if($project->featured_image)
+                                <img src="{{ $project->featured_image }}" alt="{{ $project->title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
                             @else
-                                <div class="w-full h-full flex items-center justify-center text-gray-700 font-mono text-xs">NO_IMAGE_DATA</div>
-                            @endif
-                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
-                            
-                            <div class="absolute bottom-4 left-4">
-                                <span class="px-2 py-1 bg-black/50 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold uppercase tracking-wider rounded">
-                                    {{ $project->category?->name ?? 'Projet' }}
-                                </span>
-                             </div>
-                        </div>
-
-                        <div class="p-6">
-                            <div class="flex flex-wrap gap-2 mb-4">
-                                @foreach (array_slice($project->technologies ?? [], 0, 3) as $tech)
-                                    <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 bg-primary/10 border border-primary/20 text-primary rounded-md">
-                                        {{ $tech }}
-                                    </span>
-                                @endforeach
-                            </div>
-
-                            <h4 class="text-xl font-bold mb-3 text-gray-900 group-hover:text-primary transition-colors line-clamp-1">
-                                <a href="{{ route('projects.detail', $project->slug) }}" wire:navigate>
-                                    {{ $project->title }}
-                                </a>
-                            </h4>
-                            
-                            <p class="text-gray-500 text-sm mb-6 line-clamp-2 leading-relaxed">
-                                {{ $project->description }}
-                            </p>
-
-                            <div class="flex items-center justify-between pt-4 border-t border-gray-100">
-                                <div class="flex flex-col">
-                                    <span class="text-[10px] text-gray-400 uppercase font-bold">Budget</span>
-                                    <span class="text-sm font-bold text-primary">{{ number_format($project->budget, 0, ',', ' ') }} FCFA</span>
+                                <div class="w-full h-full flex items-center justify-center text-slate-300">
+                                    <i class="fas fa-image text-4xl"></i>
                                 </div>
-                                <a href="{{ route('projects.detail', $project->slug) }}" wire:navigate class="w-8 h-8 rounded-full bg-primary/5 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all">
-                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                            @endif
+                            
+                            <!-- Badges Overlay -->
+                            <div class="absolute top-3 left-3 flex gap-2 flex-wrap">
+                                @if($project->is_featured)
+                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-yellow-400/90 text-yellow-900 backdrop-blur-sm shadow-sm">
+                                        <i class="fas fa-star mr-1"></i> En vedette
+                                    </span>
+                                @endif
+                            </div>
+                            
+                            <!-- Status Badge Overlay (Bottom Left on Image) -->
+                            <div class="absolute bottom-3 left-3">
+                                @switch($project->status)
+                                    @case('pending')
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-yellow-100/90 text-yellow-800 backdrop-blur-sm shadow-sm">
+                                            ⏳ En attente
+                                        </span>
+                                        @break
+                                    @case('in_progress')
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-100/90 text-blue-800 backdrop-blur-sm shadow-sm">
+                                            ⚙️ En cours
+                                        </span>
+                                        @break
+                                    @case('completed')
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100/90 text-emerald-800 backdrop-blur-sm shadow-sm">
+                                            ✅ Complété
+                                        </span>
+                                        @break
+                                    @case('published')
+                                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100/90 text-emerald-800 backdrop-blur-sm shadow-sm">
+                                            📢 Publié
+                                        </span>
+                                        @break
+                                @endswitch
+                            </div>
+                        </div>
+
+                        <!-- Content Section (Right on Desktop, Bottom on Mobile) -->
+                        <div class="lg:w-7/12 p-6 lg:p-8 flex flex-col justify-between h-full">
+                            
+                            <!-- Top: Title & ID -->
+                            <div class="mb-4">
+                                <h3 class="text-xl font-bold text-slate-900 leading-tight mb-2 group-hover:text-emerald-600 transition-colors line-clamp-2">{{ $project->title }}</h3>
+                                <p class="text-xs font-mono text-slate-400 uppercase tracking-wider mb-2">{{ $project->code ?? 'PRJ-' . str_pad($project->id, 6, '0', STR_PAD_LEFT) }}</p>
+                                <p class="text-sm text-slate-600 line-clamp-2">{{ Str::limit($project->description, 100) }}</p>
+                            </div>
+
+                            <!-- Middle: Minimalist Grid for Meta Data -->
+                            <div class="grid grid-cols-2 gap-y-3 gap-x-4 mb-4 text-sm border-t border-b border-slate-50 py-3">
+                                <div>
+                                    <span class="block text-xs text-slate-400">Client</span>
+                                    <span class="font-medium text-slate-800">{{ $project->client?->name ?? 'N/A' }}</span>
+                                </div>
+                                <div>
+                                    <span class="block text-xs text-slate-400">Budget</span>
+                                    <span class="font-medium text-emerald-600">{{ number_format($project->budget ?? 0, 0, ',', ' ') }} {{ $project->currency ?? 'FCFA' }}</span>
+                                </div>
+                                <div>
+                                    <span class="block text-xs text-slate-400">Date limite</span>
+                                    <span class="font-medium text-slate-800">
+                                        @if($project->deadline)
+                                            {{ $project->deadline->format('d/m/Y') }}
+                                        @else
+                                            N/A
+                                        @endif
+                                    </span>
+                                </div>
+                                <div>
+                                    <span class="block text-xs text-slate-400">Type</span>
+                                    <span class="font-medium text-slate-800 bg-slate-100 px-2 py-0.5 rounded text-xs inline-block mt-0.5">{{ $project->type?->label() ?? 'N/A' }}</span>
+                                </div>
+                            </div>
+
+                            <!-- Progress & Tech -->
+                            <div class="mb-5">
+                                @php
+                                    $progress = (int) ($project->progress_percentage ?? 0);
+                                @endphp
+                                <div class="flex justify-between text-xs mb-1">
+                                    <span class="text-slate-500">Progression</span>
+                                    <span class="font-bold text-emerald-600">{{ max(0, min(100, $progress)) }}%</span>
+                                </div>
+                                <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
+                                    <div class="bg-emerald-500 h-2 rounded-full transition-all duration-500" style="width: {{ max(0, min(100, $progress)) }}%"></div>
+                                </div>
+                                
+                                <!-- Tech Stack -->
+                                @if($project->technologies && is_array($project->technologies) && count($project->technologies) > 0)
+                                    <div class="flex flex-wrap gap-1.5 mt-3">
+                                        @php
+                                            $displayedTechs = array_slice($project->technologies, 0, 3);
+                                            $remainingCount = count($project->technologies) - 3;
+                                        @endphp
+                                        
+                                        @foreach($displayedTechs as $tech)
+                                            <span class="px-2 py-0.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-[10px] uppercase font-bold rounded">
+                                                {{ is_string($tech) ? $tech : ($tech->name ?? $tech) }}
+                                            </span>
+                                        @endforeach
+                                        
+                                        @if($remainingCount > 0)
+                                            <span class="px-2 py-0.5 bg-emerald-50 border border-emerald-100 text-emerald-700 text-[10px] uppercase font-bold rounded">
+                                                +{{ $remainingCount }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                @endif
+                            </div>
+
+                            <!-- Footer: Stats & CTA -->
+                            <div class="flex items-center justify-between pt-2 border-t border-slate-50 mt-auto">
+                                <div class="flex items-center space-x-3 text-xs text-slate-500">
+                                    @if($project->average_rating && $project->average_rating > 0)
+                                        <span class="flex items-center hover:text-yellow-500 transition-colors cursor-pointer">
+                                            <i class="fas fa-star text-yellow-400 mr-1"></i> {{ number_format($project->average_rating, 1) }}
+                                        </span>
+                                    @else
+                                        <span class="text-gray-400">Pas noté</span>
+                                    @endif
+                                    
+                                    <span class="flex items-center hover:text-red-500 transition-colors cursor-pointer">
+                                        <i class="far fa-heart mr-1"></i> {{ $project->likes_count ?? 0 }}
+                                    </span>
+                                    <span class="flex items-center">
+                                        <i class="far fa-eye mr-1"></i> {{ $project->views_count ?? 0 }}
+                                    </span>
+                                </div>
+                                
+                                <a href="{{ route('projects.detail', $project->slug) }}" wire:navigate class="bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-sm transition-colors duration-200 flex items-center">
+                                    Voir le projet <i class="fas fa-arrow-right ml-2 text-xs"></i>
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </article>
                 @empty
-                    <div class="col-span-3 text-center py-12 border-2 border-dashed border-gray-200 rounded-xl">
-                        <p class="text-gray-400">Aucun projet en vedette pour le moment.</p>
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-slate-500 text-base">Aucun projet disponible.</p>
                     </div>
                 @endforelse
             </div>
+
+            <!-- View All Link -->
+            <div class="mt-12 text-center">
+                <a href="{{ route('projects.list') }}" wire:navigate
+                    class="inline-flex items-center text-base font-semibold text-slate-900 hover:text-emerald-600 border-b-2 border-emerald-600 pb-1 transition-colors">
+                    {{ $projectsSection['cta'] ?? 'Voir tout le portfolio' }}
+                </a>
+            </div>
         </div>
     </section>
 
-    <section class="py-20 md:py-24 bg-gray-900 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-primary/5 to-transparent"></div>
-        
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="text-center mb-16">
-                <h2 class="text-xs font-bold tracking-[0.3em] text-primary uppercase mb-4">Talents</h2>
-                <h3 class="text-4xl md:text-5xl font-black text-white">L'ÉQUIPE <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-green-300">ELITE</span></h3>
+    <!-- Developers Section -->
+    <section id="equipe" class="py-20 md:py-32 bg-slate-900 text-white">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="mb-16 text-center space-y-4">
+                <div class="inline-flex items-center gap-2">
+                    <div class="w-1 h-6 bg-emerald-500 rounded-full"></div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-400">{{ $developersSection['label'] ?? 'Notre Équipe' }}</span>
+                </div>
+                <h2 class="text-4xl md:text-5xl font-black">{{ $developersSection['title'] ?? 'EXPERTS TECHNIQUES D\'ÉLITE' }}</h2>
             </div>
 
+            <!-- Developers Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 @forelse($featuredDevelopers as $developer)
-                    <div class="group relative">
-                        <div class="relative overflow-hidden rounded-xl aspect-[4/5] mb-4 bg-gray-800">
-                            <div class="absolute inset-0 border-2 border-transparent group-hover:border-primary/50 rounded-xl transition-all z-20"></div>
-                            
+                    <div class="text-center group">
+                        <!-- Avatar -->
+                        <div class="relative mb-6 inline-block">
+                            <div class="absolute inset-0 bg-emerald-600 rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-300"></div>
                             @php
-                                $avatar = $developer->profile?->avatar_url ?? 'https://ui-avatars.com/api/?name='.urlencode($developer->name).'&color=10B981&background=064E3B';
+                                $avatar = $developer->profile?->avatar_url ?? 'https://ui-avatars.com/api/?name='.urlencode($developer->name).'&color=10B981&background=F0FDF4';
                             @endphp
-                            <img src="{{ $avatar }}" alt="{{ $developer->name }}" 
-                                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 filter grayscale group-hover:grayscale-0">
-                            
-                            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-gray-900 to-transparent p-4 translate-y-2 group-hover:translate-y-0 transition-transform">
-                                <h4 class="text-white font-bold text-lg">{{ $developer->name }}</h4>
-                                <p class="text-primary text-xs font-mono">{{ $developer->profile?->title ?? 'Full Stack Dev' }}</p>
-                            </div>
+                            <img src="{{ $avatar }}" alt="{{ $developer->name }}"
+                                class="relative w-48 h-48 object-cover rounded-2xl border-2 border-white transition-transform duration-300 group-hover:scale-105 focus:outline-none focus:ring-2 focus:ring-emerald-500">
                         </div>
-                        
-                        <div class="flex justify-between items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 px-1">
-                            <span class="text-[10px] text-gray-400 font-mono">
-                                {{ $developer->projects_count ?? 0 }} Projets
-                            </span>
-                            <a href="{{ route('developers.profile', $developer->id) }}" wire:navigate class="text-xs font-bold text-primary uppercase tracking-wider hover:text-white transition-colors">
-                                Profil >
-                            </a>
-                        </div>
+
+                        <!-- Info -->
+                        <h3 class="text-xl font-bold mb-1">{{ $developer->name }}</h3>
+                        <p class="text-slate-400 text-sm mb-6">{{ $developer->profile?->title ?? 'Développeur Expert' }}</p>
+
+                        <!-- Button -->
+                        <a href="{{ route('developers.profile', $developer->id) }}" wire:navigate
+                            class="inline-flex items-center justify-center px-6 py-2.5 text-xs font-semibold uppercase tracking-wider border-2 border-emerald-600 text-emerald-400 hover:bg-emerald-600 hover:text-white transition-all duration-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 focus:ring-offset-slate-900">
+                            Voir le profil
+                        </a>
                     </div>
                 @empty
-                   <p class="text-gray-500 col-span-full text-center">Aucun expert disponible.</p>
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-slate-400 text-base">Aucun expert disponible pour le moment.</p>
+                    </div>
                 @endforelse
-            </div>
-            
-            <div class="mt-12 text-center">
-                <a href="{{ route('developers.list') }}" wire:navigate class="inline-block px-8 py-3 border border-gray-700 text-white font-bold hover:bg-white hover:text-gray-900 rounded transition-all uppercase text-sm tracking-widest">
-                    Voir tous les experts
-                </a>
             </div>
         </div>
     </section>
 
-    <section class="py-20 md:py-24 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row gap-8 justify-between items-start mb-12">
-                 <div class="max-w-2xl">
-                    <h2 class="text-sm font-bold tracking-[0.2em] text-secondary uppercase mb-3">Insights</h2>
-                    <h3 class="text-3xl md:text-4xl font-black text-gray-900 mb-4">DERNIÈRES <span class="text-secondary">ACTUALITÉS</span></h3>
-                    <p class="text-gray-500">Veille technologique, tutoriels et annonces de la plateforme.</p>
+    <!-- Blog Section -->
+    <section class="py-20 md:py-32 bg-white">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="mb-16 space-y-4">
+                <div class="inline-flex items-center gap-2">
+                    <div class="w-1 h-6 bg-emerald-600 rounded-full"></div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-emerald-600">{{ $blogSection['label'] ?? 'Insights' }}</span>
                 </div>
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900">{{ $blogSection['title'] ?? 'ACTUALITÉS TECH & INNOVATIONS' }}</h2>
+                <p class="text-slate-600 text-base max-w-2xl">{{ $blogSection['description'] ?? 'Analyses pointues, tutoriels experts et dernières tendances technologiques.' }}</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <!-- Articles Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @forelse($recentArticles as $article)
                     <article class="group flex flex-col h-full">
-                        <div class="relative h-56 mb-6 overflow-hidden rounded-lg bg-gray-100">
-                             @if ($article->featured_image)
+                        <!-- Image -->
+                        <div class="aspect-video overflow-hidden bg-slate-100 mb-6 rounded-lg">
+                            @if ($article->featured_image)
                                 <img src="{{ $article->featured_image }}" alt="{{ $article->title }}"
-                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center text-slate-300">
+                                    <i class="fas fa-file text-4xl"></i>
+                                </div>
                             @endif
-                            <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded text-xs font-bold text-gray-900 shadow-sm border border-gray-100">
-                                {{ $article->published_at?->format('d M') }}
-                            </div>
                         </div>
 
-                        <div class="mb-3">
-                             <span class="inline-block px-2 py-1 bg-secondary/10 border border-secondary/20 text-secondary text-[10px] font-bold uppercase tracking-widest rounded-sm">
-                                {{ $article->category?->label() ?? 'Tech' }}
-                            </span>
+                        <!-- Meta -->
+                        <div class="flex items-center gap-3 text-xs font-semibold uppercase tracking-wider text-slate-500 mb-4 flex-wrap">
+                            <span class="text-emerald-600">{{ $article->category?->label() ?? 'Article' }}</span>
+                            <span>•</span>
+                            <span>{{ $article->published_at?->format('d M Y') ?? now()->format('d M Y') }}</span>
                         </div>
 
-                        <h4 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-secondary transition-colors line-clamp-2">
-                             <a href="{{ route('blog.show', $article->slug) }}" wire:navigate>{{ $article->title }}</a>
-                        </h4>
-                        
-                        <p class="text-gray-600 text-sm leading-relaxed mb-4 flex-grow line-clamp-3">
+                        <!-- Title -->
+                        <h3 class="text-xl md:text-2xl font-bold text-slate-900 group-hover:text-emerald-600 transition-colors mb-3 line-clamp-2 flex-grow">
+                            <a href="{{ route('blog.show', $article->slug) }}" wire:navigate
+                                class="focus:outline-none focus:ring-2 focus:ring-emerald-500 rounded px-1">
+                                {{ $article->title }}
+                            </a>
+                        </h3>
+
+                        <!-- Excerpt -->
+                        <p class="text-slate-600 text-sm leading-relaxed line-clamp-3 mb-4">
                             {{ $article->excerpt ?? Str::limit(strip_tags($article->content), 120) }}
                         </p>
 
-                        <a href="{{ route('blog.show', $article->slug) }}" wire:navigate class="inline-flex items-center text-sm font-bold text-gray-900 group-hover:text-secondary transition-colors">
+                        <!-- Link -->
+                        <a href="{{ route('blog.show', $article->slug) }}" wire:navigate
+                            class="inline-flex items-center text-sm font-semibold text-emerald-600 hover:text-emerald-700 group/more transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:ring-offset-2 rounded px-2 py-1">
                             Lire l'article
-                            <svg class="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            <svg class="ml-2 w-4 h-4 transition-transform group-hover/more:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
                         </a>
                     </article>
                 @empty
-                    <p class="text-gray-400">Aucun article.</p>
+                    <div class="col-span-full text-center py-12">
+                        <p class="text-slate-500 text-base">Aucun article disponible.</p>
+                    </div>
                 @endforelse
+            </div>
+
+            <!-- View All Link -->
+            <div class="mt-12 text-center">
+                <a href="{{ route('blog.index') }}" wire:navigate
+                    class="inline-flex items-center text-base font-semibold text-slate-900 hover:text-emerald-600 border-b-2 border-emerald-600 pb-1 transition-colors">
+                    {{ $blogSection['cta'] ?? 'Explorer tout le blog' }}
+                </a>
             </div>
         </div>
     </section>
 
-    <section class="relative py-24 bg-primary overflow-hidden">
-        <div class="absolute inset-0">
-             <div class="absolute inset-0 bg-[linear-gradient(to_right,#ffffff1a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff1a_1px,transparent_1px)] bg-[size:2rem_2rem] opacity-20"></div>
+    <!-- Final CTA Section -->
+    <section class="py-20 md:py-32 bg-emerald-600 text-white relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 overflow-hidden pointer-events-none">
+            <div class="absolute top-10 right-20 w-64 h-64 bg-orange-500/10 rounded-full blur-3xl animate-float"></div>
+            <div class="absolute bottom-10 left-20 w-80 h-80 bg-white/5 rounded-full blur-3xl animate-float" style="animation-delay: 1.5s;"></div>
         </div>
-        
-        <div class="max-w-4xl mx-auto px-4 text-center relative z-10">
-            <h2 class="text-4xl md:text-5xl font-black text-white mb-6 leading-tight">
-                PRÊT À LANCER <br/>VOTRE <span class="text-gray-900 bg-white px-2 transform -skew-x-6 inline-block">PROJET ?</span>
+
+        <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <!-- Title -->
+            <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight leading-tight">
+                {{ $ctaSection['title_part1'] ?? 'PRÊT À' }} <span class="text-orange-300">{{ $ctaSection['title_highlight'] ?? 'TRANSFORMER' }}</span> <br class="hidden sm:block"/>{{ $ctaSection['title_part2'] ?? 'VOS IDÉES EN RÉALITÉ ?' }}
             </h2>
-            <p class="text-lg text-white/90 mb-10 max-w-2xl mx-auto font-light">
-                Rejoignez OBRYL TECH aujourd'hui. L'inscription est rapide et vous donne accès immédiat à notre réseau d'experts.
+
+            <!-- Description -->
+            <p class="text-lg md:text-xl text-emerald-100 mb-12 max-w-2xl mx-auto leading-relaxed">
+                {{ $ctaSection['description'] ?? "Rejoignez la plateforme où l'excellence technique rencontre l'innovation créative. Votre projet mérite le meilleur." }}
             </p>
-            
+
+            <!-- CTA Buttons -->
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                 @auth
-                    <a href="{{ route('dashboard') }}" wire:navigate class="bg-white text-primary px-10 py-4 font-bold rounded-lg shadow-xl hover:bg-gray-50 hover:scale-105 transition-all focus:ring-4 focus:ring-white/30">
-                        ACCÉDER AU DASHBOARD
+                @auth
+                    <a href="{{ route('dashboard') }}" wire:navigate
+                        class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-emerald-600 bg-white hover:bg-slate-50 active:bg-slate-100 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-emerald-600">
+                        {{ $ctaSection['cta_auth'] ?? 'ACCÉDER AU DASHBOARD' }}
                     </a>
                 @else
-                    <a href="{{ route('register') }}" wire:navigate class="bg-gray-900 text-white border border-gray-800 px-10 py-4 font-bold rounded-lg shadow-xl hover:bg-gray-800 hover:scale-105 transition-all focus:ring-4 focus:ring-gray-900/30">
-                        COMMENCER MAINTENANT
+                    <a href="{{ route('register') }}" wire:navigate
+                        class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-emerald-600 bg-white hover:bg-slate-50 active:bg-slate-100 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-emerald-600">
+                        {{ $ctaSection['cta_primary'] ?? 'REJOINDRE OBRYL TECH' }}
                     </a>
-                    <a href="{{ route('login') }}" wire:navigate class="bg-transparent border-2 border-white text-white px-10 py-4 font-bold rounded-lg hover:bg-white hover:text-primary transition-all">
-                        CONNEXION
+                    <a href="{{ route('login') }}" wire:navigate
+                        class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white border-2 border-white hover:bg-white hover:text-emerald-600 active:bg-slate-100 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-emerald-600">
+                        {{ $ctaSection['cta_secondary'] ?? 'SE CONNECTER' }}
                     </a>
                 @endauth
             </div>
         </div>
     </section>
+
 </div>

@@ -1,0 +1,262 @@
+<!-- Main Container -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+
+    {{-- Header avec statistiques --}}
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+            <h2 class="text-2xl font-bold text-gray-900 tracking-tight">Projets</h2>
+            
+            <!-- Stats Pills -->
+            <div class="flex flex-wrap gap-2 text-sm">
+                <div class="bg-primary-50 px-3 py-1.5 rounded-full border border-primary-100 flex items-center">
+                    <span class="text-primary-600 font-bold mr-1">{{ $stats['total'] }}</span>
+                    <span class="text-primary-700">Total</span>
+                </div>
+                <div class="bg-green-50 px-3 py-1.5 rounded-full border border-green-100 flex items-center">
+                    <span class="text-green-600 font-bold mr-1">{{ $stats['published'] }}</span>
+                    <span class="text-green-700">Publiés</span>
+                </div>
+                <div class="bg-purple-50 px-3 py-1.5 rounded-full border border-purple-100 flex items-center">
+                    <span class="text-purple-600 font-bold mr-1">{{ $stats['featured'] }}</span>
+                    <span class="text-purple-700">En vedette</span>
+                </div>
+                <div class="bg-orange-50 px-3 py-1.5 rounded-full border border-orange-100 flex items-center">
+                    <span class="text-orange-600 font-bold mr-1">{{ $stats['in_progress'] }}</span>
+                    <span class="text-orange-700">En cours</span>
+                </div>
+            </div>
+        </div>
+        
+        {{-- Filtres --}}
+        <div class="grid grid-cols-1 md:grid-cols-6 gap-4">
+            <div class="md:col-span-2">
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Recherche</label>
+                <div class="relative">
+                    <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input
+                        type="text"
+                        wire:model.live="search"
+                        placeholder="Titre, description..."
+                        class="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors text-sm"
+                    />
+                </div>
+            </div>
+            
+            <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Statut</label>
+                <select wire:model.live="statusFilter" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white">
+                    <option value="all">Tous</option>
+                    @foreach ($projectStatuses as $status)
+                        <option value="{{ $status['value'] }}">{{ $status['label'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+            
+            <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Type</label>
+                <select wire:model.live="typeFilter" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white">
+                    <option value="all">Tous</option>
+                    @foreach ($projectTypes as $type)
+                        <option value="{{ $type['value'] }}">{{ $type['label'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+            
+            <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Priorité</label>
+                <select wire:model.live="priorityFilter" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white">
+                    <option value="all">Toutes</option>
+                    @foreach ($priorities as $priority)
+                        <option value="{{ $priority['value'] }}">{{ $priority['label'] }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-1.5">Trier par</label>
+                <select wire:model.live="sortBy" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 text-sm bg-white">
+                    <option value="created_at">Date de création</option>
+                    <option value="title">Titre</option>
+                    <option value="budget">Budget</option>
+                    <option value="deadline">Date limite</option>
+                </select>
+            </div>
+            
+            <div class="flex flex-col justify-end space-y-2">
+                <label class="flex items-center space-x-2 cursor-pointer py-2">
+                    <input type="checkbox" wire:model.live="showFeaturedOnly" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500 h-4 w-4">
+                    <span class="text-sm text-gray-700">Vedette</span>
+                </label>
+                <label class="flex items-center space-x-2 cursor-pointer py-2">
+                    <input type="checkbox" wire:model.live="showPublishedOnly" class="rounded border-gray-300 text-primary-600 focus:ring-primary-500 h-4 w-4">
+                    <span class="text-sm text-gray-700">Publiés</span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Liste des projets : 2 COLONNES (lg:grid-cols-2) -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        @forelse($projects as $project)
+            <!-- PROJECT CARD -->
+            <article wire:key="project-{{ $project->id }}" class="project-card bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex flex-col lg:flex-row h-full">
+                
+                <!-- Image Section (Left on Desktop, Top on Mobile) -->
+                <div class="lg:w-5/12 h-48 lg:h-auto relative overflow-hidden group">
+                    @if($project->featured_image)
+                        <img src="{{ $project->featured_image }}" alt="{{ $project->title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                    @else
+                        <div class="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                            <i class="fas fa-image text-gray-400 text-4xl"></i>
+                        </div>
+                    @endif
+                    
+                    <!-- Badges Overlay -->
+                    <div class="absolute top-3 left-3 flex gap-2">
+                        @if($project->is_featured)
+                            <span class="bg-yellow-400/90 backdrop-blur-sm text-white text-xs font-bold px-2.5 py-1 rounded shadow-sm">
+                                <i class="fas fa-star mr-1"></i> En vedette
+                            </span>
+                        @endif
+                    </div>
+                    
+                    <!-- Status Badge Overlay (Bottom Left on Image) -->
+                    <div class="absolute bottom-3 left-3">
+                        @switch($project->status)
+                            @case('pending')
+                                <span class="bg-yellow-500/90 backdrop-blur-sm text-white text-xs font-medium px-2.5 py-1 rounded shadow-sm">
+                                    ⏳ En attente
+                                </span>
+                                @break
+                            @case('in_progress')
+                                <span class="bg-blue-600/90 backdrop-blur-sm text-white text-xs font-medium px-2.5 py-1 rounded shadow-sm">
+                                    ⚙️ En cours
+                                </span>
+                                @break
+                            @case('completed')
+                                <span class="bg-green-600/90 backdrop-blur-sm text-white text-xs font-medium px-2.5 py-1 rounded shadow-sm">
+                                    ✅ Complété
+                                </span>
+                                @break
+                            @case('published')
+                                <span class="bg-primary-600/90 backdrop-blur-sm text-white text-xs font-medium px-2.5 py-1 rounded shadow-sm">
+                                    📢 Publié
+                                </span>
+                                @break
+                        @endswitch
+                    </div>
+                </div>
+
+                <!-- Content Section (Right on Desktop, Bottom on Mobile) -->
+                <div class="lg:w-7/12 p-5 flex flex-col justify-between h-full">
+                    
+                    <!-- Top: Title & ID -->
+                    <div class="mb-3">
+                        <h3 class="text-lg font-bold text-gray-900 leading-tight mb-1">{{ $project->title }}</h3>
+                        <p class="text-xs font-mono text-gray-400 uppercase tracking-wider">{{ $project->code }}</p>
+                        <p class="text-sm text-gray-600 mt-2 line-clamp-2">
+                            {{ Str::limit($project->description, 100) }}
+                        </p>
+                    </div>
+
+                    <!-- Middle: Minimalist Grid for Meta Data -->
+                    <div class="grid grid-cols-2 gap-y-3 gap-x-4 mb-4 text-sm border-t border-b border-gray-50 py-3">
+                        <div>
+                            <span class="block text-xs text-gray-400">Client</span>
+                            <span class="font-medium text-gray-800">{{ $project->client?->name ?? 'N/A' }}</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-gray-400">Budget</span>
+                            <span class="font-medium text-primary-600">{{ number_format($project->budget, 0, ',', ' ') }} FCFA</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-gray-400">Date limite</span>
+                            <span class="font-medium {{ $project->deadline?->isPast() ? 'text-red-600' : 'text-gray-800' }}">
+                                {{ $project->deadline?->format('d/m/Y') ?? 'N/A' }}
+                            </span>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-gray-400">Type</span>
+                            <span class="font-medium text-gray-800 bg-gray-100 px-2 py-0.5 rounded text-xs inline-block mt-0.5">{{ $project->type->label() }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Progress & Tech -->
+                    <div class="mb-4">
+                        @if($project->progress_percentage)
+                            <div class="flex justify-between text-xs mb-1">
+                                <span class="text-gray-500">Progression</span>
+                                <span class="font-bold text-primary-600">{{ $project->progress_percentage }}%</span>
+                            </div>
+                            <div class="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+                                <div class="bg-primary-500 h-2 rounded-full" style="width: {{ $project->progress_percentage }}%"></div>
+                            </div>
+                        @endif
+                        
+                        <!-- Tech Stack -->
+                        @if($project->technologies)
+                            <div class="flex flex-wrap gap-1.5 mt-3">
+                                @php
+                                    $displayedTechs = array_slice($project->technologies, 0, 3);
+                                @endphp
+                                @foreach($displayedTechs as $tech)
+                                    <span class="px-2 py-0.5 bg-gray-50 border border-gray-100 text-gray-600 text-[10px] uppercase font-bold rounded">{{ $tech }}</span>
+                                @endforeach
+                                @if(count($project->technologies) > 3)
+                                    <span class="px-2 py-0.5 bg-gray-50 border border-gray-100 text-gray-600 text-[10px] uppercase font-bold rounded">+{{ count($project->technologies) - 3 }}</span>
+                                @endif
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- Footer: Stats & CTA -->
+                    <div class="flex items-center justify-between pt-2 border-t border-gray-50 mt-auto">
+                        <div class="flex items-center space-x-3 text-xs text-gray-500">
+                            @if($project->average_rating > 0)
+                                <span class="flex items-center hover:text-yellow-500 transition-colors cursor-pointer">
+                                    <i class="fas fa-star text-yellow-400 mr-1"></i> {{ number_format($project->average_rating, 1) }}
+                                    <span class="text-gray-400 ml-0.5">({{ $project->reviews_count ?? 0 }})</span>
+                                </span>
+                            @else
+                                <span class="text-gray-400">Pas noté</span>
+                            @endif
+                            
+                            <span class="flex items-center hover:text-red-500 transition-colors cursor-pointer">
+                                <i class="far fa-heart mr-1"></i> {{ $project->likes_count ?? 0 }}
+                            </span>
+                            <span class="flex items-center">
+                                <i class="far fa-eye mr-1"></i> {{ $project->views_count ?? 0 }}
+                            </span>
+                        </div>
+                        
+                        <a href="{{ route('projects.detail', $project->slug) }}" class="bg-secondary hover:bg-secondary-600 text-white text-sm font-medium px-4 py-2 rounded-lg shadow-sm transition-colors duration-200 flex items-center">
+                            Voir le projet <i class="fas fa-arrow-right ml-2 text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </article>
+        @empty
+            <div class="col-span-full text-center py-16">
+                <div class="text-gray-400 text-lg mb-2">📭 Aucun projet trouvé</div>
+                <div class="text-gray-500 text-sm">Essayez d'ajuster vos filtres de recherche</div>
+            </div>
+        @endforelse
+
+    </div>
+
+    {{-- Pagination --}}
+    @if($projects->hasPages())
+        <div class="bg-white px-4 py-4 flex items-center justify-between border-t border-gray-200 rounded-xl shadow-sm">
+            <div class="text-sm text-gray-500">
+                Affichage de <span class="font-medium">{{ $projects->firstItem() }}</span> 
+                à <span class="font-medium">{{ $projects->lastItem() }}</span> 
+                sur <span class="font-medium">{{ $projects->total() }}</span> projets
+            </div>
+            {{ $projects->links() }}
+        </div>
+    @endif
+
+</div>

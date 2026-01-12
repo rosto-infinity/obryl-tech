@@ -190,7 +190,8 @@
                                 <span class="text-xs font-semibold text-gray-900">{{ $project->progress_percentage }}%</span>
                             </div>
                             <div class="w-full bg-gray-200 rounded-full h-1.5">
-                                <div class="bg-secondary h-1.5 rounded-full transition-all duration-300" style="width: {{ $project->progress_percentage }}%"></div>
+                                <div class="bg-secondary h-1.5 rounded-full transition-all duration-300"
+                                 style="width: {{ $project->progress_percentage }}%"></div>
                             </div>
                         </div>
                     @endif
