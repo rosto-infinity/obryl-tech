@@ -3,7 +3,7 @@
     <div class="bg-gray-50/95 border-b border-gray-200 sticky top-0 z-40 backdrop-blur-lg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div class="flex flex-col lg:flex-row gap-6">
-                <!-- Search Bar -->
+                <!-- --Search Bar -->
                 <div class="flex-1">
                     <div class="relative">
                         <input 
