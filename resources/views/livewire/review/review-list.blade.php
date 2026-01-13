@@ -4,7 +4,7 @@
         <div class="flex justify-between items-center mb-6">
             <h2 class="text-2xl font-bold text-gray-900">Avis des Développeurs</h2>
             @if(auth()->user()->can('createReview'))
-                <a href="{{ route('reviews.create') }}" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/80 transition-colors duration-200">
+                <a href="{{ route('reviews.create') }}"  wire:navigate class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/80 transition-colors duration-200">
                     + Nouvel Avis
                 </a>
             @endif
@@ -156,7 +156,7 @@
 
                     {{-- Actions --}}
                     <div class="flex justify-between items-center pt-3 border-t">
-                        <a href="{{ route('reviews.show', $review->id) }}" 
+                        <a href="{{ route('reviews.show', $review->id) }}"   wire:navigate
                            class="text-blue-600 hover:text-blue-800 text-sm font-medium">
                             Voir les détails
                         </a>

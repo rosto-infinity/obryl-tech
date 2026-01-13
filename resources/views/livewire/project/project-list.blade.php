@@ -1,273 +1,217 @@
-<div class="space-y-6">
+<div class="space-y-8">
     {{-- Header avec statistiques --}}
-    <div class="bg-white rounded-lg shadow p-4 md:p-6">
-        {{-- Titre et Statistiques --}}
-        <div class="mb-6">
-            <h2 class="text-xl md:text-2xl font-bold text-gray-900 mb-4">Projets</h2>
-
-            {{-- Statistiques responsive --}}
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3 ">
-                <div class="bg-blue-50 px-2 md:px-3 py-2 rounded-lg ">
-                    <div class="text-xs md:text-sm font-medium text-primary">{{ $stats['total'] }}</div>
-                    <div class="text-xs text-primary/70">Total</div>
+    <div class="bg-white dark:bg-zinc-900/40 backdrop-blur-sm rounded-2xl shadow-xs border border-zinc-200/60 dark:border-zinc-800/50 p-6 transition-all duration-300">
+        <div class="flex flex-col lg:flex-row justify-between lg:items-center mb-8 gap-6">
+            <div>
+                <h2 class="text-3xl font-extrabold text-zinc-900 dark:text-white tracking-tight">Projets</h2>
+                <p class="text-zinc-500 dark:text-zinc-400 mt-1 font-medium">Gérez et suivez vos développements avec précision</p>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <div class="bg-zinc-50 dark:bg-zinc-800/40 px-4 py-3 rounded-xl border border-zinc-100 dark:border-zinc-700/50 transition-colors">
+                    <p class="text-[10px] uppercase font-bold text-zinc-400 dark:text-zinc-500 tracking-wider mb-1">Total</p>
+                    <span class="text-zinc-900 dark:text-white font-bold text-xl">{{ $stats['total'] }}</span>
                 </div>
-                <div class="bg-green-50 px-2 md:px-3 py-2 rounded-lg">
-                    <div class="text-xs md:text-sm font-medium text-green-600">{{ $stats['published'] }}</div>
-                    <div class="text-xs text-green-600/70">Publiés</div>
+                <div class="bg-emerald-50/50 dark:bg-emerald-500/5 px-4 py-3 rounded-xl border border-emerald-100 dark:border-emerald-500/10 transition-colors">
+                    <p class="text-[10px] uppercase font-bold text-emerald-600 dark:text-emerald-400/70 tracking-wider mb-1">Publiés</p>
+                    <span class="text-emerald-600 dark:text-emerald-400 font-bold text-xl">{{ $stats['published'] }}</span>
                 </div>
-                <div class="bg-purple-50 px-2 md:px-3 py-2 rounded-lg">
-                    <div class="text-xs md:text-sm font-medium text-purple-600">{{ $stats['featured'] }}</div>
-                    <div class="text-xs text-purple-600/70">En vedette</div>
+                <div class="bg-amber-50/50 dark:bg-amber-500/5 px-4 py-3 rounded-xl border border-amber-100 dark:border-amber-500/10 transition-colors">
+                    <p class="text-[10px] uppercase font-bold text-amber-600 dark:text-amber-400/70 tracking-wider mb-1">Vedette</p>
+                    <span class="text-warning dark:text-warning/90 font-bold text-xl">{{ $stats['featured'] }}</span>
                 </div>
-                <div class="bg-yellow-50 px-2 md:px-3 py-2 rounded-lg">
-                    <div class="text-xs md:text-sm font-medium text-yellow-600">{{ $stats['in_progress'] }}</div>
-                    <div class="text-xs text-yellow-600/70">En cours</div>
+                <div class="bg-blue-50/50 dark:bg-blue-500/5 px-4 py-3 rounded-xl border border-blue-100 dark:border-blue-500/10 transition-colors">
+                    <p class="text-[10px] uppercase font-bold text-blue-600 dark:text-blue-400/70 tracking-wider mb-1">En cours</p>
+                    <span class="text-blue-600 dark:text-blue-400 font-bold text-xl">{{ $stats['in_progress'] }}</span>
                 </div>
             </div>
         </div>
-
+        
         {{-- Filtres --}}
-        <div class="space-y-3">
-            {{-- Ligne 1: Recherche + Statut + Type --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                <div>
-                    <label class="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Recherche</label>
-                    <input type="text" wire:model.live="search" placeholder="Titre, description..."
-                        class="w-full px-2.5 md:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition" />
+        <div class="space-y-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div class="lg:col-span-2">
+                    <label class="block text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest mb-2 px-1">Recherche</label>
+                    <div class="relative group">
+                        <input
+                            type="text"
+                            wire:model.live="search"
+                            placeholder="Titre, description..."
+                            class="w-full pl-10 pr-4 py-2.5 bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary dark:focus:border-primary/50 transition-all text-sm text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-600"
+                        />
+                        <svg class="w-4 h-4 text-zinc-400 dark:text-zinc-500 absolute left-3.5 top-3.5 transition-colors group-focus-within:text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
                 </div>
-
+                
                 <div>
-                    <label class="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Statut</label>
-                    <select wire:model.live="statusFilter"
-                        class="w-full px-2.5 md:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition">
-                        <option value="all">Tous</option>
-                        @foreach ($projectStatuses as $status)
+                    <label class="block text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest mb-2 px-1">Statut</label>
+                    <select wire:model.live="statusFilter" class="w-full px-3 py-2.5 bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary dark:focus:border-primary/50 transition-all text-sm text-zinc-900 dark:text-zinc-100">
+                        <option value="all">Tous les statuts</option>
+                        @foreach($projectStatuses as $status)
                             <option value="{{ $status['value'] }}">{{ $status['label'] }}</option>
                         @endforeach
                     </select>
                 </div>
-
+                
                 <div>
-                    <label class="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Type</label>
-                    <select wire:model.live="typeFilter"
-                        class="w-full px-2.5 md:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition">
-                        <option value="all">Tous</option>
-                        @foreach ($projectTypes as $type)
+                    <label class="block text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest mb-2 px-1">Type</label>
+                    <select wire:model.live="typeFilter" class="w-full px-3 py-2.5 bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary dark:focus:border-primary/50 transition-all text-sm text-zinc-900 dark:text-zinc-100">
+                        <option value="all">Tous les types</option>
+                        @foreach($projectTypes as $type)
                             <option value="{{ $type['value'] }}">{{ $type['label'] }}</option>
                         @endforeach
                     </select>
                 </div>
-            </div>
-
-            {{-- Ligne 2: Priorité + Trier par + Checkboxes --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                
                 <div>
-                    <label class="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Priorité</label>
-                    <select wire:model.live="priorityFilter"
-                        class="w-full px-2.5 md:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition">
-                        <option value="all">Toutes</option>
-                        @foreach ($priorities as $priority)
-                            <option value="{{ $priority['value'] }}">{{ $priority['label'] }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-xs md:text-sm font-medium text-gray-700 mb-1.5">Trier par</label>
-                    <select wire:model.live="sortBy"
-                        class="w-full px-2.5 md:px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50 transition">
-                        <option value="created_at">Date de création</option>
-                        <option value="title">Titre</option>
+                    <label class="block text-[10px] font-bold text-zinc-400 dark:text-zinc-500 uppercase tracking-widest mb-2 px-1">Trier</label>
+                    <select wire:model.live="sortBy" class="w-full px-3 py-2.5 bg-zinc-50 dark:bg-zinc-800/40 border border-zinc-200 dark:border-zinc-700/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary dark:focus:border-primary/50 transition-all text-sm text-zinc-900 dark:text-zinc-100">
+                        <option value="created_at">Plus récents</option>
+                        <option value="title">Alphabétique</option>
                         <option value="budget">Budget</option>
-                        <option value="deadline">Date limite</option>
                     </select>
                 </div>
-
-                {{-- Checkboxes --}}
-                <div class="flex flex-col justify-end space-y-2">
-                    <label class="flex items-center cursor-pointer">
-                        <input type="checkbox" wire:model.live="showFeaturedOnly"
-                            class="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary/50">
-                        <span class="ml-2 text-xs md:text-sm text-gray-700">En vedette</span>
-                    </label>
-                    <label class="flex items-center cursor-pointer">
-                        <input type="checkbox" wire:model.live="showPublishedOnly"
-                            class="w-4 h-4 rounded border-gray-300 text-primary focus:ring-primary/50">
-                        <span class="ml-2 text-xs md:text-sm text-gray-700">Publiés seulement</span>
-                    </label>
-                </div>
+            </div>
+            
+            <div class="flex flex-wrap items-center gap-6 pt-2 border-t border-zinc-100 dark:border-zinc-800/50">
+                <label class="flex items-center cursor-pointer group">
+                    <div class="relative">
+                        <input type="checkbox" wire:model.live="showFeaturedOnly" class="sr-only peer">
+                        <div class="w-9 h-5 bg-zinc-200 dark:bg-zinc-700 rounded-full peer peer-focus:ring-2 peer-focus:ring-secondary/30 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-secondary"></div>
+                    </div>
+                    <span class="ml-3 text-xs font-bold text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-200 uppercase tracking-wider transition-colors">En vedette</span>
+                </label>
+                
+                <label class="flex items-center cursor-pointer group">
+                    <div class="relative">
+                        <input type="checkbox" wire:model.live="showPublishedOnly" class="sr-only peer">
+                        <div class="w-9 h-5 bg-zinc-200 dark:bg-zinc-700 rounded-full peer peer-focus:ring-2 peer-focus:ring-primary/30 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-primary"></div>
+                    </div>
+                    <span class="ml-3 text-xs font-bold text-zinc-500 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-200 uppercase tracking-wider transition-colors">Publiés uniquement</span>
+                </label>
             </div>
         </div>
     </div>
 
- <!-- Grille des projets: 2 colonnes (md+), 1 colonne (mobile) -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Liste des projets : Grid 2 Colonnes -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
         @forelse($projects as $project)
-            <div wire:key="project-{{ $project->id }}" class="bg-white rounded-lg shadow hover:shadow-md transition-shadow duration-200 overflow-hidden flex flex-col">
+            <div wire:key="project-{{ $project->id }}" class="group bg-white dark:bg-zinc-900/40 rounded-2xl shadow-xs hover:shadow-xl hover:shadow-zinc-200/50 dark:hover:shadow-black/20 transition-all duration-500 border border-zinc-200/60 dark:border-zinc-800/50 overflow-hidden flex flex-col sm:flex-row h-full">
                 
-                {{-- Image featured --}}
-                @if($project->featured_image)
-                    <div class="relative h-40 bg-gray-200 overflow-hidden">
-                        <img src="{{ $project->featured_image }}" alt="{{ $project->title }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300">
-                        
-                        {{-- Badges overlay --}}
-                        <div class="absolute top-3 left-3 flex flex-wrap gap-2">
-                            @if($project->is_featured)
-                                <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-yellow-400/90 text-yellow-900 backdrop-blur-sm">
-                                    ⭐ En vedette
-                                </span>
-                            @endif
-                            
-                            @switch($project->status)
-                                @case('pending')
-                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-yellow-400/90 text-yellow-900 backdrop-blur-sm">
-                                        ⏳ En attente
-                                    </span>
-                                    @break
-                                @case('in_progress')
-                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-400/90 text-blue-900 backdrop-blur-sm">
-                                        ⚙️ En cours
-                                    </span>
-                                    @break
-                                @case('completed')
-                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-green-400/90 text-green-900 backdrop-blur-sm">
-                                        ✅ Complété
-                                    </span>
-                                    @break
-                                @case('published')
-                                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-primary/90 text-white backdrop-blur-sm">
-                                        📢 Publié
-                                    </span>
-                                    @break
-                            @endswitch
+                {{-- Section Image --}}
+                <div class="w-full sm:w-2/5 h-52 sm:h-auto bg-zinc-100 dark:bg-zinc-800 relative shrink-0 overflow-hidden">
+                    @if($project->featured_image)
+                        <img src="{{ $project->featured_image }}" alt="{{ $project->title }}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
+                    @else
+                        <div class="w-full h-full flex items-center justify-center">
+                            <svg class="w-12 h-12 text-zinc-300 dark:text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                         </div>
-                    </div>
-                @endif
-                
-                {{-- Contenu --}}
-                <div class="p-4 flex-1 flex flex-col">
-                    {{-- Titre et code --}}
-                    <div class="mb-3">
-                        <h3 class="text-base font-semibold text-gray-900 line-clamp-2">{{ $project->title }}</h3>
-                        <p class="text-xs text-gray-500 font-mono">{{ $project->code }}</p>
-                    </div>
+                    @endif
                     
-                    {{-- Description --}}
-                    <p class="text-sm text-gray-600 line-clamp-2 mb-3">{{ Str::limit($project->description, 100) }}</p>
+                    {{-- Overlay Badge Featured --}}
+                    @if($project->is_featured)
+                        <div class="absolute top-4 left-4 bg-secondary/90 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-lg shadow-lg flex items-center uppercase tracking-widest">
+                            <span class="mr-1.5">★</span> Vedette
+                        </div>
+                    @endif
+
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-4">
+                        <span class="text-white text-[10px] font-bold uppercase tracking-widest">Voir les détails</span>
+                    </div>
+                </div>
+
+                {{-- Section Contenu --}}
+                <div class="p-6 flex flex-col flex-1">
                     
-                    {{-- Informations compactes --}}
-                    <div class="space-y-1.5 mb-3 text-xs">
-                        <div class="flex justify-between">
-                            <span class="text-gray-600">Client:</span>
-                            <span class="font-medium text-gray-900">{{ $project->client?->name ?? 'N/A' }}</span>
-                        </div>
-                        
-                        <div class="flex justify-between">
-                            <span class="text-gray-600">Budget:</span>
-                            <span class="font-medium text-gray-900">{{ number_format($project->budget, 0, ',', ' ') }} FCFA</span>
-                        </div>
-                        
-                        @if($project->deadline)
-                            <div class="flex justify-between">
-                                <span class="text-gray-600">Date limite:</span>
-                                <span class="font-medium {{ $project->deadline->isPast() ? 'text-red-600' : 'text-gray-900' }}">
-                                    {{ $project->deadline->format('d/m/Y') }}
-                                </span>
+                    {{-- Header du Projet --}}
+                    <div class="mb-5">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                @switch($project->status)
+                                    @case('pending')
+                                        <span class="w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
+                                        <span class="text-[10px] font-bold uppercase tracking-wider text-amber-600 dark:text-amber-400/80">En attente</span>
+                                        @break
+                                    @case('in_progress')
+                                        <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse"></span>
+                                        <span class="text-[10px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400/80">En cours</span>
+                                        @break
+                                    @case('completed')
+                                        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                        <span class="text-[10px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400/80">Terminé</span>
+                                        @break
+                                    @case('published')
+                                        <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+                                        <span class="text-[10px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400/80">Publié</span>
+                                        @break
+                                @endswitch
                             </div>
-                        @endif
+                            <span class="text-[10px] text-zinc-400 dark:text-zinc-600 font-mono tracking-tighter">{{ $project->code }}</span>
+                        </div>
                         
-                        <div class="flex justify-between">
-                            <span class="text-gray-600">Type:</span>
-                            <span class="font-medium text-gray-900">{{ $project->type->label() }}</span>
+                        <h3 class="text-xl font-bold text-zinc-900 dark:text-white leading-tight mb-2 group-hover:text-primary transition-colors duration-300">{{ $project->title }}</h3>
+                        <p class="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2 font-medium leading-relaxed">{{ Str::limit($project->description, 90) }}</p>
+                    </div>
+                    
+                    {{-- Détails --}}
+                    <div class="grid grid-cols-2 gap-4 mb-6 pt-4 border-t border-zinc-100 dark:border-zinc-800/50">
+                        <div>
+                            <p class="text-[9px] uppercase font-bold text-zinc-400 dark:text-zinc-500 tracking-widest mb-1">Client</p>
+                            <p class="text-xs font-bold text-zinc-800 dark:text-zinc-200 truncate">{{ $project->client?->name ?? 'Indépendant' }}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-[9px] uppercase font-bold text-zinc-400 dark:text-zinc-500 tracking-widest mb-1">Budget</p>
+                            <p class="text-xs font-extrabold text-primary">{{ number_format($project->budget, 0, ',', ' ') }} <span class="text-[10px] opacity-70">FCFA</span></p>
                         </div>
                     </div>
                     
                     {{-- Barre de progression --}}
                     @if($project->progress_percentage)
-                        <div class="mb-3">
-                            <div class="flex justify-between items-center mb-1">
-                                <span class="text-xs text-gray-600">Progression</span>
-                                <span class="text-xs font-semibold text-gray-900">{{ $project->progress_percentage }}%</span>
+                        <div class="mb-6">
+                            <div class="flex justify-between items-center text-[10px] font-bold mb-2">
+                                <span class="text-zinc-400 dark:text-zinc-500 uppercase tracking-widest">Progression</span>
+                                <span class="text-primary">{{ $project->progress_percentage }}%</span>
                             </div>
-                            <div class="w-full bg-gray-200 rounded-full h-1.5">
-                                <div class="bg-secondary h-1.5 rounded-full transition-all duration-300"
-                                 style="width: {{ $project->progress_percentage }}%"></div>
-                            </div>
-                        </div>
-                    @endif
-                    
-                    {{-- Technologies --}}
-                    @if($project->technologies)
-                        <div class="mb-3">
-                            <div class="flex flex-wrap gap-1">
-                                @php
-                                    $technologies = $project->technologies;
-                                    $displayedTechs = array_slice($technologies, 0, 3);
-                                @endphp
-                                @foreach($displayedTechs as $tech)
-                                    <span class="inline-block px-2 py-0.5 text-xs bg-gray-100 text-gray-700 rounded">
-                                        {{ $tech }}
-                                    </span>
-                                @endforeach
-                                @if(count($technologies) > 3)
-                                    <span class="inline-block px-2 py-0.5 text-xs bg-gray-100 text-gray-600 rounded font-medium">
-                                        +{{ count($technologies) - 3 }}
-                                    </span>
-                                @endif
+                            <div class="w-full bg-zinc-100 dark:bg-zinc-800/50 rounded-full h-1.5 overflow-hidden">
+                                <div class="bg-gradient-to-r from-primary to-emerald-400 h-full rounded-full transition-all duration-1000 ease-out shadow-[0_0_8px_rgba(53,154,105,0.4)]" style="width: {{ $project->progress_percentage }}%"></div>
                             </div>
                         </div>
                     @endif
                     
-                    {{-- Statistiques --}}
-                    <div class="flex justify-between items-center text-xs text-gray-600 mb-4 py-2 border-t border-gray-100">
-                        <div class="flex items-center space-x-3">
-                            @if($project->average_rating > 0)
-                                <div class="flex items-center">
-                                    <span class="text-yellow-400">★</span>
-                                    <span class="ml-1 font-medium text-gray-900">{{ number_format($project->average_rating, 1) }}</span>
-                                    <span class="text-gray-400 ml-0.5">({{ $project->reviews_count ?? 0 }})</span>
-                                </div>
-                            @else
-                                <span class="text-gray-400">Pas noté</span>
-                            @endif
+                    {{-- Footer --}}
+                    <div class="mt-auto flex items-center justify-between gap-4 pt-4 border-t border-zinc-100 dark:border-zinc-800/50">
+                        <div class="flex items-center gap-3">
+                            <div class="flex items-center group/stat" title="Note moyenne">
+                                <span class="text-secondary text-xs mr-1 transition-transform group-hover/stat:scale-125">★</span>
+                                <span class="text-[11px] font-bold text-zinc-600 dark:text-zinc-400">{{ number_format($project->average_rating, 1) }}</span>
+                            </div>
+                            <div class="flex items-center group/stat" title="Vues">
+                                <svg class="w-3.5 h-3.5 text-blue-400 mr-1 transition-transform group-hover/stat:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                <span class="text-[11px] font-bold text-zinc-600 dark:text-zinc-400">{{ $project->views_count ?? 0 }}</span>
+                            </div>
                         </div>
-                        
-                        <div class="flex items-center space-x-2">
-                            <span class="flex items-center">
-                                <span class="text-red-500">❤️</span>
-                                <span class="ml-0.5 font-medium">{{ $project->likes_count ?? 0 }}</span>
-                            </span>
-                            <span class="flex items-center">
-                                <span class="text-blue-500">👁️</span>
-                                <span class="ml-0.5 font-medium">{{ $project->views_count ?? 0 }}</span>
-                            </span>
-                        </div>
-                    </div>
-                    
-                    {{-- Actions --}}
-                    <div class="flex gap-2 mt-auto">
-                        <a href="{{ route('projects.detail', $project->slug) }}" class="flex-1 bg-primary text-white text-center px-3 py-2 rounded-md text-sm font-medium hover:bg-primary/90 transition-colors duration-200">
-                            Voir
+
+                        <a href="{{ route('projects.detail', $project->slug) }}"  wire:navigate class="inline-flex items-center justify-center bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 text-[10px] font-bold uppercase tracking-widest px-5 py-2.5 rounded-xl hover:bg-primary dark:hover:bg-primary hover:text-white dark:hover:text-white transition-all duration-300 shadow-sm">
+                            Explorer
+                            <svg class="w-3 h-3 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                         </a>
-                        @if($project->status === 'published')
-                            <button class="px-3 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors duration-200 text-sm">
-                                ❤️
-                            </button>
-                        @endif
                     </div>
                 </div>
             </div>
         @empty
-            <div class="col-span-full text-center py-16">
-                <div class="text-gray-400 text-lg mb-2">📭 Aucun projet trouvé</div>
-                <div class="text-gray-500 text-sm">Essayez d'ajuster vos filtres de recherche</div>
+            <div class="col-span-full flex flex-col items-center justify-center py-20 text-center bg-zinc-50 dark:bg-zinc-900/20 rounded-3xl border-2 border-dashed border-zinc-200 dark:border-zinc-800">
+                <div class="bg-white dark:bg-zinc-800 p-5 rounded-2xl shadow-sm mb-6">
+                    <svg class="w-10 h-10 text-zinc-300 dark:text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h3 class="text-xl font-bold text-zinc-900 dark:text-white mb-2">Aucun projet trouvé</h3>
+                <p class="text-zinc-500 dark:text-zinc-400 text-sm max-w-xs mx-auto font-medium">Nous n'avons trouvé aucun projet correspondant à vos critères actuels.</p>
             </div>
         @endforelse
     </div>
 
     {{-- Pagination --}}
     @if($projects->hasPages())
-        <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 rounded-lg shadow">
+        <div class="bg-white dark:bg-zinc-900/40 px-8 py-5 flex items-center justify-between border border-zinc-200/60 dark:border-zinc-800/50 rounded-2xl shadow-sm backdrop-blur-sm">
             {{ $projects->links() }}
         </div>
     @endif

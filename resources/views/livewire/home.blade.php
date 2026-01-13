@@ -1,379 +1,334 @@
-<div>
-    <!-- Hero Section OBRYL TECH - Professional Design -->
-    <section class="relative min-h-screen bg-gradient-to-b from-slate-50 via-white to-slate-50 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 pt-20 pb-16 md:pt-32 md:pb-24 overflow-hidden">
+    <div>
+    
+    <!-- Hero Section - Premium Mesh Gradient Design -->
+    <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-mesh-gradient">
+        
+        <!-- Decorative Glass Blobs -->
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/10 blur-[120px] animate-pulse"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-secondary/10 blur-[120px] animate-pulse" style="animation-delay: 2s;"></div>
 
-        <!-- Animated Grid Background -->
-        <div class="absolute inset-0 opacity-3">
-            <div class="absolute inset-0"
-                style="background-image: 
-            linear-gradient(0deg, transparent 24%, rgba(53, 154, 105, 0.1) 25%, rgba(53, 154, 105, 0.1) 26%, transparent 27%, transparent 74%, rgba(53, 154, 105, 0.1) 75%, rgba(53, 154, 105, 0.1) 76%, transparent 77%, transparent),
-            linear-gradient(90deg, transparent 24%, rgba(53, 154, 105, 0.1) 25%, rgba(53, 154, 105, 0.1) 26%, transparent 27%, transparent 74%, rgba(53, 154, 105, 0.1) 75%, rgba(53, 154, 105, 0.1) 76%, transparent 77%, transparent);
-            background-size: 50px 50px;">
-            </div>
-        </div>
-
-        <!-- Floating Particles Background -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <div class="absolute animate-float-up"
-                style="left: 10%; bottom: -50px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, transparent 70%); border-radius: 50%; filter: blur(40px);">
-            </div>
-            <div class="absolute animate-float-up"
-                style="left: 50%; bottom: -50px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(249, 115, 22, 0.08) 0%, transparent 70%); border-radius: 50%; filter: blur(40px); animation-delay: 1s;">
-            </div>
-            <div class="absolute animate-float-up"
-                style="left: 80%; bottom: -50px; width: 90px; height: 90px; background: radial-gradient(circle, rgba(16, 185, 129, 0.1) 0%, transparent 70%); border-radius: 50%; filter: blur(40px); animation-delay: 2s;">
-            </div>
-        </div>
-
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-
-                <!-- Left Content -->
-                <div class="text-left space-y-8">
-                    <!-- Badge -->
-                    <div class="inline-flex items-center gap-2 animate-in fade-in slide-in-from-top-4 duration-500">
-                        <div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
-                        <span class="text-xs md:text-sm font-semibold uppercase tracking-wider text-primary">Bienvenue à OBRYL TECH</span>
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <!-- Hero Content -->
+                <div class="space-y-10">
+                    <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full glass animate-in fade-in slide-in-from-left-8 duration-700">
+                        <span class="relative flex h-3 w-3">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-primary"></span>
+                        </span>
+                        <span class="text-sm font-bold tracking-widest uppercase text-slate-800 dark:text-slate-200">Innovation & Excellence</span>
                     </div>
 
-                    <!-- Main Title -->
-                    <div class="space-y-4">
-                        <h1 class="text-5xl sm:text-6xl md:text-7xl font-black tracking-tight text-slate-900 leading-tight animate-in fade-in slide-in-from-top-6 duration-700 delay-100">
-                            <span class="block">OBRYL</span>
-                            <span class="relative inline-block text-primary">TECH</span>
+                    <div class="space-y-6">
+                        <h1 class="text-6xl sm:text-7xl md:text-8xl font-black tracking-tighter leading-[0.9] animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-100">
+                            <span class="text-primary dark:text-white">OBRYL</span><br/>
+                            <span class="text-secondary">TECH</span>
                         </h1>
-
-                        <!-- Subtitle -->
-                        <p class="text-xl md:text-2xl font-light text-slate-700 animate-in fade-in slide-in-from-top-6 duration-700 delay-200">
-                            L'INGÉNIERIE DE L'EXCELLENCE DIGITALE
+                        <p class="text-xl md:text-2xl text-slate-600 dark:text-slate-400 font-medium max-w-xl animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-200">
+                            Propulsez vos ambitions numériques avec l'ingénierie d'élite.
                         </p>
                     </div>
 
-                    <!-- Description -->
-                    <p class="text-base md:text-lg text-slate-600 max-w-2xl leading-relaxed animate-in fade-in slide-in-from-top-6 duration-700 delay-300">
-                        Plateforme d'élite où l'innovation rencontre l'expertise technique. Connectez-vous avec les meilleurs développeurs et transformez vos idées en réalité.
-                    </p>
-
-                    <!-- CTA Buttons -->
-                    <div class="flex flex-col sm:flex-row gap-4 pt-4 animate-in fade-in slide-in-from-top-6 duration-700 delay-400">
-                        <!-- Primary Button -->
+                    <div class="flex flex-wrap gap-5 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
                         <a href="{{ route('projects.list') }}" wire:navigate
-                            class="inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-white bg-primary hover:bg-primary/90 active:bg-primary/80 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-                            Explorer les Projets
-                            <svg class="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                            </svg>
+                            class="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white bg-slate-900 dark:bg-primary rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl">
+                            <span class="relative z-10 flex items-center gap-2">
+                                Découvrir le Portfolio
+                                <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                            </span>
                         </a>
-
-                        <!-- Secondary Button -->
                         <a href="{{ route('developers.list') }}" wire:navigate
-                            class="inline-flex items-center justify-center px-8 py-3.5 text-base font-semibold text-primary bg-white border-2 border-primary hover:bg-primary/10 active:bg-primary/20 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-                            Trouver un Expert
+                            class="inline-flex items-center justify-center px-8 py-4 font-bold text-slate-900 dark:text-white glass rounded-2xl transition-all duration-300 hover:bg-white/60 dark:hover:bg-gray-800/60 active:scale-95">
+                            Nos Experts
                         </a>
                     </div>
 
-                    <!-- Stats Row -->
-                    <div class="grid grid-cols-3 gap-8 pt-12 border-t border-slate-200 animate-in fade-in slide-in-from-top-6 duration-700 delay-500">
-                        <div class="space-y-2">
-                            <div class="text-3xl md:text-4xl font-black text-primary">500+</div>
-                            <p class="text-sm text-slate-600">Projets</p>
+                    <!-- Trust Badges -->
+                    <div class="pt-8 flex flex-wrap gap-8 items-center border-t border-slate-200/50 dark:border-slate-800/50 animate-in fade-in duration-1000 delay-500">
+                        <div class="flex flex-col">
+                            <span class="text-3xl font-black text-slate-900 dark:text-white">500+</span>
+                            <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Projets Livrés</span>
                         </div>
-                        <div class="space-y-2">
-                            <div class="text-3xl md:text-4xl font-black text-secondary">150+</div>
-                            <p class="text-sm text-slate-600">Experts</p>
-                        </div>
-                        <div class="space-y-2">
-                            <div class="text-3xl md:text-4xl font-black text-primary">98%</div>
-                            <p class="text-sm text-slate-600">Satisfaction</p>
+                        <div class="h-8 w-[1px] bg-slate-200 dark:bg-slate-800 hidden sm:block"></div>
+                        <div class="flex flex-col">
+                            <span class="text-3xl font-black text-primary">98%</span>
+                            <span class="text-xs font-bold uppercase tracking-widest text-slate-500">Satisfaction</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right Visual Elements -->
-                <div class="hidden lg:flex items-center justify-center relative h-96">
-                    <div class="absolute inset-0 space-y-8">
-
-                        <!-- Card 1 - Innovation -->
-                        <div class="absolute top-0 right-0 w-56 bg-white border border-primary/20 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:border-primary transition-all duration-300 group cursor-pointer">
-                            <div class="flex items-start justify-between mb-3">
-                                <div>
-                                    <p class="text-xs font-bold uppercase tracking-wider text-primary mb-2">Innovation</p>
-                                    <p class="text-sm text-slate-700 leading-relaxed">Solutions technologiques avancées</p>
-                                </div>
-                                <div class="w-2 h-2 rounded-full bg-primary/100 animate-pulse flex-shrink-0"></div>
+                <!-- Interactive Visual Section -->
+                <div class="hidden lg:block relative">
+                    <div class="relative z-10 glass-dark rounded-[2.5rem] p-8 shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-700">
+                        <div class="flex items-center justify-between mb-8">
+                            <div class="flex gap-2">
+                                <div class="w-3 h-3 rounded-full bg-red-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-400"></div>
                             </div>
+                            <div class="text-xs font-mono text-slate-500">obryl-tech.system</div>
                         </div>
-
-                        <!-- Card 2 - Excellence -->
-                        <div class="absolute bottom-20 left-0 w-56 bg-white border border-orange-200 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:border-orange-400 transition-all duration-300 group cursor-pointer">
-                            <div class="flex items-start justify-between mb-3">
-                                <div>
-                                    <p class="text-xs font-bold uppercase tracking-wider text-secondary mb-2">Excellence</p>
-                                    <p class="text-sm text-slate-700 leading-relaxed">Qualité sans compromis</p>
-                                </div>
-                                <div class="w-2 h-2 rounded-full bg-orange-500 animate-pulse flex-shrink-0"></div>
-                            </div>
+                        <div class="space-y-4 font-mono text-sm leading-relaxed">
+                            <p class="text-primary-light">const excellence = {</p>
+                            <p class="pl-4 text-slate-300">innovation: <span class="text-secondary">true</span>,</p>
+                            <p class="pl-4 text-slate-300">quality: <span class="text-secondary">"uncompromising"</span>,</p>
+                            <p class="pl-4 text-slate-300">speed: <span class="text-secondary">"optimized"</span></p>
+                            <p class="text-primary-light">};</p>
+                            <p class="text-slate-400 mt-4">// Deploying future...</p>
                         </div>
-
-                        <!-- Card 3 - Expertise -->
-                        <div class="absolute top-1/2 right-1/4 w-56 bg-white border border-primary/20 rounded-2xl p-6 shadow-lg hover:shadow-xl hover:border-primary transition-all duration-300 group cursor-pointer">
-                            <div class="flex items-start justify-between mb-3">
-                                <div>
-                                    <p class="text-xs font-bold uppercase tracking-wider text-primary mb-2">Expertise</p>
-                                    <p class="text-sm text-slate-700 leading-relaxed">Équipe de professionnels</p>
-                                </div>
-                                <div class="w-2 h-2 rounded-full bg-primary/100 animate-pulse flex-shrink-0"></div>
-                            </div>
+                        
+                        <!-- Floating Cards inside Visual -->
+                        <div class="absolute -top-12 -right-8 glass p-6 rounded-2xl shadow-xl animate-float">
+                            <div class="text-primary font-black">Performance</div>
+                            <div class="text-xs text-slate-500">Lighthouse Score 100</div>
+                        </div>
+                        <div class="absolute -bottom-8 -left-8 glass p-6 rounded-2xl shadow-xl animate-float" style="animation-delay: 1.5s;">
+                            <div class="text-secondary font-black">Security</div>
+                            <div class="text-xs text-slate-500">Enterprise Encrypted</div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
         </div>
     </section>
 
+
     <!-- Projects Section -->
-    <section class="py-20 md:py-32 ">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <section class="py-24 relative overflow-hidden bg-white dark:bg-gray-950">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Section Header -->
-            <div class="mb-16 space-y-4">
-                <div class="inline-flex items-center gap-2">
-                    <div class="w-1 h-6 bg-primary rounded-full"></div>
-                    <span class="text-xs font-bold uppercase tracking-wider text-primary">Portfolio</span>
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+                <div class="space-y-4">
+                    <div class="inline-flex items-center gap-2">
+                        <div class="w-12 h-[2px] bg-primary"></div>
+                        <span class="text-xs font-bold uppercase tracking-[0.2em] text-primary">Portfolio</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">RÉALISATIONS <span class="text-primary">D'EXCEPTION</span></h2>
                 </div>
-                <h2 class="text-4xl md:text-5xl font-black text-accent-foreground">RÉALISATIONS D'EXCEPTION</h2>
+                <a href="{{ route('projects.list') }}" wire:navigate
+                    class="group inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors">
+                    Explorer tout le portfolio
+                    <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
             </div>
 
             <!-- Projects Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 @forelse($latestProjects as $project)
-                    <article class="group bg-white rounded-xl shadow-md hover:shadow-xl overflow-hidden transition-all duration-300 hover:-translate-y-1">
-                        <!-- Image -->
-                        <div class="aspect-video overflow-hidden bg-slate-100">
+                    <article class="group relative flex flex-col bg-white dark:bg-gray-900 rounded-[2rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
+                        <!-- Image Container -->
+                        <div class="relative aspect-[4/3] overflow-hidden">
                             @if ($project->featured_image)
                                 <img src="{{ $project->featured_image }}" alt="{{ $project->title }}"
-                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                             @else
-                                <div class="w-full h-full flex items-center justify-center text-slate-300">
-                                    <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                    </svg>
+                                <div class="w-full h-full flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-300">
+                                    <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                                 </div>
                             @endif
+                            <!-- Overlay Badge -->
+                            <div class="absolute top-4 left-4 flex gap-2">
+                                @foreach (array_slice($project->technologies ?? [], 0, 1) as $tech)
+                                    <span class="px-3 py-1 text-[10px] font-bold uppercase tracking-widest bg-white/90 dark:bg-gray-950/90 text-slate-900 dark:text-white backdrop-blur-md rounded-full shadow-sm">
+                                        {{ $tech }}
+                                    </span>
+                                @endforeach
+                            </div>
                         </div>
 
                         <!-- Content -->
-                        <div class="p-6 md:p-8 space-y-4">
-                            <!-- Technologies -->
-                            <div class="flex flex-wrap gap-2">
-                                @foreach (array_slice($project->technologies ?? [], 0, 3) as $tech)
-                                    <span class="inline-flex items-center px-3 py-1 text-xs font-semibold text-primary/90 bg-primary/10 border border-primary/20 rounded-full">{{ $tech }}</span>
-                                @endforeach
-                            </div>
-
-                            <!-- Title -->
-                            <h3 class="text-xl font-bold text-slate-900 group-hover:text-primary transition-colors line-clamp-2">
+                        <div class="p-8 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white mb-3 group-hover:text-primary transition-colors">
                                 {{ $project->title }}
                             </h3>
-
-                            <!-- Description -->
-                            <p class="text-slate-600 text-sm leading-relaxed line-clamp-2">
+                            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-2 mb-6 flex-grow">
                                 {{ $project->description }}
                             </p>
-
-                            <!-- Link -->
                             <a href="{{ route('projects.detail', $project->slug) }}" wire:navigate
-                                class="inline-flex items-center text-sm font-semibold text-primary hover:text-primary/90 group/link transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1">
-                                Découvrir le projet
-                                <svg class="ml-2 w-4 h-4 transition-transform group-hover/link:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                                </svg>
+                                class="inline-flex items-center font-bold text-sm text-slate-900 dark:text-white border-b-2 border-primary/20 hover:border-primary transition-all pb-1 w-fit">
+                                Voir les détails
                             </a>
                         </div>
                     </article>
                 @empty
-                    <div class="col-span-full text-center py-12">
-                        <p class="text-slate-500 text-base">Aucun projet récent disponible.</p>
+                    <div class="col-span-full py-20 text-center glass rounded-3xl">
+                        <p class="text-slate-500 font-medium">Aucun projet récent disponible.</p>
                     </div>
                 @endforelse
-            </div>
-
-            <!-- View All Link -->
-            <div class="mt-12 text-center">
-                <a href="{{ route('projects.list') }}" wire:navigate
-                    class="inline-flex items-center text-base font-semibold text-slate-900 hover:text-primary border-b-2 border-primary pb-1 transition-colors">
-                    Voir tout le portfolio
-                </a>
             </div>
         </div>
     </section>
 
-    <!-- Developers Section -->
-    <section class="py-20 md:py-32 bg-slate-900 text-white">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <!-- Developers Section - Premium Team Display -->
+    <section class="py-24 bg-slate-900 dark:bg-black relative overflow-hidden">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 opacity-20 pointer-events-none">
+            <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px]"></div>
+            <div class="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[120px]"></div>
+        </div>
+
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Section Header -->
-            <div class="mb-16 text-center space-y-4">
+            <div class="text-center max-w-3xl mx-auto mb-20 space-y-4">
                 <div class="inline-flex items-center gap-2">
-                    <div class="w-1 h-6 bg-primary/100 rounded-full"></div>
-                    <span class="text-xs font-bold uppercase tracking-wider text-primary">Notre Équipe</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-primary">Le Mindset OBRYL</span>
                 </div>
-                <h2 class="text-4xl md:text-5xl font-black">EXPERTS TECHNIQUES D'ÉLITE</h2>
+                <h2 class="text-4xl md:text-5xl font-black text-white">EXPERTS TECHNIQUES <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary to-primary-light">D'ÉLITE</span></h2>
+                <p class="text-slate-400 text-lg">L'excellence n'est pas un acte, mais une habitude.</p>
             </div>
 
             <!-- Developers Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
                 @forelse($featuredDevelopers as $developer)
-                    <div class="text-center group">
-                        <!-- Avatar -->
-                        <div class="relative mb-6 inline-block">
-                            <div class="absolute inset-0 bg-primary rounded-2xl transform translate-x-2 translate-y-2 group-hover:translate-x-0 group-hover:translate-y-0 transition-transform duration-300"></div>
-                            @php
-                                $avatar = $developer->profile?->avatar_url ?? 'https://ui-avatars.com/api/?name='.urlencode($developer->name).'&color=10B981&background=F0FDF4';
-                            @endphp
-                            <img src="{{ $avatar }}" alt="{{ $developer->name }}"
-                                class="relative w-48 h-48 object-cover rounded-2xl border-2 border-white transition-transform duration-300 group-hover:scale-105 focus:outline-none focus:ring-2 focus:ring-primary">
+                    <div class="group text-center">
+                        <div class="relative mb-8 mx-auto w-48 h-48">
+                            <!-- Decorative Rings -->
+                            <div class="absolute inset-[-8px] rounded-full border-2 border-primary/20 scale-90 group-hover:scale-110 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                            <div class="absolute inset-[-15px] rounded-full border border-secondary/10 scale-90 group-hover:scale-105 opacity-0 group-hover:opacity-100 transition-all duration-700 delay-75"></div>
+                            
+                            <!-- Avatar -->
+                            <div class="relative w-full h-full rounded-full overflow-hidden border-4 border-slate-800 shadow-2xl transition-transform duration-500 group-hover:rotate-6">
+                                @php
+                                    $avatar = $developer->profile?->avatar_url ?? 'https://ui-avatars.com/api/?name='.urlencode($developer->name).'&color=10B981&background=0F172A';
+                                @endphp
+                                <img src="{{ $avatar }}" alt="{{ $developer->name }}" class="w-full h-full object-cover">
+                                <!-- Dark Overlay on hover -->
+                                <div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            </div>
                         </div>
 
-                        <!-- Info -->
-                        <h3 class="text-xl font-bold mb-1">{{ $developer->name }}</h3>
-                        <p class="text-slate-400 text-sm mb-6">{{ $developer->profile?->title ?? 'Développeur Expert' }}</p>
-
-                        <!-- Button -->
-                        <a href="{{ route('developers.profile', $developer->id) }}" wire:navigate
-                            class="inline-flex items-center justify-center px-6 py-2.5 text-xs font-semibold uppercase tracking-wider border-2 border-primary text-primary hover:bg-primary hover:text-white transition-all duration-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-slate-900">
-                            Voir le profil
-                        </a>
+                        <div class="space-y-2">
+                            <h3 class="text-xl font-bold text-white group-hover:text-primary transition-colors">{{ $developer->name }}</h3>
+                            <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">{{ $developer->profile?->title ?? 'Développeur Expert' }}</p>
+                            
+                            <div class="pt-6">
+                                <a href="{{ route('developers.profile', $developer->id) }}" wire:navigate
+                                    class="inline-flex items-center justify-center px-6 py-2 text-xs font-bold uppercase tracking-widest text-primary border border-primary/30 rounded-full hover:bg-primary hover:text-white transition-all duration-300">
+                                    Portfolio
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 @empty
-                    <div class="col-span-full text-center py-12">
-                        <p class="text-slate-400 text-base">Aucun expert disponible pour le moment.</p>
+                    <div class="col-span-full py-20 text-center border-2 border-dashed border-slate-800 rounded-3xl">
+                        <p class="text-slate-500">Équipe en cours de déploiement...</p>
                     </div>
                 @endforelse
             </div>
         </div>
     </section>
 
-    <!-- Blog Section -->
-    <section class="py-20 md:py-32 bg-white">
-        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+    <!-- Blog Section - Premium Insights -->
+    <section class="py-24 bg-slate-50 dark:bg-gray-900/50 relative overflow-hidden">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
             <!-- Section Header -->
-            <div class="mb-16 space-y-4">
-                <div class="inline-flex items-center gap-2">
-                    <div class="w-1 h-6 bg-primary rounded-full"></div>
-                    <span class="text-xs font-bold uppercase tracking-wider text-primary">Insights</span>
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+                <div class="space-y-4">
+                    <div class="inline-flex items-center gap-2">
+                        <div class="w-12 h-[2px] bg-secondary"></div>
+                        <span class="text-xs font-bold uppercase tracking-[0.2em] text-secondary">Insights</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">ACTUALITÉS <span class="text-secondary">TECH</span></h2>
                 </div>
-                <h2 class="text-4xl md:text-5xl font-black text-slate-900">ACTUALITÉS TECH & INNOVATIONS</h2>
-                <p class="text-slate-600 text-base max-w-2xl">Analyses pointues, tutoriels experts et dernières tendances technologiques.</p>
+                <a href="{{ route('blog.index') }}" wire:navigate
+                    class="group inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-secondary transition-colors">
+                    Explorer tout le blog
+                    <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
             </div>
 
             <!-- Articles Grid -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 @forelse($recentArticles as $article)
-                    <article class="group flex flex-col h-full">
+                    <article class="group flex flex-col h-full bg-white dark:bg-gray-900 p-4 rounded-[2rem] border border-slate-100 dark:border-slate-800 hover:shadow-xl transition-all duration-500">
                         <!-- Image -->
-                        <div class="aspect-video overflow-hidden bg-slate-100 mb-6 rounded-lg">
+                        <div class="aspect-video overflow-hidden rounded-[1.5rem] mb-6">
                             @if ($article->featured_image)
                                 <img src="{{ $article->featured_image }}" alt="{{ $article->title }}"
-                                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                             @else
-                                <div class="w-full h-full flex items-center justify-center text-slate-300">
-                                    <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l5 5v11a2 2 0 01-2 2z" />
-                                    </svg>
+                                <div class="w-full h-full flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-300">
+                                    <svg class="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10l5 5v11a2 2 0 01-2 2z" /></svg>
                                 </div>
                             @endif
                         </div>
 
                         <!-- Meta -->
-                        <div class="flex items-center gap-3 text-xs font-semibold uppercase tracking-wider text-slate-500 mb-4 flex-wrap">
-                            <span class="text-primary">{{ $article->category?->label() ?? 'Article' }}</span>
-                            <span>•</span>
+                        <div class="px-2 flex items-center justify-between text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4">
+                            <span class="px-2 py-1 rounded-md bg-secondary/10 text-secondary">{{ $article->category?->label() ?? 'Article' }}</span>
                             <span>{{ $article->published_at?->format('d M Y') }}</span>
                         </div>
 
                         <!-- Title -->
-                        <h3 class="text-xl md:text-2xl font-bold text-slate-900 group-hover:text-primary transition-colors mb-3 line-clamp-2 flex-grow">
-                            <a href="{{ route('blog.show', $article->slug) }}" wire:navigate
-                                class="focus:outline-none focus:ring-2 focus:ring-primary rounded px-1">
-                                {{ $article->title }}
-                            </a>
-                        </h3>
-
-                        <!-- Excerpt -->
-                        <p class="text-slate-600 text-sm leading-relaxed line-clamp-3 mb-4">
-                            {{ $article->excerpt ?? Str::limit(strip_tags($article->content), 120) }}
-                        </p>
+                        <div class="px-2 space-y-3 flex-grow">
+                            <h3 class="text-xl font-bold text-slate-900 dark:text-white group-hover:text-secondary transition-colors line-clamp-2">
+                                <a href="{{ route('blog.show', $article->slug) }}" wire:navigate class="focus:outline-none">
+                                    {{ $article->title }}
+                                </a>
+                            </h3>
+                            <p class="text-slate-500 dark:text-slate-400 text-sm leading-relaxed line-clamp-3">
+                                {{ $article->excerpt ?? Str::limit(strip_tags($article->content), 120) }}
+                            </p>
+                        </div>
 
                         <!-- Link -->
-                        <a href="{{ route('blog.show', $article->slug) }}" wire:navigate
-                            class="inline-flex items-center text-sm font-semibold text-primary hover:text-primary/90 group/more transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded px-2 py-1">
-                            Lire l'article
-                            <svg class="ml-2 w-4 h-4 transition-transform group-hover/more:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                            </svg>
-                        </a>
+                        <div class="p-2 pt-6">
+                            <a href="{{ route('blog.show', $article->slug) }}" wire:navigate
+                                class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-white hover:text-secondary transition-colors">
+                                Lire plus
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                            </a>
+                        </div>
                     </article>
                 @empty
-                    <div class="col-span-full text-center py-12">
-                        <p class="text-slate-500 text-base">Aucun article disponible.</p>
+                    <div class="col-span-full py-20 text-center glass rounded-3xl">
+                        <p class="text-slate-500 font-medium">Le blog se prépare...</p>
                     </div>
                 @endforelse
             </div>
+        </div>
+    </section>
 
-            <!-- View All Link -->
-            <div class="mt-12 text-center">
-                <a href="{{ route('blog.index') }}" wire:navigate
-                    class="inline-flex items-center text-base font-semibold text-slate-900 hover:text-primary border-b-2 border-primary pb-1 transition-colors">
-                    Explorer tout le blog
-                </a>
+    <!-- Final CTA Section - High Impact -->
+    <section class="py-32 relative overflow-hidden">
+        <!-- Background with Mesh Gradient -->
+        <div class="absolute inset-0 bg-slate-900 dark:bg-black">
+             <div class="absolute inset-0 bg-mesh-gradient opacity-30"></div>
+        </div>
+
+        <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="glass-dark rounded-[3rem] p-12 md:p-20 text-center space-y-12 border-white/10 shadow-3xl">
+                <div class="space-y-6">
+                    <h2 class="text-5xl md:text-7xl font-black text-white tracking-tighter leading-tight">
+                        PRÊT À <span class="text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary-light to-secondary">TRANSFORMER</span> <br class="hidden sm:block"/>VOS IDÉES ?
+                    </h2>
+                    <p class="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto font-medium">
+                        Rejoignez l'élite technologique et donnez vie à vos projets les plus ambitieux.
+                    </p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                    @auth
+                        <a href="{{ route('dashboard') }}" wire:navigate
+                            class="inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-slate-950 bg-white hover:bg-slate-200 rounded-2xl shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95">
+                            ACCÉDER AU DASHBOARD
+                        </a>
+                    @else
+                        <a href="{{ route('register') }}" wire:navigate
+                            class="inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-white bg-primary hover:bg-primary-light rounded-2xl shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95">
+                            REJOINDRE L'AVENTURE
+                        </a>
+                        <a href="{{ route('login') }}" wire:navigate
+                            class="inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-white glass-dark rounded-2xl hover:bg-white/10 transition-all duration-300 hover:scale-105 active:scale-95">
+                            SE CONNECTER
+                        </a>
+                    @endauth
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Final CTA Section -->
-    <section class="py-20 md:py-32 bg-primary text-white relative overflow-hidden">
-        <!-- Background Elements -->
-        <div class="absolute inset-0 overflow-hidden pointer-events-none">
-            <div class="absolute top-10 right-20 w-64 h-64 bg-secondary/10 rounded-full blur-3xl animate-float"></div>
-            <div class="absolute bottom-10 left-20 w-80 h-80 bg-white/5 rounded-full blur-3xl animate-float" style="animation-delay: 1.5s;"></div>
-        </div>
-
-        <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <!-- Title -->
-            <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 tracking-tight leading-tight">
-                PRÊT À <span class="text-secondary">TRANSFORMER</span> <br class="hidden sm:block"/>VOS IDÉES EN RÉALITÉ ?
-            </h2>
-
-            <!-- Description -->
-            <p class="text-lg md:text-xl text-white/90 mb-12 max-w-2xl mx-auto leading-relaxed">
-                Rejoignez la plateforme où l'excellence technique rencontre l'innovation créative. Votre projet mérite le meilleur.
-            </p>
-
-            <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                @auth
-                    <a href="{{ route('dashboard') }}" wire:navigate
-                        class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-primary bg-white hover:bg-gray-50 active:bg-gray-100 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary">
-                        ACCÉDER AU DASHBOARD
-                    </a>
-                @else
-                    <a href="{{ route('register') }}" wire:navigate
-                        class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-primary bg-white hover:bg-gray-50 active:bg-gray-100 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary">
-                        REJOINDRE OBRYL TECH
-                    </a>
-                    <a href="{{ route('login') }}" wire:navigate
-                        class="inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white border-2 border-white hover:bg-white hover:text-primary active:bg-gray-100 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-primary">
-                        SE CONNECTER
-                    </a>
-                @endauth
-            </div>
-        </div>
-    </section>
 
 </div>
