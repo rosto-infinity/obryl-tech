@@ -22,6 +22,7 @@
                 <x-project.milestones :project="$project" />
 
                 {{-- Reviews --}}
+                <livewire:project.review-form :project="$project" />
                 <x-project.reviews :project="$project" />
             </div>
 

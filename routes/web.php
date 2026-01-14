@@ -59,6 +59,9 @@ Route::view('legal/mentions-legales', 'legal.mentions-legales')->name('legal.men
 Route::view('legal/politique-confidentialite', 'legal.politique-confidentialite')->name('legal.privacy');
 Route::view('legal/cgu', 'legal.cgu')->name('legal.cgu');
 
+// Routes Publiques "Avis/Témoignages"
+Route::get('avis', \App\Livewire\Public\Reviews::class)->name('reviews.public');
+
 // Routes protégées (nécessitent une authentification)
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
@@ -108,6 +111,11 @@ Route::get('/storage/private/{path}', function ($path) {
     // Routes des commissions (nécessitent authentification)
     Route::get('commissions', CommissionDashboard::class)->name('commissions.dashboard');
     Route::get('commissions/history', CommissionHistory::class)->name('commissions.history');
+    
+    // Avis (Dashboard) - Scoped pour Client/Dev/Admin
+    Route::get('reviews', \App\Livewire\Review\ReviewList::class)->name('reviews.index');
+    // Détail d'un avis (si existant)
+    Route::get('reviews/{review}', \App\Livewire\Review\ReviewDetail::class)->name('reviews.show');
     
  
 Route::middleware(['auth'])->prefix('workload')->group(function () {

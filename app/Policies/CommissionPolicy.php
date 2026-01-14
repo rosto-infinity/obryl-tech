@@ -67,4 +67,14 @@ class CommissionPolicy
         return $authUser->can('Reorder:Commission');
     }
 
+    public function approve(AuthUser $authUser, Commission $commission): bool
+    {
+        return $authUser->hasRole('super_admin') || $authUser->can('Update:Commission');
+    }
+
+    public function pay(AuthUser $authUser, Commission $commission): bool
+    {
+        return $authUser->hasRole('super_admin') || $authUser->can('Update:Commission');
+    }
+
 }

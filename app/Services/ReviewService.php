@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Models\Review;
 use App\Models\User;
 use App\Enums\ReviewStatus;
+use App\Enums\Project\ProjectStatus;
 
 class ReviewService
 {
@@ -88,6 +89,11 @@ class ReviewService
      */
     public function canUserReviewProject(User $user, $project): bool
     {
+        // DEV: Allow Admins to see the form for testing
+        if ($user->hasRole('super_admin') || $user->isAdmin()) {
+            return true;
+        }
+
         // Only clients can review projects
         if (!$user->isClient()) {
             return false;
@@ -98,8 +104,8 @@ class ReviewService
             return false;
         }
 
-        // Project must be completed
-        if ($project->status !== 'completed') {
+        // Project must be completed or published
+        if (!in_array($project->status, [ProjectStatus::COMPLETED, ProjectStatus::PUBLISHED])) {
             return false;
         }
 

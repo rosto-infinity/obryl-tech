@@ -1,81 +1,82 @@
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
     {{-- Header Profile --}}
-    <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-        <div class="bg-gradient-to-r from-primary to-secondary h-32"></div>
-        <div class="px-8 pb-8">
-            <div class="flex items-end -mt-16 mb-6">
-                <div class="w-32 h-32 bg-white rounded-full border-4 border-white shadow-lg flex items-center justify-center">
+    {{-- Header Profile --}}
+    <div class="bg-white rounded-lg border border-gray-100 dark:border-gray-700 overflow-hidden mb-8">
+        {{-- Removed Gradient --}}
+        <div class="px-8 py-8">
+            <div class="flex flex-col md:flex-row items-center md:items-start">
+                <div class="w-32 h-32 bg-gray-50 rounded-full border-4 border-white shadow flex items-center justify-center shrink-0">
                     <span class="text-3xl font-bold text-primary">{{ $developer->initials() }}</span>
                 </div>
-                <div class="ml-6 mb-4">
+                <div class="mt-6 md:mt-0 md:ml-6 text-center md:text-left flex-1">
                     <h1 class="text-3xl font-bold text-gray-900 dark:text-white">{{ $developer->name }}</h1>
                     <p class="text-lg text-gray-600 dark:text-gray-300">
                         {{ $developer->profile?->specialization?->label() ?? 'Développeur' }}
                     </p>
-                    <div class="flex items-center mt-2 space-x-4">
+                    <div class="flex items-center justify-center md:justify-start mt-2 space-x-4">
                         @if($developer->profile?->is_verified)
-                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                                ✓ Développeur vérifié
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-50 text-green-700 border border-green-100">
+                                ✓ Vérifié
                             </span>
                         @endif
                         
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium border
                             @switch($developer->profile?->availability)
                                 @case('available')
-                                    bg-green-100 text-green-800
+                                    bg-green-50 text-green-700 border-green-100
                                 @break
                                 @case('busy')
-                                    bg-yellow-100 text-yellow-800
+                                    bg-yellow-50 text-yellow-700 border-yellow-100
                                 @break
                                 @case('unavailable')
-                                    bg-red-100 text-red-800
+                                    bg-red-50 text-red-700 border-red-100
                                 @break
                                 @default
-                                    bg-gray-100 text-gray-800
+                                    bg-gray-50 text-gray-700 border-gray-100
                             @endswitch
                         ">
                             {{ $developer->profile?->availability?->label() ?? 'Non disponible' }}
                         </span>
                     </div>
                 </div>
+                
+                {{-- Actions --}}
+                <div class="mt-6 md:mt-0 flex space-x-3">
+                    <button class="bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors duration-200">
+                        Contacter
+                    </button>
+                    <button disabled class="border border-gray-200 text-gray-400 px-6 py-2 rounded-lg cursor-not-allowed" title="Bientôt disponible">
+                        Voir le portfolio (Bientôt)
+                    </button>
+                </div>
             </div>
             
             {{-- Bio --}}
             @if($developer->profile?->bio)
-                <div class="mb-6">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">Bio</h3>
-                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed">{{ $developer->profile?->bio }}</p>
+                <div class="mt-8 border-t border-gray-100 pt-8">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">À propos</h3>
+                    <p class="text-gray-600 dark:text-gray-300 leading-relaxed max-w-3xl">{{ $developer->profile?->bio }}</p>
                 </div>
             @endif
             
             {{-- Stats Grid --}}
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class="text-2xl font-bold text-primary">{{ $stats['completed_projects'] }}</div>
-                    <div class="text-sm text-gray-600">Projets complétés</div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+                <div class="text-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                    <div class="text-2xl font-bold text-gray-900">{{ $stats['completed_projects'] }}</div>
+                    <div class="text-sm text-gray-500">Projets complétés</div>
                 </div>
-                <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class="text-2xl font-bold text-primary">{{ number_format($stats['total_earnings'], 0, ',', ' ') }}</div>
-                    <div class="text-sm text-gray-600">Gains totaux</div>
+                <div class="text-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                    <div class="text-2xl font-bold text-gray-900">{{ number_format($stats['total_earnings'], 0, ',', ' ') }}</div>
+                    <div class="text-sm text-gray-500">Gains totaux</div>
                 </div>
-                <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class="text-2xl font-bold text-primary">{{ number_format($stats['average_rating'], 1) }}</div>
-                    <div class="text-sm text-gray-600">Note moyenne</div>
+                <div class="text-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                    <div class="text-2xl font-bold text-gray-900">{{ number_format($stats['average_rating'], 1) }}</div>
+                    <div class="text-sm text-gray-500">Note moyenne</div>
                 </div>
-                <div class="text-center p-4 bg-gray-50 rounded-lg">
-                    <div class="text-2xl font-bold text-primary">{{ $stats['total_reviews'] }}</div>
-                    <div class="text-sm text-gray-600">Avis clients</div>
+                <div class="text-center p-4 rounded-lg hover:bg-gray-50 transition-colors">
+                    <div class="text-2xl font-bold text-gray-900">{{ $stats['total_reviews'] }}</div>
+                    <div class="text-sm text-gray-500">Avis clients</div>
                 </div>
-            </div>
-            
-            {{-- Contact Actions --}}
-            <div class="flex space-x-4">
-                <button class="flex-1 bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/80 transition-colors duration-200">
-                    Contacter
-                </button>
-                <button class="flex-1 border border-primary text-primary px-6 py-3 rounded-lg hover:bg-primary/10 transition-colors duration-200">
-                    Voir le portfolio
-                </button>
             </div>
         </div>
     </div>

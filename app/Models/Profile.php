@@ -169,4 +169,20 @@ class Profile extends Model
         
         return [];
     }
+
+    public function updateAverageRating(): void
+    {
+        $average = \App\Models\Review::where('developer_id', $this->user_id)
+            ->where('status', \App\Enums\ReviewStatus::APPROVED)
+            ->avg('rating');
+
+        $count = \App\Models\Review::where('developer_id', $this->user_id)
+            ->where('status', \App\Enums\ReviewStatus::APPROVED)
+            ->count();
+
+        $this->update([
+            'average_rating' => round($average ?? 0, 1),
+            'total_reviews_count' => $count
+        ]);
+    }
 }

@@ -63,9 +63,19 @@ class ReviewList extends Component
 
     public function getReviewsProperty()
     {
+        $user = auth()->user();
         $query = Review::query()
-            ->with(['project', 'client', 'developer'])
-            ->when($this->search, function ($query) {
+            ->with(['project', 'client', 'developer']);
+
+        // Role-based Scoping
+        if ($user->isClient()) {
+            $query->where('client_id', $user->id);
+        } elseif ($user->isDeveloper()) {
+            $query->where('developer_id', $user->id);
+        }
+        // Admins see everything by default
+
+        $query->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('comment', 'like', '%' . $this->search . '%')
                       ->orWhereHas('project', function ($pq) {
@@ -151,16 +161,16 @@ class ReviewList extends Component
         
         return [
             'total' => $reviews->count(),
-            'approved' => $reviews->where('status', ReviewStatus::APPROVED->value)->count(),
-            'pending' => $reviews->where('status', ReviewStatus::PENDING->value)->count(),
-            'rejected' => $reviews->where('status', ReviewStatus::REJECTED->value)->count(),
-            'average_rating' => $reviews->where('status', ReviewStatus::APPROVED->value)->avg('rating'),
+            'approved' => $reviews->filter(fn($r) => $r->status === ReviewStatus::APPROVED)->count(),
+            'pending' => $reviews->filter(fn($r) => $r->status === ReviewStatus::PENDING)->count(),
+            'rejected' => $reviews->filter(fn($r) => $r->status === ReviewStatus::REJECTED)->count(),
+            'average_rating' => $reviews->filter(fn($r) => $r->status === ReviewStatus::APPROVED)->avg('rating'),
         ];
     }
 
     public function getRatingDistributionProperty(): array
     {
-        $approvedReviews = Review::where('status', ReviewStatus::APPROVED->value)->get();
+        $approvedReviews = Review::where('status', ReviewStatus::APPROVED)->get();
         
         return [
             5 => $approvedReviews->where('rating', '>=', 4.5)->count(),

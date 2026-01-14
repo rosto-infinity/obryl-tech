@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
+        @include('partials.theme-init')
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>{{ $title ?? 'OBRYL TECH' }} - Génie Informatique</title>
@@ -15,6 +16,7 @@
         
         <!-- Styles -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+        @fluxAppearance
         @livewireStyles
         @livewireScripts
     </head>
@@ -32,5 +34,6 @@
         <x-footer />
         
         @stack('scripts')
+        @fluxScripts
     </body>
 </html>

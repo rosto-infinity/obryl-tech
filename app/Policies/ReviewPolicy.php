@@ -29,7 +29,7 @@ class ReviewPolicy
 
     public function update(AuthUser $authUser, Review $review): bool
     {
-        return $authUser->can('Update:Review');
+        return $authUser->hasRole('super_admin') || $authUser->can('Update:Review');
     }
 
     public function delete(AuthUser $authUser, Review $review): bool

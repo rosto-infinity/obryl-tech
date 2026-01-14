@@ -2,7 +2,7 @@
     {{-- Header avec statistiques --}}
     <div class="bg-white rounded-lg shadow p-6">
         <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-gray-900">Avis des Développeurs</h2>
+            <h2 class="text-2xl font-bold text-gray-900">Avis des Cliens</h2>
             @if(auth()->user()->can('createReview'))
                 <a href="{{ route('reviews.create') }}"  wire:navigate class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/80 transition-colors duration-200">
                     + Nouvel Avis
@@ -13,8 +13,8 @@
         {{-- Statistiques --}}
         <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
             <div class="bg-blue-50 p-4 rounded-lg">
-                <div class="text-2xl font-bold text-blue-600">{{ $stats['total'] }}</div>
-                <div class="text-sm text-blue-500">Total</div>
+                <div class="text-2xl font-bold text-primary">{{ $stats['total'] }}</div>
+                <div class="text-sm text-primary">Total</div>
             </div>
             <div class="bg-green-50 p-4 rounded-lg">
                 <div class="text-2xl font-bold text-green-600">{{ $stats['approved'] }}</div>
@@ -123,12 +123,12 @@
                     {{-- Statut --}}
                     <div class="flex items-center justify-between">
                         <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
-                            @if($review->status === 'approved') bg-green-100 text-green-800
-                            @elseif($review->status === 'pending') bg-yellow-100 text-yellow-800
-                            @elseif($review->status === 'rejected') bg-red-100 text-red-800
+                            @if($review->status === \App\Enums\ReviewStatus::APPROVED) bg-green-100 text-green-800
+                            @elseif($review->status === \App\Enums\ReviewStatus::PENDING) bg-yellow-100 text-yellow-800
+                            @elseif($review->status === \App\Enums\ReviewStatus::REJECTED) bg-red-100 text-red-800
                             @else bg-gray-100 text-gray-800
                             @endif">
-                            {{ $review->status === 'approved' ? 'Approuvé' : ($review->status === 'pending' ? 'En attente' : 'Rejeté') }}
+                            {{ $review->status->label() }}
                         </span>
                         <span class="text-xs text-gray-500">
                             {{ $review->created_at->format('d/m/Y') }}
@@ -143,7 +143,7 @@
                     @endif
                     
                     {{-- Critères --}}
-                    @if($review->criteria)
+                    @if($review->criteria && is_array($review->criteria))
                         <div class="space-y-1 mb-3">
                             @foreach($review->criteria as $criterion => $score)
                                 <div class="flex justify-between text-xs">
@@ -157,20 +157,25 @@
                     {{-- Actions --}}
                     <div class="flex justify-between items-center pt-3 border-t">
                         <a href="{{ route('reviews.show', $review->id) }}"   wire:navigate
-                           class="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                           class="text-primary/80 hover:text-secondary text-sm font-medium">
                             Voir les détails
                         </a>
                         
-                        @if(auth()->user()->can('updateReview') && $review->status === 'pending')
+                        @if(auth()->user()->can('updateReview'))
                             <div class="flex space-x-2">
-                                <button wire:click="approveReview({{ $review->id }})" 
-                                        class="text-green-600 hover:text-green-800 text-sm">
-                                    ✅ Approuver
-                                </button>
-                                <button wire:click="rejectReview({{ $review->id }})" 
-                                        class="text-red-600 hover:text-red-800 text-sm">
-                                    ❌ Rejeter
-                                </button>
+                                @if($review->isPending() || $review->isRejected())
+                                    <button wire:click="approveReview({{ $review->id }})" 
+                                            class="text-green-600 hover:text-green-800 text-sm">
+                                        ✅ Approuver
+                                    </button>
+                                @endif
+
+                                @if($review->isPending() || $review->isApproved())
+                                    <button wire:click="rejectReview({{ $review->id }})" 
+                                            class="text-red-600 hover:text-red-800 text-sm">
+                                        ❌ Rejeter
+                                    </button>
+                                @endif
                             </div>
                         @endif
                         

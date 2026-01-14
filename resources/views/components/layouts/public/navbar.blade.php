@@ -29,6 +29,11 @@
                         :current="request()->routeIs('portfolio.*')" wire:navigate>Portfolio
                     </flux:navlist.item>
 
+                    <!-- Avis -->
+                    <flux:navlist.item href="{{ route('reviews.public') }}"
+                        :current="request()->routeIs('reviews.public')" wire:navigate>Avis
+                    </flux:navlist.item>
+
                     <!-- Blog -->
                     <flux:navlist.item href="{{ route('blog.index') }}"
                         :current="request()->routeIs('blog.*')" wire:navigate>Blog
@@ -65,22 +70,21 @@
 
             <!-- Appearance & Mobile menu button -->
             <div class="flex items-center gap-4">
-                <!-- Appearance Selector -->
-                <div x-data="{ open: false, appearance: localStorage.getItem('theme') || 'system' }" class="relative">
+                <!-- Appearance Selector - Utilise Flux -->
+                <div x-data class="relative">
                     <!-- Button -->
-                    <button @click="open = !open" type="button"
+                    <button @click="$refs.themeMenu.classList.toggle('hidden')" type="button"
                         class="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200">
-                        <svg x-show="appearance === 'light' || (appearance === 'system' && !window.matchMedia('(prefers-color-scheme: dark)').matches)"
-                            class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg x-show="$flux.appearance === 'light'" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 3v1m0 16v1m9-9h-1m-16 0H1m15.657 5.657l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
-                        <svg x-show="appearance === 'dark'" class="h-5 w-5" fill="none" stroke="currentColor"
+                        <svg x-show="$flux.appearance === 'dark'" class="h-5 w-5" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                         </svg>
-                        <svg x-show="appearance === 'system'" class="h-5 w-5" fill="none" stroke="currentColor"
+                        <svg x-show="$flux.appearance === 'system'" class="h-5 w-5" fill="none" stroke="currentColor"
                             viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M9.75 17L9 20m0 0l-.75 3M9 20H5m4 0h4m7-4v6m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM15 7a4 4 0 11-8 0 4 4 0 018 0z" />
@@ -88,16 +92,12 @@
                     </button>
 
                     <!-- Dropdown Menu -->
-                    <div x-show="open" @click.outside="open = false"
-                        class="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
+                    <div x-ref="themeMenu" @click.outside="$refs.themeMenu.classList.add('hidden')"
+                        class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
 
                         <!-- Light Option -->
-                        <button @click="
-                            appearance = 'light';
-                            localStorage.setItem('theme', 'light');
-                            document.documentElement.classList.remove('dark');
-                            open = false;
-                        " :class="appearance === 'light' ? 'bg-primary/10' : ''"
+                        <button @click="$flux.appearance = 'light'; $refs.themeMenu.classList.add('hidden')"
+                            :class="$flux.appearance === 'light' ? 'bg-primary/10' : ''"
                             class="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center gap-3">
                             <svg class="h-5 w-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -110,12 +110,8 @@
                         </button>
 
                         <!-- Dark Option -->
-                        <button @click="
-                            appearance = 'dark';
-                            localStorage.setItem('theme', 'dark');
-                            document.documentElement.classList.add('dark');
-                            open = false;
-                        " :class="appearance === 'dark' ? 'bg-primary/10' : ''"
+                        <button @click="$flux.appearance = 'dark'; $refs.themeMenu.classList.add('hidden')"
+                            :class="$flux.appearance === 'dark' ? 'bg-primary/10' : ''"
                             class="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center gap-3">
                             <svg class="h-5 w-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -128,16 +124,8 @@
                         </button>
 
                         <!-- System Option -->
-                        <button @click="
-                            appearance = 'system';
-                            localStorage.setItem('theme', 'system');
-                            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                                document.documentElement.classList.add('dark');
-                            } else {
-                                document.documentElement.classList.remove('dark');
-                            }
-                            open = false;
-                        " :class="appearance === 'system' ? 'bg-primary/10' : ''"
+                        <button @click="$flux.appearance = 'system'; $refs.themeMenu.classList.add('hidden')"
+                            :class="$flux.appearance === 'system' ? 'bg-primary/10' : ''"
                             class="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center gap-3">
                             <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

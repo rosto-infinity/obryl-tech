@@ -23,6 +23,7 @@ class Review extends Model
     protected $casts = [
         'rating' => 'integer',
         'criteria' => 'json',
+        'status' => \App\Enums\ReviewStatus::class,
     ];
 
     // Relations
@@ -44,17 +45,17 @@ class Review extends Model
     // Helpers
     public function isApproved(): bool
     {
-        return $this->status === 'approved';
+        return $this->status === \App\Enums\ReviewStatus::APPROVED;
     }
 
     public function isPending(): bool
     {
-        return $this->status === 'pending';
+        return $this->status === \App\Enums\ReviewStatus::PENDING;
     }
 
     public function isRejected(): bool
     {
-        return $this->status === 'rejected';
+        return $this->status === \App\Enums\ReviewStatus::REJECTED;
     }
 
     public function getRatingLabel(): string
@@ -76,7 +77,7 @@ class Review extends Model
 
     public function approve(): void
     {
-        $this->update(['status' => 'approved']);
+        $this->update(['status' => \App\Enums\ReviewStatus::APPROVED]);
         
         // Mettre à jour la note moyenne du développeur
         $this->developer->profile->updateAverageRating();
@@ -84,7 +85,7 @@ class Review extends Model
 
     public function reject(): void
     {
-        $this->update(['status' => 'rejected']);
+        $this->update(['status' => \App\Enums\ReviewStatus::REJECTED]);
     }
 
     // Scopes
