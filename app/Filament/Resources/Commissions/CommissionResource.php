@@ -11,6 +11,7 @@ use App\Filament\Resources\Commissions\Schemas\CommissionInfolist;
 use App\Filament\Resources\Commissions\Tables\CommissionsTable;
 use App\Models\Commission;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -21,6 +22,14 @@ class CommissionResource extends Resource
     protected static ?string $model = Commission::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    protected static string|UnitEnum|null $navigationGroup = 'Projets & Commissions';
+
+    protected static ?string $navigationLabel = 'Commissions';
+
+    protected static ?string $pluralLabel = 'Commissions';
+
+    protected static ?string $modelLabel = 'Commission';
 
     protected static ?string $recordTitleAttribute = 'project_id';
 

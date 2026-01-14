@@ -62,6 +62,12 @@ Route::view('legal/cgu', 'legal.cgu')->name('legal.cgu');
 // Routes protégées (nécessitent une authentification)
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
+    Route::get('notifications', \App\Livewire\Notification\NotificationCenter::class)->name('notifications');
+    
+    // Routes de Support
+    Route::get('support', \App\Livewire\Support\TicketList::class)->name('support.list');
+    Route::get('support/create', \App\Livewire\Support\TicketCreate::class)->name('support.create');
+    Route::get('support/{ticket}', \App\Livewire\Support\TicketChat::class)->name('support.chat');
     
     Route::redirect('settings', 'settings/profile');
     Route::get('settings/profile', Profile::class)->name('profile.edit');

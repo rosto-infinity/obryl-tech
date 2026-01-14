@@ -9,6 +9,7 @@ use App\Filament\Resources\WorkloadManagement\Schemas\WorkloadManagementForm;
 use App\Filament\Resources\WorkloadManagement\Tables\WorkloadManagementTable;
 use App\Models\WorkloadManagement;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -19,6 +20,14 @@ class WorkloadManagementResource extends Resource
     protected static ?string $model = WorkloadManagement::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    protected static string|UnitEnum|null $navigationGroup = 'Projets & Commissions';
+
+    protected static ?string $navigationLabel = 'Gestion de Charge';
+
+    protected static ?string $pluralLabel = 'Gestion de Charge';
+
+    protected static ?string $modelLabel = 'Charge';
 
     protected static ?string $recordTitleAttribute = 'developer_id';
 

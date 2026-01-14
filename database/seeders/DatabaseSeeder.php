@@ -15,8 +15,10 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             ProjectSeeder::class,
-            // ArticleSeeder::class,
+            ArticleSeeder::class,
             // SettingSeeder::class,
+            SupportTicketSeeder::class,
+            NotificationSeeder::class,
         ]);
 
         echo "\n";

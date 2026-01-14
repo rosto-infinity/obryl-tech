@@ -1,0 +1,47 @@
+<?php
+
+namespace App\Livewire\Support;
+
+use Livewire\Component;
+
+use App\Models\SupportTicket;
+
+class TicketChat extends Component
+{
+    public SupportTicket $ticket;
+    public $message = '';
+
+    protected $rules = [
+        'message' => 'required|string|min:1',
+    ];
+
+    public function mount(SupportTicket $ticket)
+    {
+        $this->ticket = $ticket;
+    }
+
+    public function sendMessage()
+    {
+        $this->validate();
+
+        $messages = $this->ticket->messages ?? [];
+        $messages[] = [
+            'id' => uniqid(),
+            'user_id' => auth()->id(),
+            'user_name' => auth()->user()->name,
+            'message' => $this->message,
+            'created_at' => now()->toIso8601String(),
+            'is_admin' => auth()->user()->isAdmin(),
+        ];
+
+        $this->ticket->update(['messages' => $messages]);
+        $this->message = '';
+        
+        $this->dispatch('message-sent');
+    }
+
+    public function render()
+    {
+        return view('livewire.support.ticket-chat');
+    }
+}

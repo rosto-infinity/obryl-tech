@@ -13,6 +13,7 @@ use App\Filament\Resources\Articles\Schemas\ArticleInfolist;
 use App\Filament\Resources\Articles\Tables\ArticlesTable;
 use App\Models\Article;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -26,11 +27,13 @@ class ArticleResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedNewspaper;
 
+    protected static string|UnitEnum|null $navigationGroup = 'Contenu & Marketing';
+
     protected static ?string $navigationLabel = 'Articles';
 
     protected static ?string $modelLabel = 'Article';
 
-    protected static ?string $pluralModelLabel = 'Articles';
+    protected static ?string $pluralLabel = 'Articles';
 
     protected static ?int $navigationSort = 1;
 

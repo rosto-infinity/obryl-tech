@@ -145,15 +145,15 @@ class User extends Authenticatable
     //     return $this->hasMany(Article::class, 'author_id');
     // }
 
-    // public function tickets(): HasMany
-    // {
-    //     return $this->hasMany(SupportTicket::class, 'user_id');
-    // }
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(SupportTicket::class, 'user_id');
+    }
 
-    // public function notifications(): HasMany
-    // {
-    //     return $this->hasMany(Notification::class);
-    // }
+    public function notifications(): HasMany
+    {
+        return $this->hasMany(Notification::class);
+    }
 
     // Helpers
     public function isDeveloper(): bool

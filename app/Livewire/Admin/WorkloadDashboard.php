@@ -72,6 +72,11 @@ class WorkloadDashboard extends Component
                     ->success()
                     ->send();
                 
+                session()->flash('notification', [
+                    'type' => 'success',
+                    'message' => count($redistributedProjects) . ' projet(s) réassigné(s) avec succès'
+                ]);
+
                 $this->dispatch('notification', [
                     'type' => 'success',
                     'message' => count($redistributedProjects) . ' projet(s) réassigné(s) avec succès'
@@ -85,6 +90,11 @@ class WorkloadDashboard extends Component
                     ->info()
                     ->send();
                 
+                session()->flash('notification', [
+                    'type' => 'info',
+                    'message' => 'Aucun développeur surchargé trouvé'
+                ]);
+
                 $this->dispatch('notification', [
                     'type' => 'info',
                     'message' => 'Aucun développeur surchargé trouvé'
@@ -97,6 +107,11 @@ class WorkloadDashboard extends Component
                 ->danger()
                 ->send();
                 
+            session()->flash('notification', [
+                'type' => 'error',
+                'message' => 'Erreur lors de la gestion de la surcharge: ' . $e->getMessage()
+            ]);
+
             $this->dispatch('notification', [
                 'type' => 'error',
                 'message' => 'Erreur lors de la gestion de la surcharge: ' . $e->getMessage()

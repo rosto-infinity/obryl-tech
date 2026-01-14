@@ -9,6 +9,7 @@ use App\Filament\Resources\ExternalDeveloperCommissions\Schemas\ExternalDevelope
 use App\Filament\Resources\ExternalDeveloperCommissions\Tables\ExternalDeveloperCommissionsTable;
 use App\Models\ExternalDeveloperCommission;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -19,6 +20,14 @@ class ExternalDeveloperCommissionResource extends Resource
     protected static ?string $model = ExternalDeveloperCommission::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    protected static string|UnitEnum|null $navigationGroup = 'Projets & Commissions';
+
+    protected static ?string $navigationLabel = 'Commissions Externes';
+
+    protected static ?string $pluralLabel = 'Commissions Externes';
+
+    protected static ?string $modelLabel = 'Commission Externe';
 
     protected static ?string $recordTitleAttribute = 'project_id';
 

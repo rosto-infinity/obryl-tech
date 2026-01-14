@@ -11,6 +11,7 @@ use App\Filament\Resources\Projects\Schemas\ProjectInfolist;
 use App\Filament\Resources\Projects\Tables\ProjectsTable;
 use App\Models\Project;
 use BackedEnum;
+use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -23,6 +24,14 @@ class ProjectResource extends Resource
     protected static ?string $model = Project::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    protected static string|UnitEnum|null $navigationGroup = 'Projets & Commissions';
+
+    protected static ?string $navigationLabel = 'Projets';
+
+    protected static ?string $pluralLabel = 'Projets';
+
+    protected static ?string $modelLabel = 'Projet';
 
     protected static ?string $recordTitleAttribute = 'title';
 
