@@ -33,11 +33,14 @@ class ArticleDetail extends Component
 
     public function toggleLike(): void
     {
+        if (!auth()->check()) {
+            $this->dispatch('notify', ['type' => 'error', 'message' => 'Veuillez vous connecter pour aimer cet article.']);
+            return;
+        }
+
         $likedKey = "article_liked_{$this->article->id}";
         
         if ($this->hasLiked) {
-            // Déjà liké, on pourrait décrémenter si on avait la méthode
-            // Pour l'instant on reste simple : on ne peut liker qu'une fois
             return;
         }
 
@@ -50,20 +53,23 @@ class ArticleDetail extends Component
 
     public function addComment(): void
     {
+        if (!auth()->check()) {
+            return; // Normalement géré par le bouton/formulaire masqué en UI
+        }
+
         $this->validate([
             'commentContent' => 'required|min:3|max:1000',
         ]);
 
-        // Simuler un utilisateur (ou utiliser auth())
-        $userId = auth()->id() ?? 0;
-        $userName = auth()->user()?->name ?? 'Anonyme';
+        $user = auth()->user();
 
         $comments = $this->article->comments ?? [];
         $comments[] = [
             'id' => uniqid(),
-            'user_name' => $userName,
+            'user_id' => $user->id,
+            'user_name' => $user->name,
             'content' => $this->commentContent,
-            'status' => 'approved', // Publié automatiquement
+            'status' => 'approved',
             'created_at' => now()->toDateTimeString(),
         ];
 

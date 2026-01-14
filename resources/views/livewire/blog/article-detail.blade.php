@@ -73,18 +73,30 @@
                             <div class="text-primary font-black text-3xl mb-1 tracking-tighter">{{ number_format($article->views_count) }}</div>
                             <div class="text-[8px] text-gray-400 uppercase tracking-[0.4em] font-black">Impact Vues</div>
                         </div>
-                        <button 
-                            wire:click="toggleLike"
-                            class="p-6 rounded-3xl transition-all flex flex-col items-center group/like {{ $hasLiked ? 'bg-primary text-white shadow-2xl shadow-primary/20 border border-primary/30' : 'bg-white text-gray-400 hover:bg-gray-50 border border-gray-100' }}"
-                        >
-                            <div class="font-black text-3xl mb-1 tracking-tighter flex items-center">
-                                <svg class="w-6 h-6 mr-3 {{ $hasLiked ? 'fill-white' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                                </svg>
-                                {{ number_format($article->likes_count) }}
+                        @auth
+                            <button 
+                                wire:click="toggleLike"
+                                class="p-6 rounded-3xl transition-all flex flex-col items-center group/like {{ $hasLiked ? 'bg-primary text-white shadow-2xl shadow-primary/20 border border-primary/30' : 'bg-white text-gray-400 hover:bg-gray-50 border border-gray-100' }}"
+                            >
+                                <div class="font-black text-3xl mb-1 tracking-tighter flex items-center">
+                                    <svg class="w-6 h-6 mr-3 {{ $hasLiked ? 'fill-white' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                    </svg>
+                                    {{ number_format($article->likes_count) }}
+                                </div>
+                                <div class="text-[8px] uppercase tracking-[0.4em] font-black {{ $hasLiked ? 'text-white' : 'text-gray-400' }}">Propulser</div>
+                            </button>
+                        @else
+                            <div class="p-6 bg-white rounded-3xl border border-gray-100 flex flex-col items-center group/like opacity-60">
+                                <div class="font-black text-3xl mb-1 tracking-tighter flex items-center text-gray-300">
+                                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                    </svg>
+                                    {{ number_format($article->likes_count) }}
+                                </div>
+                                <div class="text-[8px] uppercase tracking-[0.4em] font-black text-gray-300">Connectez-vous</div>
                             </div>
-                            <div class="text-[8px] uppercase tracking-[0.4em] font-black {{ $hasLiked ? 'text-white' : 'text-gray-400' }}">Propulser</div>
-                        </button>
+                        @endauth
                     </div>
                 </div>
 
@@ -109,17 +121,25 @@
                 {!! \Illuminate\Support\Str::markdown($article->content ?? '') !!}
             </article>
 
-            <!-- Like Button (Mobile/Tablet) -->
             <div class="lg:hidden flex justify-center py-12">
-                <button 
-                    wire:click="toggleLike"
-                    class="flex items-center space-x-4 px-12 py-6 rounded-[2rem] transition-all transform hover:scale-105 active:scale-95 {{ $hasLiked ? 'bg-primary text-white shadow-2xl shadow-primary/30' : 'bg-white border border-gray-200 text-gray-500 shadow-xl' }}"
-                >
-                    <svg class="w-8 h-8" fill="{{ $hasLiked ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                    </svg>
-                    <span class="font-black text-2xl tracking-tighter">{{ $article->likes_count }}</span>
-                </button>
+                @auth
+                    <button 
+                        wire:click="toggleLike"
+                        class="flex items-center space-x-4 px-12 py-6 rounded-[2rem] transition-all transform hover:scale-105 active:scale-95 {{ $hasLiked ? 'bg-primary text-white shadow-2xl shadow-primary/30' : 'bg-white border border-gray-200 text-gray-500 shadow-xl' }}"
+                    >
+                        <svg class="w-8 h-8" fill="{{ $hasLiked ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                        </svg>
+                        <span class="font-black text-2xl tracking-tighter">{{ $article->likes_count }}</span>
+                    </button>
+                @else
+                    <div class="flex items-center space-x-4 px-12 py-6 rounded-[2rem] bg-gray-50 border border-gray-100 text-gray-300 shadow-sm opacity-60">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                        <span class="font-black text-2xl tracking-tighter">{{ $article->likes_count }}</span>
+                    </div>
+                @endauth
             </div>
 
             <hr class="border-gray-100 h-px w-full">
@@ -131,43 +151,71 @@
                 </div>
 
                 <!-- Add Comment Form -->
-                <div class="bg-gray-50 p-10 rounded-[3rem] border border-gray-100 shadow-xl shadow-gray-100/50 relative overflow-hidden group">
-                    <div class="absolute -right-20 -top-20 w-60 h-60 bg-primary/5 rounded-full blur-3xl"></div>
-                    
-                    <h3 class="text-2xl font-black text-gray-900 mb-8 flex items-center tracking-tight">
-                        Contribuer à la discussion
-                    </h3>
-
-                    @if (session('comment_status'))
-                        <div class="mb-8 p-6 bg-primary/10 text-primary text-sm font-black rounded-3xl border border-primary/20 animate-pulse uppercase tracking-widest">
-                            {{ session('comment_status') }}
-                        </div>
-                    @endif
-
-                    <form wire:submit.prevent="addComment" class="space-y-6">
-                        <textarea 
-                            wire:model="commentContent"
-                            placeholder="Votre analyse ou question..." 
-                            class="w-full h-40 px-8 py-6 bg-white border border-gray-200 text-gray-900 placeholder-gray-400 rounded-3xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none text-lg font-medium"
-                        ></textarea>
-                        @error('commentContent') <span class="text-red-500 text-[10px] font-black uppercase tracking-widest px-4">{{ $message }}</span> @enderror
+                @auth
+                    <div class="bg-gray-50 p-10 rounded-[3rem] border border-gray-100 shadow-xl shadow-gray-100/50 relative overflow-hidden group">
+                        <div class="absolute -right-20 -top-20 w-60 h-60 bg-primary/5 rounded-full blur-3xl"></div>
                         
-                        <div class="flex flex-col sm:flex-row items-center justify-between gap-8">
-                            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] max-w-sm">
-                                Votre expertise technique est partagée instantanément avec la communauté.
-                            </p>
-                            <button 
-                                type="submit" 
-                                class="w-full sm:w-auto px-12 py-5 bg-primary hover:bg-gray-900 text-white font-black rounded-2xl transition-all shadow-xl shadow-primary/20 transform hover:-rotate-1 active:scale-95 uppercase tracking-widest text-xs"
-                                wire:loading.attr="disabled"
-                                wire:target="addComment"
-                            >
-                                <span wire:loading.remove wire:target="addComment">Soumettre</span>
-                                <span wire:loading wire:target="addComment">Validation...</span>
-                            </button>
+                        <h3 class="text-2xl font-black text-gray-900 mb-8 flex items-center tracking-tight">
+                            Contribuer à la discussion
+                        </h3>
+
+                        @if (session('comment_status'))
+                            <div class="mb-8 p-6 bg-primary/10 text-primary text-sm font-black rounded-3xl border border-primary/20 animate-pulse uppercase tracking-widest">
+                                {{ session('comment_status') }}
+                            </div>
+                        @endif
+
+                        <form wire:submit.prevent="addComment" class="space-y-6">
+                            <textarea 
+                                wire:model="commentContent"
+                                placeholder="Votre analyse ou question..." 
+                                class="w-full h-40 px-8 py-6 bg-white border border-gray-200 text-gray-900 placeholder-gray-400 rounded-3xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none text-lg font-medium"
+                            ></textarea>
+                            @error('commentContent') <span class="text-red-500 text-[10px] font-black uppercase tracking-widest px-4">{{ $message }}</span> @enderror
+                            
+                            <div class="flex flex-col sm:flex-row items-center justify-between gap-8">
+                                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-[0.2em] max-w-sm">
+                                    Votre expertise technique est partagée instantanément avec la communauté.
+                                </p>
+                                <button 
+                                    type="submit" 
+                                    class="w-full sm:w-auto px-12 py-5 bg-primary hover:bg-gray-900 text-white font-black rounded-2xl transition-all shadow-xl shadow-primary/20 transform hover:-rotate-1 active:scale-95 uppercase tracking-widest text-xs"
+                                    wire:loading.attr="disabled"
+                                    wire:target="addComment"
+                                >
+                                    <span wire:loading.remove wire:target="addComment">Soumettre</span>
+                                    <span wire:loading wire:target="addComment">Validation...</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                @else
+                    <div class="bg-gray-50 p-12 rounded-[3rem] border border-gray-100 text-center relative overflow-hidden group">
+                        <div class="absolute -left-20 -bottom-20 w-60 h-60 bg-primary/5 rounded-full blur-3xl"></div>
+                        
+                        <div class="relative z-10 space-y-8">
+                            <div class="w-20 h-20 bg-white rounded-3xl border border-gray-100 flex items-center justify-center mx-auto shadow-sm">
+                                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                                </svg>
+                            </div>
+                            <div class="space-y-4">
+                                <h3 class="text-2xl font-black text-gray-900 tracking-tight">Participez à la conversation</h3>
+                                <p class="text-gray-500 text-sm font-medium max-w-md mx-auto leading-relaxed">
+                                    Connectez-vous à votre compte Obryl Tech pour partager votre analyse technique ou poser vos questions sur cette expertise.
+                                </p>
+                            </div>
+                            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                                <a href="{{ route('login') }}" wire:navigate class="px-10 py-4 bg-primary text-white font-black rounded-2xl transition-all shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 uppercase tracking-widest text-[10px]">
+                                    Se connecter
+                                </a>
+                                <a href="{{ route('register') }}" wire:navigate class="px-10 py-4 bg-white border border-gray-200 text-gray-900 font-black rounded-2xl transition-all hover:bg-gray-50 hover:scale-105 active:scale-95 uppercase tracking-widest text-[10px]">
+                                    Créer un compte
+                                </a>
+                            </div>
                         </div>
-                    </form>
-                </div>
+                    </div>
+                @endauth
 
                 <!-- Comments List -->
                 <div class="space-y-8">

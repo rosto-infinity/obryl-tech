@@ -106,6 +106,18 @@ class User extends Authenticatable
                 }
             }
         });
+
+        // Assigner automatiquement le rôle correspondant au user_type
+        static::created(function ($user) {
+            $user->assignRole($user->user_type->value);
+        });
+
+        static::updated(function ($user) {
+            if ($user->isDirty('user_type')) {
+                // Synchroniser le rôle si le type a changé
+                $user->syncRoles([$user->user_type->value]);
+            }
+        });
     }
 
     /**

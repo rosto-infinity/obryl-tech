@@ -210,6 +210,7 @@
                 </div>
 
                
+            
 
                 <!-- Actions utilisateur mobile -->
                 @auth
