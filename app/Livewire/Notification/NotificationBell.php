@@ -8,6 +8,7 @@ class NotificationBell extends Component
 {
     public int $unreadCount = 0;
     public $notifications = [];
+    public string $mode = 'dropdown'; // 'dropdown' or 'link'
 
     protected $listeners = ['notification-received' => 'loadUnreadCount', 'notifications-read' => 'loadUnreadCount'];
 

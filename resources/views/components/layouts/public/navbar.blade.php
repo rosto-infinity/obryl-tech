@@ -40,11 +40,14 @@
 
                     <!-- Actions utilisateur -->
                     @auth
-                        <flux:navlist.item href="{{ route('dashboard') }}" :current="request()->routeIs('dashboard.*')"
-                            wire:navigate>
-                            <span
-                                class="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/80 transition-colors duration-200">Dashboard</span>
-                        </flux:navlist.item>
+                        <div class="flex items-center gap-4">
+                            <livewire:notification.notification-bell mode="link" />
+                            <flux:navlist.item href="{{ route('dashboard') }}" :current="request()->routeIs('dashboard.*')"
+                                wire:navigate>
+                                <span
+                                    class="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/80 transition-colors duration-200">Dashboard</span>
+                            </flux:navlist.item>
+                        </div>
                     @else
                         <flux:navlist.item href="{{ route('login') }}" :current="request()->routeIs('login')" wire:navigate>
                             <span
@@ -210,6 +213,10 @@
 
                 <!-- Actions utilisateur mobile -->
                 @auth
+                    <div class="flex items-center justify-between px-3 py-2">
+                        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">Notifications</span>
+                        <livewire:notification.notification-bell />
+                    </div>
                     <flux:navlist.item href="{{ route('dashboard') }}" :current="request()->routeIs('dashboard.*')"
                         wire:navigate>
                         <span
