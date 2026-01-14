@@ -1,11 +1,11 @@
     <div>
     
     <!-- Hero Section - Premium Mesh Gradient Design -->
-    <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden bg-mesh-gradient">
+    <section class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         
         <!-- Decorative Glass Blobs -->
-        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-primary/10 blur-[120px] animate-pulse"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-secondary/10 blur-[120px] animate-pulse" style="animation-delay: 2s;"></div>
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full animate-pulse"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full  animate-pulse" style="animation-delay: 2s;"></div>
 
         <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10 w-full">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -39,7 +39,7 @@
                             </span>
                         </a>
                         <a href="{{ route('developers.list') }}" wire:navigate
-                            class="inline-flex items-center justify-center px-8 py-4 font-bold text-slate-900 dark:text-white glass rounded-2xl transition-all duration-300 hover:bg-white/60 dark:hover:bg-gray-800/60 active:scale-95">
+                            class="inline-flex items-center justify-center px-8 py-4 font-bold text-slate-900 dark:text-white glass rounded-2xl transition-all duration-300 bg-primary dark:hover:bg-primary active:scale-95">
                             Nos Experts
                         </a>
                     </div>
@@ -60,14 +60,14 @@
 
                 <!-- Interactive Visual Section -->
                 <div class="hidden lg:block relative">
-                    <div class="relative z-10 glass-dark rounded-[2.5rem] p-8 shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-700">
+                    <div class="relative z-10 bg-black/75 rounded-[0.7rem] p-8 shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-700">
                         <div class="flex items-center justify-between mb-8">
                             <div class="flex gap-2">
                                 <div class="w-3 h-3 rounded-full bg-red-400"></div>
                                 <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
                                 <div class="w-3 h-3 rounded-full bg-green-400"></div>
                             </div>
-                            <div class="text-xs font-mono text-slate-500">obryl-tech.system</div>
+                            <div class="text-xs font-mono text-slate-300">obryl-tech.system</div>
                         </div>
                         <div class="space-y-4 font-mono text-sm leading-relaxed">
                             <p class="text-primary-light">const excellence = {</p>
@@ -79,11 +79,11 @@
                         </div>
                         
                         <!-- Floating Cards inside Visual -->
-                        <div class="absolute -top-12 -right-8 glass p-6 rounded-2xl shadow-xl animate-float">
+                        <div class="absolute -top-15 -right-8 glass p-6 rounded-[0.7rem] shadow-xl animate-float">
                             <div class="text-primary font-black">Performance</div>
                             <div class="text-xs text-slate-500">Lighthouse Score 100</div>
                         </div>
-                        <div class="absolute -bottom-8 -left-8 glass p-6 rounded-2xl shadow-xl animate-float" style="animation-delay: 1.5s;">
+                        <div class="absolute -bottom-15 -left-8 glass p-6 rounded-[0.7rem] shadow-xl animate-float" style="animation-delay: 1.5s;">
                             <div class="text-secondary font-black">Security</div>
                             <div class="text-xs text-slate-500">Enterprise Encrypted</div>
                         </div>
@@ -213,6 +213,63 @@
                 @empty
                     <div class="col-span-full py-20 text-center border-2 border-dashed border-slate-800 rounded-3xl">
                         <p class="text-slate-500">Équipe en cours de déploiement...</p>
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section - Client Testimonials -->
+    <section class="py-24 bg-white dark:bg-gray-950 relative overflow-hidden">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Section Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-8">
+                <div class="space-y-4">
+                    <div class="inline-flex items-center gap-2">
+                        <div class="w-12 h-[2px] bg-primary"></div>
+                        <span class="text-xs font-bold uppercase tracking-[0.2em] text-primary">Témoignages</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight">AVIS <span class="text-primary">CLIENTS</span></h2>
+                </div>
+                <a href="{{ route('reviews.public') }}" wire:navigate
+                    class="group inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-slate-400 hover:text-primary transition-colors">
+                    Voir tous les avis
+                    <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+            </div>
+
+            <!-- Reviews Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                @forelse($topReviews as $review)
+                    <div class="bg-slate-50 dark:bg-gray-900 rounded-2xl p-8 border border-slate-100 dark:border-slate-800 hover:shadow-xl transition-all duration-500">
+                        <!-- Rating -->
+                        <div class="flex items-center gap-1 mb-6">
+                            @for($i = 0; $i < 5; $i++)
+                                <svg class="w-5 h-5 {{ $i < $review->rating ? 'text-yellow-400 fill-current' : 'text-slate-300 dark:text-slate-600' }}" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+                                </svg>
+                            @endfor
+                        </div>
+
+                        <!-- Comment -->
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed mb-8 line-clamp-4">
+                            "{{ $review->comment }}"
+                        </p>
+
+                        <!-- Author -->
+                        <div class="flex items-center gap-4">
+                            <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+                                <span class="text-primary font-bold text-lg">{{ substr($review->client->name, 0, 1) }}</span>
+                            </div>
+                            <div>
+                                <p class="font-bold text-slate-900 dark:text-white">{{ $review->client->name }}</p>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">{{ $review->project->title ?? 'Client' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="col-span-full py-16 text-center glass rounded-3xl">
+                        <p class="text-slate-500 font-medium">Aucun avis pour le moment.</p>
                     </div>
                 @endforelse
             </div>

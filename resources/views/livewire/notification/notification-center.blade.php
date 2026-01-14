@@ -1,11 +1,11 @@
 <div class="max-w-4xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center mb-8">
-        <div>
+    <div class="flex flex-col  md:flex-row justify-between items-center mb-8">
+        <div class="mb-3">
             <flux:heading size="xl">Centre de Notifications</flux:heading>
             <flux:subheading>Gérez vos alertes et mises à jour système.</flux:subheading>
         </div>
         @if($notifications->whereNull('read_at')->count() > 0)
-            <flux:button wire:click="markAllAsRead" size="sm" variant="outline" icon="check-badge">
+            <flux:button wire:click="markAllAsRead" size="sm" class="text-primary" variant="outline" icon="check-badge">
                 Tout marquer comme lu
             </flux:button>
         @endif
@@ -34,7 +34,7 @@
                                 </div>
                             </div>
                             
-                            <div class="flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <div class="flex  gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                 @if(!$notification->read_at)
                                     <flux:button wire:click="markAsRead('{{ $notification->id }}')" size="xs" variant="ghost" icon="check" tooltip="Marquer comme lu" />
                                 @endif
@@ -48,8 +48,8 @@
                     </div>
                     
                     @if(!$notification->read_at)
-                        <div class="shrink-0 pt-2 text-primary-500">
-                            <div class="h-2 w-2 rounded-full bg-current shadow-[0_0_8px_currentColor]"></div>
+                        <div class="shrink-0 pt-2 text-primary">
+                            <div class="h-3 w-3 rounded-full bg-current shadow-[0_0_8px_currentColor]"></div>
                         </div>
                     @endif
                 </div>

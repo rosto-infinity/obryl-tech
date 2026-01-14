@@ -70,71 +70,118 @@
 
             <!-- Appearance & Mobile menu button -->
             <div class="flex items-center gap-4">
-                <!-- Appearance Selector - Utilise Flux -->
-                <div x-data class="relative">
-                    <!-- Button -->
-                    <button @click="$refs.themeMenu.classList.toggle('hidden')" type="button"
-                        class="p-2 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200">
-                        <svg x-show="$flux.appearance === 'light'" class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 3v1m0 16v1m9-9h-1m-16 0H1m15.657 5.657l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                <!-- Appearance Toggle - Modern Design -->
+                <div x-data="{ open: false }" class="relative">
+                    <!-- Toggle Button -->
+                    <button 
+                        @click="open = !open" 
+                        @click.outside="open = false"
+                        type="button"
+                        class="relative p-2.5 rounded-xl bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all duration-300 group"
+                        :class="open ? 'ring-2 ring-primary/30' : ''"
+                    >
+                        <!-- Sun Icon (Light) -->
+                        <svg 
+                            x-show="$flux.appearance === 'light'" 
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 rotate-90 scale-50"
+                            x-transition:enter-end="opacity-100 rotate-0 scale-100"
+                            class="h-5 w-5 text-yellow-500" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                        >
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1m-16 0H1m15.657 5.657l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
                         </svg>
-                        <svg x-show="$flux.appearance === 'dark'" class="h-5 w-5" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                        
+                        <!-- Moon Icon (Dark) -->
+                        <svg 
+                            x-show="$flux.appearance === 'dark'" 
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 -rotate-90 scale-50"
+                            x-transition:enter-end="opacity-100 rotate-0 scale-100"
+                            class="h-5 w-5 text-blue-400" 
+                            fill="currentColor" 
+                            viewBox="0 0 24 24"
+                        >
+                            <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
                         </svg>
-                        <svg x-show="$flux.appearance === 'system'" class="h-5 w-5" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M9.75 17L9 20m0 0l-.75 3M9 20H5m4 0h4m7-4v6m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM15 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                        
+                        <!-- System Icon -->
+                        <svg 
+                            x-show="$flux.appearance === 'system'" 
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 scale-50"
+                            x-transition:enter-end="opacity-100 scale-100"
+                            class="h-5 w-5 text-gray-500 dark:text-gray-400" 
+                            fill="none" 
+                            stroke="currentColor" 
+                            viewBox="0 0 24 24"
+                        >
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-.75 3M9 20h6m-6 0H5m4 0h4m6-3V3a1 1 0 00-1-1H6a1 1 0 00-1 1v14a1 1 0 001 1h12a1 1 0 001-1zm-3-7a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
                     </button>
 
                     <!-- Dropdown Menu -->
-                    <div x-ref="themeMenu" @click.outside="$refs.themeMenu.classList.add('hidden')"
-                        class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
-
+                    <div 
+                        x-show="open"
+                        x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+                        x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                        x-transition:leave="transition ease-in duration-150"
+                        x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                        x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+                        class="absolute right-0 mt-3 w-44 bg-white dark:bg-gray-800 rounded-2xl shadow-xl shadow-gray-200/50 dark:shadow-gray-900/50 border border-gray-100 dark:border-gray-700 py-2 z-50 overflow-hidden"
+                    >
                         <!-- Light Option -->
-                        <button @click="$flux.appearance = 'light'; $refs.themeMenu.classList.add('hidden')"
-                            :class="$flux.appearance === 'light' ? 'bg-primary/10' : ''"
-                            class="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center gap-3">
-                            <svg class="h-5 w-5 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 3v1m0 16v1m9-9h-1m-16 0H1m15.657 5.657l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-                            <div>
-                                <p class="text-sm font-medium text-gray-900 dark:text-white">Light</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Bright and clean</p>
+                        <button 
+                            @click="$flux.appearance = 'light'; open = false"
+                            class="w-full text-left px-4 py-3 flex items-center gap-3 transition-all duration-200"
+                            :class="$flux.appearance === 'light' ? 'bg-primary/10 text-primary' : 'hover:bg-gray-50 dark:hover:bg-gray-700/50 text-gray-700 dark:text-gray-300'"
+                        >
+                            <div class="w-8 h-8 rounded-lg flex items-center justify-center" :class="$flux.appearance === 'light' ? 'bg-primary/20' : 'bg-yellow-100 dark:bg-yellow-900/30'">
+                                <svg class="h-4 w-4 text-yellow-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1m-16 0H1m15.657 5.657l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
                             </div>
+                            <span class="text-sm font-semibold">Clair</span>
+                            <svg x-show="$flux.appearance === 'light'" class="w-4 h-4 ml-auto text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
                         </button>
 
                         <!-- Dark Option -->
-                        <button @click="$flux.appearance = 'dark'; $refs.themeMenu.classList.add('hidden')"
-                            :class="$flux.appearance === 'dark' ? 'bg-primary/10' : ''"
-                            class="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center gap-3">
-                            <svg class="h-5 w-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                            </svg>
-                            <div>
-                                <p class="text-sm font-medium text-gray-900 dark:text-white">Dark</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Easy on the eyes</p>
+                        <button 
+                            @click="$flux.appearance = 'dark'; open = false"
+                            class="w-full text-left px-4 py-3 flex items-center gap-3 transition-all duration-200"
+                            :class="$flux.appearance === 'dark' ? 'bg-primary/10 text-primary' : 'hover:bg-gray-50 dark:hover:bg-gray-700/50 text-gray-700 dark:text-gray-300'"
+                        >
+                            <div class="w-8 h-8 rounded-lg flex items-center justify-center" :class="$flux.appearance === 'dark' ? 'bg-primary/20' : 'bg-blue-100 dark:bg-blue-900/30'">
+                                <svg class="h-4 w-4 text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                                </svg>
                             </div>
+                            <span class="text-sm font-semibold">Sombre</span>
+                            <svg x-show="$flux.appearance === 'dark'" class="w-4 h-4 ml-auto text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
                         </button>
 
                         <!-- System Option -->
-                        <button @click="$flux.appearance = 'system'; $refs.themeMenu.classList.add('hidden')"
-                            :class="$flux.appearance === 'system' ? 'bg-primary/10' : ''"
-                            class="w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200 flex items-center gap-3">
-                            <svg class="h-5 w-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M9.75 17L9 20m0 0l-.75 3M9 20H5m4 0h4m7-4v6m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM15 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                            </svg>
-                            <div>
-                                <p class="text-sm font-medium text-gray-900 dark:text-white">System</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Follow OS settings</p>
+                        <button 
+                            @click="$flux.appearance = 'system'; open = false"
+                            class="w-full text-left px-4 py-3 flex items-center gap-3 transition-all duration-200"
+                            :class="$flux.appearance === 'system' ? 'bg-primary/10 text-primary' : 'hover:bg-gray-50 dark:hover:bg-gray-700/50 text-gray-700 dark:text-gray-300'"
+                        >
+                            <div class="w-8 h-8 rounded-lg flex items-center justify-center" :class="$flux.appearance === 'system' ? 'bg-primary/20' : 'bg-gray-100 dark:bg-gray-700'">
+                                <svg class="h-4 w-4 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-.75 3M9 20h6m-6 0H5m4 0h4m6-3V3a1 1 0 00-1-1H6a1 1 0 00-1 1v14a1 1 0 001 1h12a1 1 0 001-1zm-3-7a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
                             </div>
+                            <span class="text-sm font-semibold">Système</span>
+                            <svg x-show="$flux.appearance === 'system'" class="w-4 h-4 ml-auto text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                            </svg>
                         </button>
                     </div>
                 </div>

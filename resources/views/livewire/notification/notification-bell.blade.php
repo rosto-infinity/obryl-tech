@@ -8,7 +8,7 @@
     </flux:button>
 @else
     <flux:dropdown>
-        <flux:button variant="ghost" size="sm" icon="bell" class="relative">
+        <flux:button variant="ghost" size="sm" icon="bell" class="relative text-white bg-primary">
             @if($unreadCount > 0)
                 <span class="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-[10px] font-bold text-white ring-2 ring-white dark:ring-zinc-900">
                     {{ $unreadCount > 9 ? '9+' : $unreadCount }}
@@ -26,7 +26,7 @@
 
             <div class="max-h-[400px] overflow-y-auto">
                 @forelse($notifications as $notification)
-                    <div class="p-4 border-b border-zinc-50 dark:border-zinc-800/50 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors {{ !$notification->read_at ? 'bg-zinc-50/50 dark:bg-zinc-800/30' : '' }}">
+                    <div class="p-4 border-b border-zinc-50 dark:border-zinc-800/50  hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors {{ !$notification->read_at ? 'bg-zinc-50/50 dark:bg-zinc-800/30' : '' }}">
                         <div class="flex gap-3">
                             <div class="shrink-0 mt-0.5">
                                 <flux:icon name="bell" size="sm" class="text-zinc-400" />
@@ -44,7 +44,7 @@
                                     {{ $notification->message }}
                                 </p>
                                 @if(!$notification->read_at)
-                                    <button wire:click="markAsRead('{{ $notification->id }}')" class="mt-2 text-[10px] text-primary-600 hover:text-primary-700 font-medium tracking-tight">
+                                    <button wire:click="markAsRead('{{ $notification->id }}')" class="mt-2 text-[10px] text-primary/80 hover:text-primary font-medium tracking-tight">
                                         Marquer comme lu
                                     </button>
                                 @endif

@@ -1,8 +1,8 @@
-<div class="space-y-6">
+<div class="space-y-6 ">
     {{-- Header avec statistiques --}}
-    <div class="bg-white rounded-lg shadow p-6">
+    <div class="bg-white rounded-lg shadow p-6 dark:bg-gray-800 ">
         <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-gray-900">Avis des Cliens</h2>
+            <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-300">Avis des Cliens</h2>
             @if(auth()->user()->can('createReview'))
                 <a href="{{ route('reviews.create') }}"  wire:navigate class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary/80 transition-colors duration-200">
                     + Nouvel Avis
@@ -37,7 +37,7 @@
         </div>
 
         {{-- Distribution des notes --}}
-        <div class="mb-6">
+        <div class="mb-6 ">
             <h3 class="text-lg font-medium text-gray-700 mb-3">Distribution des notes</h3>
             <div class="space-y-2">
                 @for($i = 5; $i >= 1; $i--)
@@ -100,12 +100,12 @@
     </div>
 
     {{-- Liste des avis --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6  ">
         @forelse($reviews as $review)
             <div class="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200">
                 {{-- Header --}}
-                <div class="p-4 border-b">
-                    <div class="flex justify-between items-start mb-2">
+                <div class="p-4 border-b ">
+                    <div class="flex justify-between items-start mb-2 ">
                         <div>
                             <h3 class="font-semibold text-gray-900">{{ $review->project->title }}</h3>
                             <p class="text-sm text-gray-600">
@@ -121,7 +121,7 @@
                     </div>
                     
                     {{-- Statut --}}
-                    <div class="flex items-center justify-between">
+                    <div class="flex items-center justify-between ">
                         <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium
                             @if($review->status === \App\Enums\ReviewStatus::APPROVED) bg-green-100 text-green-800
                             @elseif($review->status === \App\Enums\ReviewStatus::PENDING) bg-yellow-100 text-yellow-800
@@ -137,14 +137,14 @@
                 </div>
 
                 {{-- Contenu --}}
-                <div class="p-4">
+                <div class="p-4 ">
                     @if($review->comment)
                         <p class="text-gray-700 text-sm mb-3">{{ Str::limit($review->comment, 150) }}</p>
                     @endif
                     
                     {{-- Critères --}}
                     @if($review->criteria && is_array($review->criteria))
-                        <div class="space-y-1 mb-3">
+                        <div class="space-y-1 mb-3 ">
                             @foreach($review->criteria as $criterion => $score)
                                 <div class="flex justify-between text-xs">
                                     <span class="text-gray-600">{{ ucfirst($criterion) }}</span>
