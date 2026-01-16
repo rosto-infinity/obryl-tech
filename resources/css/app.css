@@ -39,9 +39,9 @@
     --color-primary-light: #34d399;
     --color-primary-dark: #059669;
 
-    --color-secondary: #facc15;
-    --color-secondary-light: #fde047;
-    --color-secondary-dark: #eab308;
+    --color-secondary: #fbbf24;
+    --color-secondary-light: #fcd34d;
+    --color-secondary-dark: #f59e0b;
 
     --color-accent: #ffffff;
     --color-accent-content: #ffffff;
@@ -57,20 +57,12 @@
 
 @layer utilities {
 
-    /* Texte */
+    /* Texte - Simplifié */
     .text-primary {
         color: var(--color-primary);
     }
 
-    .dark .text-primary {
-        color: var(--color-primary);
-    }
-
     .text-secondary {
-        color: var(--color-secondary);
-    }
-
-    .dark .text-secondary {
         color: var(--color-secondary);
     }
 
@@ -79,15 +71,7 @@
         background-color: var(--color-primary);
     }
 
-    .dark .bg-primary {
-        background-color: var(--color-primary);
-    }
-
     .bg-secondary {
-        background-color: var(--color-secondary);
-    }
-
-    .dark .bg-secondary {
         background-color: var(--color-secondary);
     }
 
@@ -96,15 +80,7 @@
         border-color: var(--color-primary);
     }
 
-    .dark .border-primary {
-        border-color: var(--color-primary);
-    }
-
     .border-secondary {
-        border-color: var(--color-secondary);
-    }
-
-    .dark .border-secondary {
         border-color: var(--color-secondary);
     }
 
@@ -130,24 +106,12 @@
         --tw-ring-color: var(--color-primary);
     }
 
-    .dark .focus\:ring-primary:focus {
-        --tw-ring-color: var(--color-primary);
-    }
-
     .focus\:ring-secondary:focus {
-        --tw-ring-color: var(--color-secondary);
-    }
-
-    .dark .focus\:ring-secondary:focus {
         --tw-ring-color: var(--color-secondary);
     }
 
     /* Dégradés */
     .bg-gradient-primary {
-        @apply bg-gradient-to-r from-primary to-primary-light;
-    }
-
-    .dark .bg-gradient-primary {
         @apply bg-gradient-to-r from-primary to-primary-light;
     }
 
@@ -183,7 +147,7 @@
     }
 
     .dark .text-primary-on-secondary {
-        color: #1f2937;
+        color: #f3f4f6;
     }
 
     .text-secondary-on-primary {
@@ -191,7 +155,7 @@
     }
 
     .dark .text-secondary-on-primary {
-        color: #fff;
+        color: #1f2937;
     }
 }
 
@@ -205,7 +169,6 @@
         border-color: var(--color-gray-200, currentColor);
     }
 
-    /* Désactiver toutes les transitions pendant le chargement initial */
     html.no-transitions,
     html.no-transitions *,
     html.no-transitions *::before,
@@ -245,7 +208,6 @@ select:focus[data-flux-control] {
     @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground dark:ring-primary dark:ring-offset-gray-800;
 }
 
-/* Navlist dark mode */
 [data-flux-navlist-item] {
     @apply dark:hover:bg-gray-800 dark:text-gray-200 dark:hover:text-white;
 }
@@ -253,7 +215,3 @@ select:focus[data-flux-control] {
 [data-flux-navlist-item][aria-current="page"] {
     @apply dark:bg-gray-800 dark:text-white;
 }
-
-/* \[:where(&)\]:size-4 {
-    @apply size-4;
-} */

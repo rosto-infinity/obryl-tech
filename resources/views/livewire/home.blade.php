@@ -31,17 +31,18 @@
                     </div>
 
                     <div class="flex flex-wrap gap-5 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-300">
+                         <a href="{{ route('developers.list') }}" wire:navigate
+                            class="inline-flex items-center justify-center px-8 py-4 font-bold text-primary dark:text-white border rounded-md transition-all duration-300  dark:hover:bg-primary active:scale-95">
+                            Nos Experts
+                        </a>
                         <a href="{{ route('projects.list') }}" wire:navigate
-                            class="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white bg-slate-900 dark:bg-primary rounded-2xl overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl">
+                            class="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white bg-slate-900 dark:bg-primary rounded-md overflow-hidden transition-all duration-300 hover:scale-105 active:scale-95 shadow-2xl">
                             <span class="relative z-10 flex items-center gap-2">
                                 Découvrir le Portfolio
                                 <svg class="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
                             </span>
                         </a>
-                        <a href="{{ route('developers.list') }}" wire:navigate
-                            class="inline-flex items-center justify-center px-8 py-4 font-bold text-slate-900 dark:text-white glass rounded-2xl transition-all duration-300 bg-primary dark:hover:bg-primary active:scale-95">
-                            Nos Experts
-                        </a>
+                       
                     </div>
 
                     <!-- Trust Badges -->
