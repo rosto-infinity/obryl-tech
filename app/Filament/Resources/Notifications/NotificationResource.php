@@ -34,10 +34,10 @@ class NotificationResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'title';
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::whereNull('read_at')->count();
-    }
+    // public static function getNavigationBadge(): ?string
+    // {
+    //     return static::getModel()::whereNull('read_at')->count();
+    // }
 
     public static function getNavigationBadgeColor(): ?string
     {
@@ -74,5 +74,9 @@ class NotificationResource extends Resource
             'view' => ViewNotification::route('/{record}'),
             'edit' => EditNotification::route('/{record}/edit'),
         ];
+    }
+     public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getModel()::count();
     }
 }

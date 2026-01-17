@@ -67,7 +67,7 @@
                 </div>
                 <div>
                     <p class="font-medium text-gray-900 dark:text-white">{{ $project->client->name }}</p>
-                    <p class="text-sm text-gray-500">{{ $project->client->email }}</p>
+                    
                 </div>
             </div>
         </div>

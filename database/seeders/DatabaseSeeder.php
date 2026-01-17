@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
+use FixUserSlugSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,7 +17,6 @@ class DatabaseSeeder extends Seeder
         // Exécuter les seeders dans l'ordre
         $this->call([
             UserSeeder::class,
-            FixUserSlugSeeder::class,
             ProjectSeeder::class,
             ArticleSeeder::class,
             // SettingSeeder::class,

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Policies;
 
+use Illuminate\Foundation\Auth\User as AuthUser;
 use App\Models\Review;
 use Illuminate\Auth\Access\HandlesAuthorization;
-use Illuminate\Foundation\Auth\User as AuthUser;
 
 class ReviewPolicy
 {
     use HandlesAuthorization;
-
+    
     public function viewAny(AuthUser $authUser): bool
     {
         return $authUser->can('ViewAny:Review');
@@ -29,7 +29,7 @@ class ReviewPolicy
 
     public function update(AuthUser $authUser, Review $review): bool
     {
-        return $authUser->hasRole('super_admin') || $authUser->can('Update:Review');
+        return $authUser->can('Update:Review');
     }
 
     public function delete(AuthUser $authUser, Review $review): bool
@@ -66,4 +66,5 @@ class ReviewPolicy
     {
         return $authUser->can('Reorder:Review');
     }
+
 }
