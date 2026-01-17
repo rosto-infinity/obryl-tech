@@ -195,7 +195,7 @@ class Profile extends Model
 
     public function getAvatarUrlAttribute()
     {
-        if (!$this->avatar) {
+        if (! $this->avatar) {
             return null;
         }
 

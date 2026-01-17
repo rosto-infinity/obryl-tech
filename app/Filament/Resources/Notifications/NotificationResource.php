@@ -75,7 +75,8 @@ class NotificationResource extends Resource
             'edit' => EditNotification::route('/{record}/edit'),
         ];
     }
-     public static function getNavigationBadge(): ?string
+
+    public static function getNavigationBadge(): ?string
     {
         return (string) static::getModel()::count();
     }

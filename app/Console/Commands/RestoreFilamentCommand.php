@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -23,53 +25,54 @@ class RestoreFilamentCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $this->info('🚀 RESTAURATION COMPLÈTE DU PANEL FILAMENT');
         $this->info(str_repeat('=', 60));
-        
-        if (!$this->confirm('⚠️  Ceci va réinitialiser complètement Filament. Continuer?')) {
+
+        if (! $this->confirm('⚠️  Ceci va réinitialiser complètement Filament. Continuer?')) {
             $this->info('❌ Opération annulée');
+
             return;
         }
 
         // 1. Vider tous les caches
         $this->info('🧹 ÉTAPE 1/6: Vidage complet des caches...');
         $this->call('optimize:clear');
-        
+
         // 2. Recréer les permissions Shield
         $this->info('🔐 ÉTAPE 2/6: Regénération des permissions Shield...');
         $this->call('shield:generate', ['--all' => true]);
-        
+
         // 3. Recréer les rôles
         $this->info('👥 ÉTAPE 3/6: Recréation des rôles...');
         $this->call('db:seed', ['--class' => 'ProductionRoleSeeder', '--force' => true]);
-        
+
         // 4. Publier les ressources Filament
         $this->info('📦 ÉTAPE 4/6: Publication des ressources Filament...');
         $this->call('vendor:publish', [
             '--tag' => 'filament-shield-config',
-            '--force' => true
+            '--force' => true,
         ]);
-        
+
         // 5. Recréer les liens de navigation
         $this->info('🔗 ÉTAPE 5/6: Recréation des liens de navigation...');
         $this->recreateNavigation();
-        
+
         // 6. Optimisation finale
         $this->info('⚡ ÉTAPE 6/6: Optimisation finale...');
         $this->call('config:cache');
         $this->call('route:cache');
         $this->call('view:cache');
-        
+
         $this->info(str_repeat('=', 60));
         $this->info('✅ PANEL FILAMENT RESTAURÉ AVEC SUCCÈS!');
-        $this->info('🌐 Accédez au panel: ' . config('app.url') . '/admin');
+        $this->info('🌐 Accédez au panel: '.config('app.url').'/admin');
         $this->info('👤 Email: admin@obryl.tech');
         $this->info('🔐 Rôle: super_admin');
     }
 
-    private function recreateNavigation()
+    private function recreateNavigation(): void
     {
         $this->call('tinker', [
             '--execute' => "
@@ -103,7 +106,7 @@ class RestoreFilamentCommand extends Command
                 }
                 
                 echo '✅ Navigation recréée avec succès' . PHP_EOL;
-            "
+            ",
         ]);
     }
 }

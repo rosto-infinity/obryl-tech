@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -23,11 +25,12 @@ class FixProductionCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
-        if (!$this->option('force')) {
-            if (!$this->confirm('⚠️  Cette commande va corriger les problèmes Filament en production. Continuer?')) {
+        if (! $this->option('force')) {
+            if (! $this->confirm('⚠️  Cette commande va corriger les problèmes Filament en production. Continuer?')) {
                 $this->info('❌ Opération annulée');
+
                 return;
             }
         }

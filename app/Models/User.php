@@ -246,40 +246,40 @@ class User extends Authenticatable implements FilamentUser
     {
         // Créer un slug unique avec 50 caractères
         $emailPart = substr($this->email, 0, 8);
-        $idHash = substr(md5((string)$this->id), 0, 8);
+        $idHash = substr(md5((string) $this->id), 0, 8);
         $timestamp = substr(md5($this->created_at ? $this->created_at->format('Y-m-d H:i:s') : now()->format('Y-m-d H:i:s')), 0, 8);
         $random1 = Str::random(8);
         $random2 = Str::random(8);
         $random3 = Str::random(8);
-        
+
         // Assembler les parties pour créer 50 caractères
-        $slug = strtolower($emailPart . '-' . $idHash . '-' . $timestamp . '-' . $random1 . $random2 . $random3);
-        
+        $slug = strtolower($emailPart.'-'.$idHash.'-'.$timestamp.'-'.$random1.$random2.$random3);
+
         // S'assurer que le slug a exactement 50 caractères
         if (strlen($slug) < 50) {
-            $slug = $slug . Str::random(50 - strlen($slug));
+            $slug = $slug.Str::random(50 - strlen($slug));
         } elseif (strlen($slug) > 50) {
             $slug = substr($slug, 0, 50);
         }
-        
+
         // Nettoyer pour n'avoir que des caractères alphanumériques et tirets
         $slug = preg_replace('/[^a-z0-9-]/', '', $slug);
-        
+
         // Si après nettoyage c'est plus court, compléter
         if (strlen($slug) < 50) {
-            $slug = $slug . Str::random(50 - strlen($slug));
+            $slug = $slug.Str::random(50 - strlen($slug));
         }
-        
+
         // S'assurer que le slug est unique
         $originalSlug = $slug;
         $counter = 1;
-        
+
         while (static::where('slug', $slug)->where('id', '!=', $this->id)->exists()) {
             // Remplacer les derniers caractères par le compteur
-            $slug = substr($originalSlug, 0, 45) . str_pad((string)$counter, 5, '0', STR_PAD_LEFT);
+            $slug = substr($originalSlug, 0, 45).str_pad((string) $counter, 5, '0', STR_PAD_LEFT);
             $counter++;
         }
-        
+
         return $slug;
     }
 

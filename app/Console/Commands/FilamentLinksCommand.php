@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
-use Spatie\Permission\Models\Role;
 
 class FilamentLinksCommand extends Command
 {
@@ -24,38 +25,42 @@ class FilamentLinksCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $action = $this->argument('action');
-        
+
         switch ($action) {
             case 'check':
                 $this->checkLinks();
+
                 break;
             case 'fix':
                 $this->fixLinks();
+
                 break;
             case 'reset':
                 $this->resetLinks();
+
                 break;
             default:
                 $this->error('Action non valide. Actions disponibles: check, fix, reset');
                 $this->showUsage();
+
                 break;
         }
     }
 
-    private function checkLinks()
+    private function checkLinks(): void
     {
         $this->info('🔍 VÉRIFICATION DES LIENS FILAMENT');
         $this->info(str_repeat('=', 50));
-        
+
         // Vérifier les ressources Filament
         $resourcesPath = app_path('Filament/Resources');
         if (is_dir($resourcesPath)) {
-            $resources = glob($resourcesPath . '/*Resource.php');
-            $this->info('📁 Ressources trouvées: ' . count($resources));
-            
+            $resources = glob($resourcesPath.'/*Resource.php');
+            $this->info('📁 Ressources trouvées: '.count($resources));
+
             foreach ($resources as $resource) {
                 $className = basename($resource, '.php');
                 $this->line("  • $className");
@@ -63,13 +68,13 @@ class FilamentLinksCommand extends Command
         } else {
             $this->warn('⚠️  Dossier Resources non trouvé');
         }
-        
+
         // Vérifier les pages Filament
         $pagesPath = app_path('Filament/Pages');
         if (is_dir($pagesPath)) {
-            $pages = glob($pagesPath . '/*.php');
-            $this->info('📄 Pages trouvées: ' . count($pages));
-            
+            $pages = glob($pagesPath.'/*.php');
+            $this->info('📄 Pages trouvées: '.count($pages));
+
             foreach ($pages as $page) {
                 $className = basename($page, '.php');
                 $this->line("  • $className");
@@ -77,7 +82,7 @@ class FilamentLinksCommand extends Command
         } else {
             $this->warn('⚠️  Dossier Pages non trouvé');
         }
-        
+
         // Vérifier la configuration
         $configFile = config_path('filament.php');
         if (file_exists($configFile)) {
@@ -85,60 +90,61 @@ class FilamentLinksCommand extends Command
         } else {
             $this->warn('⚠️  Fichier de configuration non trouvé');
         }
-        
+
         $this->info(str_repeat('=', 50));
     }
 
-    private function fixLinks()
+    private function fixLinks(): void
     {
         $this->info('🔧 RÉPARATION DES LIENS FILAMENT');
         $this->info(str_repeat('=', 50));
-        
+
         // Vider les caches
         $this->info('🧹 Vidage des caches...');
         $this->call('config:clear');
         $this->call('route:clear');
         $this->call('view:clear');
         $this->call('cache:clear');
-        
+
         // Optimiser
         $this->info('⚡ Optimisation...');
         $this->call('config:cache');
         $this->call('route:cache');
         $this->call('view:cache');
-        
+
         // Vider le cache Filament
         $this->info('🎯 Vidage du cache Filament...');
         $this->call('filament:cache-clear');
-        
+
         $this->info('✅ Liens Filament réparés avec succès!');
     }
 
-    private function resetLinks()
+    private function resetLinks(): void
     {
         $this->info('🔄 RÉINITIALISATION COMPLÈTE DES LIENS');
         $this->info(str_repeat('=', 50));
-        
-        if (!$this->confirm('⚠️  Ceci va réinitialiser complètement Filament. Continuer?')) {
+
+        if (! $this->confirm('⚠️  Ceci va réinitialiser complètement Filament. Continuer?')) {
             $this->info('❌ Opération annulée');
+
             return;
         }
-        
+
         // Vider tous les caches
         $this->call('optimize:clear');
-        
+
         // Recréer les caches
         $this->call('optimize');
-        
+
         // Publier les assets
         $this->call('vendor:publish', ['--tag' => 'filament-config', '--force']);
         $this->call('vendor:publish', ['--tag' => 'filament-assets', '--force']);
-        
+
         $this->info('✅ Filament réinitialisé avec succès!');
-        $this->info('🌐 Accédez au panel: ' . config('app.url') . '/admin');
+        $this->info('🌐 Accédez au panel: '.config('app.url').'/admin');
     }
 
-    private function showUsage()
+    private function showUsage(): void
     {
         $this->info('📖 UTILISATION:');
         $this->line('  php artisan filament:links check    # Vérifier les liens');

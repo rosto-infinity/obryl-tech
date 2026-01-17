@@ -1,9 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Models\User;
+use Illuminate\Console\Command;
 
 class RegenerateSlugsCommand extends Command
 {
@@ -24,11 +26,12 @@ class RegenerateSlugsCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
-        if (!$this->option('force')) {
-            if (!$this->confirm('⚠️  Ceci va regénérer tous les slugs. Continuer?')) {
+        if (! $this->option('force')) {
+            if (! $this->confirm('⚠️  Ceci va regénérer tous les slugs. Continuer?')) {
                 $this->info('❌ Opération annulée');
+
                 return;
             }
         }
@@ -43,11 +46,11 @@ class RegenerateSlugsCommand extends Command
         foreach ($users as $user) {
             $oldSlug = $user->slug;
             $newSlug = $user->generateSlug();
-            
+
             if ($oldSlug !== $newSlug) {
                 $user->slug = $newSlug;
                 $user->save();
-                
+
                 $this->line("✅ {$user->name}");
                 $this->line("   Avant: {$oldSlug}");
                 $this->line("   Après:  {$newSlug}");
@@ -59,7 +62,7 @@ class RegenerateSlugsCommand extends Command
         }
 
         $this->info(str_repeat('=', 50));
-        $this->info("📊 RÉSULTATS:");
+        $this->info('📊 RÉSULTATS:');
         $this->info("✅ Mis à jour: {$updated} utilisateurs");
         $this->info("📌 Inchangés: {$unchanged} utilisateurs");
         $this->info("📋 Total: {$users->count()} utilisateurs");

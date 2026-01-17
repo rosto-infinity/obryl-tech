@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -23,7 +25,7 @@ class PublishFilamentCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $this->info('📦 PUBLICATION DES RESSOURCES FILAMENT');
         $this->info(str_repeat('=', 50));
@@ -74,12 +76,12 @@ class PublishFilamentCommand extends Command
 
         $this->info(str_repeat('=', 50));
         $this->info('🎉 RESSOURCES FILAMENT PUBLIÉES !');
-        
+
         if ($this->option('all')) {
             $this->info('🔐 Permissions Filament Shield configurées');
             $this->info('👑 Super admin configuré');
         }
-        
+
         $this->info('📱 Accédez à: /admin');
     }
 }

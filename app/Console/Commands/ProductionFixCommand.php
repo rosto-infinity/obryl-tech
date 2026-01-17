@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
@@ -23,7 +25,7 @@ class ProductionFixCommand extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(): void
     {
         $this->info('🚀 CORRECTION PRODUCTION - TECH OBRYL');
         $this->info(str_repeat('=', 50));
