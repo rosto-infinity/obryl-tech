@@ -39,6 +39,16 @@
                         :current="request()->routeIs('blog.*')" wire:navigate>Blog
                     </flux:navlist.item>
 
+                    <!-- Publier un projet -->
+                    @auth
+                        <flux:navlist.item href="{{ route('projects.request') }}"
+                            :current="request()->routeIs('projects.request')" wire:navigate>
+                            <span class="bg-green-500 text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-green-600 transition-colors duration-200">
+                                📝 Publier un projet
+                            </span>
+                        </flux:navlist.item>
+                    @endauth
+
                
 
 
@@ -220,6 +230,16 @@
                 <!-- Blog -->
                 <flux:navlist.item href="{{ route('blog.index') }}" :current="request()->routeIs('blog.*')"
                     wire:navigate>Blog</flux:navlist.item>
+
+                <!-- Publier un projet -->
+                @auth
+                    <flux:navlist.item href="{{ route('projects.request') }}"
+                        :current="request()->routeIs('projects.request')" wire:navigate>
+                        <span class="block bg-green-500 text-white px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 transition-colors duration-200">
+                            📝 Publier un projet
+                        </span>
+                    </flux:navlist.item>
+                @endauth
 
                 <!-- Legal Mobile -->
                 <div class="px-3 py-2">

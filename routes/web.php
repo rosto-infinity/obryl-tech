@@ -17,8 +17,9 @@ use App\Livewire\Portfolio\ProjectLike;
 use App\Livewire\Project\ProjectList;
 use App\Livewire\Project\ProjectDetail;
 use App\Livewire\Project\ProjectFilter;
+use App\Livewire\Project\ProjectRequest;
 use App\Livewire\Project\ProjectProgress;
-use App\Livewire\Admin\WorkloadDashboard;
+use App\Livewire\Admin\ProjectRequests;
 use App\Livewire\Developer\DeveloperList;
 use App\Livewire\Developer\DeveloperFilter;
 use App\Livewire\Developer\DeveloperSearch;
@@ -66,6 +67,12 @@ Route::get('avis', \App\Livewire\Public\Reviews::class)->name('reviews.public');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
     Route::get('notifications', \App\Livewire\Notification\NotificationCenter::class)->name('notifications');
+    
+    // Route pour publier un projet
+    Route::get('publier-projet', ProjectRequest::class)->name('projects.request');
+    
+    // Route admin pour les demandes de projets
+    Route::get('project-requests', ProjectRequests::class)->name('project.requests');
     
     // Routes de Support
     Route::get('support', \App\Livewire\Support\TicketList::class)->name('support.list');

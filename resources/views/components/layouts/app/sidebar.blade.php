@@ -34,6 +34,9 @@
                 <flux:navlist.item icon="users" :href="route('developers.list')"
                     :current="request()->routeIs('developers.*')" wire:navigate>{{ __('Développeurs') }}
                 </flux:navlist.item>
+                 <flux:navlist.item icon="chart-bar" :href="route('projects.request')"
+                    :current="request()->routeIs('projects.request')" wire:navigate>{{ __('Pulier un projet') }}
+                </flux:navlist.item>
                 @endcan
 
                 {{-- Commissions --}}
@@ -67,6 +70,7 @@
                     :current="request()->routeIs('blog.*')" wire:navigate>{{ __('Blog') }}
                 </flux:navlist.item>
                 @endcan
+
             </flux:navlist.group>
 
             <flux:navlist.group :heading="__('Support & Communication')" class="grid">
@@ -82,9 +86,11 @@
 
             <flux:navlist.group :heading="__('Administration')" class="grid">
                 @can('ViewAny:WorkloadManagement')
+                <livewire:notification.project-request-notification />
                 <flux:navlist.item icon="chart-bar" :href="route('workload.dashboard')"
                     :current="request()->routeIs('workload.*')" wire:navigate>{{ __('Gestion de Charge') }}
                 </flux:navlist.item>
+                
                 @endcan
             </flux:navlist.group>
 
@@ -101,15 +107,12 @@
         <flux:spacer />
 
         <flux:navlist variant="outline">
-            <flux:navlist.item icon="folder-git-2" href="https://github.com/laravel/livewire-starter-kit"
+            <flux:navlist.item icon="folder-git-2" href="https://github.com/rosto-infinity/obryl-tech"
                 target="_blank">
-                {{ __('Repository') }}
+                {{ __('Repositorie') }}
             </flux:navlist.item>
 
-            <flux:navlist.item icon="book-open-text" href="https://laravel.com/docs/starter-kits#livewire"
-                target="_blank">
-                {{ __('Documentation') }}
-            </flux:navlist.item>
+           
         </flux:navlist>
 
         <!-- Desktop User Menu -->

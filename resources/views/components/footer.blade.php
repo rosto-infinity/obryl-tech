@@ -37,7 +37,7 @@
             <div class="space-y-4">
                 <h3 class="text-lg font-semibold">{{ __('Services') }}</h3>
                 <flux:navlist variant="vertical" class="space-y-2">
-                    <flux:navlist.item href="{{ route('projects.list') }}" :current="request()->routeIs('projects.*')" wire:navigate class="text-primary hover:text-secondary transition-colors duration-200">
+                    <flux:navlist.item href="{{ route('projects.list') }}" :current="request()->routeIs('projects.*')" wire:navigate class="text-white hover:text-white">
                         {{ __('Développement d\'Applications') }}
                     </flux:navlist.item>
                     <flux:navlist.item href="#" class="text-primary hover:text-secondary transition-colors duration-200">

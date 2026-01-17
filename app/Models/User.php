@@ -34,10 +34,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'phone',
-        'avatar',
         'user_type',
         'status',
+        'phone',
+        'avatar',
         'slug',
     ];
 
@@ -109,13 +109,16 @@ class User extends Authenticatable
 
         // Assigner automatiquement le rôle correspondant au user_type
         static::created(function ($user) {
-            $user->assignRole($user->user_type->value);
+            // user_type est une chaîne, pas un enum
+            if ($user->user_type) {
+                $user->assignRole($user->user_type);
+            }
         });
 
         static::updated(function ($user) {
             if ($user->isDirty('user_type')) {
                 // Synchroniser le rôle si le type a changé
-                $user->syncRoles([$user->user_type->value]);
+                $user->syncRoles([$user->user_type]);
             }
         });
     }

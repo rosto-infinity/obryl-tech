@@ -293,6 +293,11 @@ class Project extends Model
         return $this->hasMany(Commission::class);
     }
 
+    public function references(): HasMany
+    {
+        return $this->hasMany(ProjectReference::class);
+    }
+
     // Helpers
     public function isCompleted(): bool
     {

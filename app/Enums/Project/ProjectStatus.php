@@ -4,6 +4,7 @@ namespace App\Enums\Project;
 
 enum ProjectStatus: string
 {
+    case REQUESTED = 'requested';
     case PENDING = 'pending';
     case ACCEPTED = 'accepted';
     case IN_PROGRESS = 'in_progress';
@@ -15,6 +16,7 @@ enum ProjectStatus: string
     public function label(): string
     {
         return match($this) {
+            self::REQUESTED => 'Demandé',
             self::PENDING => 'En attente',
             self::ACCEPTED => 'Accepté',
             self::IN_PROGRESS => 'En cours',
@@ -28,6 +30,7 @@ enum ProjectStatus: string
     public function color(): string
     {
         return match($this) {
+            self::REQUESTED => 'info',
             self::PENDING => 'warning',
             self::ACCEPTED => 'info',
             self::IN_PROGRESS => 'primary',
@@ -41,6 +44,7 @@ enum ProjectStatus: string
     public function icon(): string
     {
         return match($this) {
+            self::REQUESTED => '📝',
             self::PENDING => '⏳',
             self::ACCEPTED => '✅',
             self::IN_PROGRESS => '⚙️',
