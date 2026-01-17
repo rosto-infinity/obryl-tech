@@ -204,7 +204,7 @@
                             <p class="text-slate-400 text-xs font-bold uppercase tracking-widest">{{ $developer->profile?->title ?? 'Développeur Expert' }}</p>
                             
                             <div class="pt-6">
-                                <a href="{{ route('developers.profile', $developer->id) }}" wire:navigate
+                                <a href="{{ route('developers.profile', $developer->slug) }}" wire:navigate
                                     class="inline-flex items-center justify-center px-6 py-2 text-xs font-bold uppercase tracking-widest text-primary border border-primary/30 rounded-full hover:bg-primary hover:text-white transition-all duration-300">
                                     Portfolio
                                 </a>

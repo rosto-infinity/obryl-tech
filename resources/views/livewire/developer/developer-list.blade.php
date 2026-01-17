@@ -189,7 +189,7 @@
                     {{-- Actions --}}
                     
                     <div class="flex space-x-2">
-                        <a href="{{ route('developers.profile', $developer->id) }}"  wire:navigate class="flex-1 bg-primary text-white text-center px-4 py-2 rounded-md hover:bg-primary/70 transition-colors duration-200">
+                        <a href="{{ route('developers.profile', $developer->slug) }}"  wire:navigate class="flex-1 bg-primary text-white text-center px-4 py-2 rounded-md hover:bg-primary/70 transition-colors duration-200">
                             Voir le profil
                         </a>
                         <a href="#" class="flex-1 border border-primary text-primary text-center px-4 py-2 rounded-md hover:bg-secondary/50 dark:hover:bg-secondary/20 transition-colors duration-200">

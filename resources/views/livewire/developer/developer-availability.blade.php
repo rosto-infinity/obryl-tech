@@ -146,7 +146,7 @@
                         {{-- Actions --}}
                         <div class="mt-4 pt-4 border-t">
                             <flux:button 
-                                wire:navigate="route('developers.profile', $developer->id)"  wire:navigate
+                                wire:navigate="route('developers.profile', $developer->slug)"  wire:navigate
                                 class="w-full"
                                 variant="outline"
                             >

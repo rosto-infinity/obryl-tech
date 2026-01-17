@@ -220,7 +220,7 @@
                             </div>
 
                             <!-- CTA Button -->
-                            <a href="{{ route('developers.profile', $profile->user->id) }}" wire:navigate 
+                            <a href="{{ route('developers.profile', $profile->user->slug) }}" wire:navigate 
                                class="w-full block text-center px-4 py-2 bg-primary/10 text-primary rounded-lg hover:bg-primary/20 transition-colors font-medium">
                                 Voir le profil
                             </a>

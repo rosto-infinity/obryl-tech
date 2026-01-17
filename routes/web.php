@@ -46,7 +46,7 @@ Route::get('projects/filter', ProjectFilter::class)->name('projects.filter');
 Route::get('developers', DeveloperList::class)->name('developers.list');
 Route::get('developers/search', DeveloperSearch::class)->name('developers.search');
 Route::get('developers/filter', DeveloperFilter::class)->name('developers.filter');
-Route::get('developers/{developer}', DeveloperProfile::class)->name('developers.profile');
+Route::get('developers/{developer:slug}', DeveloperProfile::class)->name('developers.profile');
 
 Route::get('portfolio', PortfolioGallery::class)->name('portfolio.gallery');
 Route::get('portfolio/project-card', ProjectCard::class)->name('portfolio.project-card');
