@@ -39,15 +39,7 @@
                         :current="request()->routeIs('blog.*')" wire:navigate>Blog
                     </flux:navlist.item>
 
-                    <!-- Publier un projet -->
-                    @auth
-                        <flux:navlist.item href="{{ route('projects.request') }}"
-                            :current="request()->routeIs('projects.request')" wire:navigate>
-                            <span class="bg-green-500 text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-green-600 transition-colors duration-200">
-                                📝 Publier un projet
-                            </span>
-                        </flux:navlist.item>
-                    @endauth
+             
 
                
 
@@ -55,14 +47,25 @@
 
                     <!-- Actions utilisateur -->
                     @auth
-                        <div class="flex items-center gap-4">
+                        <div class="flex items-center gap-0">
                             <livewire:notification.notification-bell mode="link" />
                             <flux:navlist.item href="{{ route('dashboard') }}" :current="request()->routeIs('dashboard.*')"
                                 wire:navigate>
                                 <span
-                                    class="bg-primary text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-primary/80 transition-colors duration-200">Dashboard</span>
+                                    class="border border-primary text-primary px-3 py-1 rounded-md text-sm font-medium hover:bg-primary/80 transition-colors duration-200">Dashboard</span>
                             </flux:navlist.item>
+
+                            <flux:navlist.item href="{{ route('projects.request') }}"
+                            :current="request()->routeIs('projects.request')" wire:navigate>
+                            <span class="bg-primary text-white px-3 py-1 rounded-md text-sm font-medium hover:bg-primary/80 transition-colors duration-200">
+                                Publier un projet
+                            </span>
+                        </flux:navlist.item>
                         </div>
+                               <!-- Publier un projet -->
+                  
+                        
+                  
                     @else
                         <flux:navlist.item href="{{ route('login') }}" :current="request()->routeIs('login')" wire:navigate>
                             <span
@@ -235,8 +238,8 @@
                 @auth
                     <flux:navlist.item href="{{ route('projects.request') }}"
                         :current="request()->routeIs('projects.request')" wire:navigate>
-                        <span class="block bg-green-500 text-white px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 transition-colors duration-200">
-                            📝 Publier un projet
+                        <span class="block bg-primary text-white px-3 py-2 rounded-md text-base font-medium hover:bg-green-600 transition-colors duration-200">
+                            Publier un projet
                         </span>
                     </flux:navlist.item>
                 @endauth
