@@ -18,7 +18,10 @@ class Home extends Component
     {
         $recentArticles = Article::published()->recent(3)->get();
         $latestProjects = Project::where('is_published', true)->latest()->take(3)->get();
-        $featuredDevelopers = User::whereHas('profile')->take(4)->get();
+        $featuredDevelopers = User::where('user_type', 'developer')
+            ->whereHas('profile')
+            ->take(4)
+            ->get();
         $topReviews = Review::where('status', 'approved')
             ->where('rating', '>=', 4)
             ->with(['client', 'project', 'developer'])

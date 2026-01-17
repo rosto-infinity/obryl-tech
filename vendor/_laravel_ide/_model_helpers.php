@@ -2115,6 +2115,7 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $verified_at
      * @property \App\Enums\Developer\VerificationLevel $verification_level
      * @property boolean $is_verified
+     * @property string|null $avatar
      * @property string|null $cv_path
      * @property string|null $linkedin_url
      * @property string|null $github_url
@@ -2131,6 +2132,7 @@ namespace App\Models {
      * @property-read mixed $certifications
      * @property-read mixed $experiences
      * @property-read mixed $social_links
+     * @property-read mixed $avatar_url
      * @property-read \App\Models\User $user
      * @property-read \App\Models\User $verifiedBy
      * @method static \Illuminate\Database\Eloquent\Builder<Profile>|Profile whereId($value)
@@ -2145,6 +2147,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Profile>|Profile whereGithubUrl($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Profile>|Profile whereLinkedinUrl($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Profile>|Profile whereCvPath($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Profile>|Profile whereAvatar($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Profile>|Profile whereIsVerified($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Profile>|Profile whereVerificationLevel($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Profile>|Profile whereVerifiedAt($value)

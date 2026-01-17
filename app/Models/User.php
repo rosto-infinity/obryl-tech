@@ -7,6 +7,8 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\Auth\UserStatus;
 use App\Enums\Auth\UserType;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -16,7 +18,7 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, HasRoles, Notifiable,TwoFactorAuthenticatable;
@@ -287,5 +289,14 @@ class User extends Authenticatable
     public function getRouteKeyName(): string
     {
         return 'slug'; // Utiliser le slug pour les routes
+    }
+
+    /**
+     * Determine if the user can access the Filament panel.
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        // Autoriser l'accès si l'utilisateur a le rôle super_admin ou admin
+        return $this->hasRole(['super_admin', 'admin']);
     }
 }

@@ -10,6 +10,7 @@ use App\Enums\Developer\VerificationLevel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class Profile extends Model
 {
@@ -27,6 +28,7 @@ class Profile extends Model
         'github_url',
         'linkedin_url',
         'cv_path',
+        'avatar',
         'is_verified',
         'verification_level',
         'verified_at',
@@ -189,5 +191,14 @@ class Profile extends Model
             'average_rating' => round($average ?? 0, 1),
             'total_reviews_count' => $count,
         ]);
+    }
+
+    public function getAvatarUrlAttribute()
+    {
+        if (!$this->avatar) {
+            return null;
+        }
+
+        return Storage::url($this->avatar);
     }
 }

@@ -191,7 +191,20 @@
                             <!-- Avatar -->
                             <div class="relative w-full h-full rounded-full overflow-hidden border-4 border-slate-800 shadow-2xl transition-transform duration-500 group-hover:rotate-6">
                                 @php
-                                    $avatar = $developer->profile?->avatar_url ?? 'https://ui-avatars.com/api/?name='.urlencode($developer->name).'&color=10B981&background=0F172A';
+                                    if ($developer->profile?->avatar_url) {
+                                        $avatar = $developer->profile->avatar_url;
+                                    } else {
+                                        // Avatar par défaut avec ui-avatars.com
+                                        $avatar = 'https://ui-avatars.com/api/?' . http_build_query([
+                                            'name' => $developer->name,
+                                            'size' => 200,
+                                            'background' => '0F172A',
+                                            'color' => '10B981',
+                                            'font-size' => 0.6,
+                                            'rounded' => true,
+                                            'bold' => true
+                                        ]);
+                                    }
                                 @endphp
                                 <img src="{{ $avatar }}" alt="{{ $developer->name }}" class="w-full h-full object-cover">
                                 <!-- Dark Overlay on hover -->
