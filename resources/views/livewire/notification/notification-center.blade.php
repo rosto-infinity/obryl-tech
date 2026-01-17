@@ -11,7 +11,7 @@
         @endif
     </div>
 
-    <div class="bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden shadow-sm">
+    <div class="bg-white dark:bg-zinc-900 rounded-xl border  border-zinc-200 dark:border-zinc-800 overflow-hidden shadow-sm">
         @forelse($notifications as $notification)
             <div wire:key="{{ $notification->id }}" class="group p-4 sm:p-6 border-b border-zinc-100 dark:border-zinc-800 last:border-0 hover:bg-zinc-50 dark:hover:bg-zinc-800/50 transition-colors {{ !$notification->read_at ? 'bg-zinc-50/30 dark:bg-zinc-800/20' : '' }}">
                 <div class="flex gap-4 sm:gap-6">

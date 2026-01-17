@@ -47,8 +47,8 @@
 
                     <!-- Actions utilisateur -->
                     @auth
-                        <div class="flex items-center gap-0">
-                            <livewire:notification.notification-bell mode="link" />
+                        <div class="flex justify-end items-center gap-0">
+                            <livewire:notification.notification-bell mode="link"  style="background-color: red  !important;"/>
                             <flux:navlist.item href="{{ route('dashboard') }}" :current="request()->routeIs('dashboard.*')"
                                 wire:navigate>
                                 <span
