@@ -29,7 +29,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            ->path(config('app.admin_path', 'obryl-admin-devopsrosto-250-pro2026'))
             ->login()
             ->colors([
                 'primary' => Color::Green,

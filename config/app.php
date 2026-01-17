@@ -125,4 +125,15 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+/*
+    |--------------------------------------------------------------------------
+    | Admin Panel Path
+    |--------------------------------------------------------------------------
+    |
+    | This value is the path to your admin panel. You can customize this
+    | to make your admin URL more secure and harder to guess.
+    |
+    */
+    'admin_path' => env('ADMIN_PATH', 'fzefefdefzerrr'),
+
 ];

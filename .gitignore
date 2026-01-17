@@ -9,6 +9,7 @@
 zero_docs_olus
 .env
 .env.backup
+.env.admin
 .env.production
 .phpactor.json
 .phpunit.result.cache
