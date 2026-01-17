@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Auth;
 
 enum UserStatus: string
@@ -10,7 +12,7 @@ enum UserStatus: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::ACTIVE => 'Actif',
             self::INACTIVE => 'Inactif',
             self::SUSPENDED => 'Suspendu',
@@ -19,7 +21,7 @@ enum UserStatus: string
 
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::ACTIVE => 'success',
             self::INACTIVE => 'warning',
             self::SUSPENDED => 'danger',

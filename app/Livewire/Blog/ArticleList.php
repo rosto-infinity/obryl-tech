@@ -4,19 +4,21 @@ declare(strict_types=1);
 
 namespace App\Livewire\Blog;
 
-use App\Models\Article;
 use App\Enums\Blog\ArticleCategory;
-use Livewire\Component;
-use Livewire\WithPagination;
+use App\Models\Article;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Component;
+use Livewire\WithPagination;
 
 class ArticleList extends Component
 {
     use WithPagination;
 
     public string $search = '';
+
     public ?string $category = null;
+
     public string $sort = 'recent';
 
     protected $queryString = [

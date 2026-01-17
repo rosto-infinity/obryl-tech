@@ -1,12 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Enums\Commission\CommissionStatus;
-use App\Enums\Commission\PaymentMethod;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ExternalDeveloperCommission extends Model
 {
@@ -112,7 +113,7 @@ class ExternalDeveloperCommission extends Model
      */
     public function getFormattedAmountAttribute(): string
     {
-        return number_format($this->amount, 0, ',', ' ') . ' ' . $this->currency;
+        return number_format($this->amount, 0, ',', ' ').' '.$this->currency;
     }
 
     /**
@@ -128,6 +129,6 @@ class ExternalDeveloperCommission extends Model
      */
     public function getFormattedCommissionAmountAttribute(): string
     {
-        return number_format($this->commission_amount, 0, ',', ' ') . ' ' . $this->currency;
+        return number_format($this->commission_amount, 0, ',', ' ').' '.$this->currency;
     }
 }

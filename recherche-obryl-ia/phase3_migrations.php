@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 // ============================================
 // PHASE 3 : TABLES DÉPENDANTES DE PROJECTS
 // ============================================
@@ -14,7 +16,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('project_milestones', function (Blueprint $table) {
+        Schema::create('project_milestones', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->string('title'); // "Maquettes", "Backend", "Frontend"
@@ -28,7 +30,7 @@ return new class extends Migration
             $table->timestamp('completed_at')->nullable();
             $table->timestamp('paid_at')->nullable();
             $table->timestamps();
-            
+
             // Indexes
             $table->index(['project_id', 'status']);
             $table->index(['project_id', 'order']);
@@ -49,7 +51,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('project_payments', function (Blueprint $table) {
+        Schema::create('project_payments', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete(); // Qui paie
@@ -63,7 +65,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->timestamp('processed_at')->nullable();
             $table->timestamps();
-            
+
             // Indexes
             $table->index(['project_id', 'status']);
             $table->index('transaction_id');
@@ -85,7 +87,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('chats', function (Blueprint $table) {
+        Schema::create('chats', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->foreignId('sender_id')->constrained('users')->cascadeOnDelete();
@@ -94,7 +96,7 @@ return new class extends Migration
             $table->boolean('is_read')->default(false);
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
-            
+
             // Indexes
             $table->index(['project_id', 'created_at']);
             $table->index(['sender_id', 'created_at']);
@@ -115,7 +117,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('project_collaborators', function (Blueprint $table) {
+        Schema::create('project_collaborators', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->foreignId('developer_id')->constrained('users')->cascadeOnDelete();
@@ -130,10 +132,10 @@ return new class extends Migration
             $table->timestamp('paid_at')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
-            
+
             // Contrainte unique
             $table->unique(['project_id', 'developer_id']);
-            
+
             // Indexes
             $table->index(['developer_id', 'status']);
             $table->index(['project_id', 'role']);
@@ -154,7 +156,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('portfolio_projects', function (Blueprint $table) {
+        Schema::create('portfolio_projects', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->string('showcase_title')->nullable(); // Titre public
@@ -169,7 +171,7 @@ return new class extends Migration
             $table->integer('views_count')->default(0);
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
-            
+
             // Indexes
             $table->unique('project_id');
             $table->index(['is_featured', 'display_order']);

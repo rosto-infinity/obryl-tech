@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Support;
 
 enum TicketPriority: string
@@ -11,7 +13,7 @@ enum TicketPriority: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::LOW => 'Basse',
             self::MEDIUM => 'Moyenne',
             self::HIGH => 'Haute',
@@ -21,7 +23,7 @@ enum TicketPriority: string
 
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::LOW => 'success',
             self::MEDIUM => 'warning',
             self::HIGH => 'danger',
@@ -31,7 +33,7 @@ enum TicketPriority: string
 
     public function icon(): string
     {
-        return match($this) {
+        return match ($this) {
             self::LOW => '🟢',
             self::MEDIUM => '🟡',
             self::HIGH => '🔴',

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('workload_management', function (Blueprint $table) {
+        Schema::create('workload_management', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('developer_id')->constrained('users')->cascadeOnDelete();
             $table->integer('current_projects_count')->default(0);
@@ -19,7 +21,7 @@ return new class extends Migration
             $table->enum('availability_status', ['available', 'busy', 'overloaded'])->default('available');
             $table->decimal('workload_percentage', 5, 2)->default(0.00);
             $table->timestamp('last_updated_at')->useCurrent();
-            
+
             // Indexes
             $table->index('developer_id');
             $table->index('availability_status');

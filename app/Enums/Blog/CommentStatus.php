@@ -15,7 +15,7 @@ enum CommentStatus: string
      */
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => 'En attente',
             self::APPROVED => 'Approuvé',
             self::REJECTED => 'Rejeté',
@@ -27,7 +27,7 @@ enum CommentStatus: string
      */
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => 'bg-yellow-100 text-yellow-800 border-yellow-200',
             self::APPROVED => 'bg-green-100 text-green-800 border-green-200',
             self::REJECTED => 'bg-red-100 text-red-800 border-red-200',

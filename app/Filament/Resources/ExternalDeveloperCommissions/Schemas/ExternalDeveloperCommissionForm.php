@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\ExternalDeveloperCommissions\Schemas;
 
 use Filament\Forms\Components\DateTimePicker;
@@ -73,7 +75,7 @@ class ExternalDeveloperCommissionForm
                         'pending' => 'En attente',
                         'approved' => 'Approuvée',
                         'paid' => 'Payée',
-                        'cancelled' => 'Annulée'
+                        'cancelled' => 'Annulée',
                     ])
                     ->default('pending')
                     ->required()

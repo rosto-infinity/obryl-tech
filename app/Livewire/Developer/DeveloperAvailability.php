@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Developer;
 
 use App\Models\User;
@@ -11,8 +13,11 @@ class DeveloperAvailability extends Component
     use WithPagination;
 
     public $search = '';
+
     public $specialization = '';
+
     public $skillLevel = '';
+
     public $availability = '';
 
     protected $queryString = [
@@ -25,22 +30,22 @@ class DeveloperAvailability extends Component
     public function render()
     {
         $developers = User::where('user_type', 'developer')
-            ->whereHas('profile', function($query) {
+            ->whereHas('profile', function ($query): void {
                 $query->where('availability', 'available');
             })
-            ->when($this->search, function($query) {
-                $query->where(function($subQuery) {
-                    $subQuery->where('name', 'like', '%' . $this->search . '%')
-                          ->orWhere('email', 'like', '%' . $this->search . '%');
+            ->when($this->search, function ($query): void {
+                $query->where(function ($subQuery): void {
+                    $subQuery->where('name', 'like', '%'.$this->search.'%')
+                        ->orWhere('email', 'like', '%'.$this->search.'%');
                 });
             })
-            ->when($this->specialization, function($query) {
-                $query->whereHas('profile', function($subQuery) {
+            ->when($this->specialization, function ($query): void {
+                $query->whereHas('profile', function ($subQuery): void {
                     $subQuery->whereJsonContains('specializations', [$this->specialization]);
                 });
             })
-            ->when($this->skillLevel, function($query) {
-                $query->whereHas('profile', function($subQuery) {
+            ->when($this->skillLevel, function ($query): void {
+                $query->whereHas('profile', function ($subQuery): void {
                     $subQuery->where('skill_level', $this->skillLevel);
                 });
             })

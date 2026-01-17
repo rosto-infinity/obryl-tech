@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Users\Schemas;
 
-use App\Models\User;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Schema;
 
@@ -42,8 +43,8 @@ class UserInfolist
                 TextEntry::make('status')
                     ->badge(),
                 TextEntry::make('deleted_at')
-                    ->dateTime()
-                   
+                    ->dateTime(),
+
             ]);
     }
 }

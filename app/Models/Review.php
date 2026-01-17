@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -60,7 +62,7 @@ class Review extends Model
 
     public function getRatingLabel(): string
     {
-        return match($this->rating) {
+        return match ($this->rating) {
             1 => '⭐ Très mauvais',
             2 => '⭐⭐ Mauvais',
             3 => '⭐⭐⭐ Moyen',
@@ -78,7 +80,7 @@ class Review extends Model
     public function approve(): void
     {
         $this->update(['status' => \App\Enums\ReviewStatus::APPROVED]);
-        
+
         // Mettre à jour la note moyenne du développeur
         $this->developer->profile->updateAverageRating();
     }

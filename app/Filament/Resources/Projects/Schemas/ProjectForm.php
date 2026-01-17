@@ -1,37 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Projects\Schemas;
 
-use Filament\Forms;
-use App\Models\User;
-use Filament\Forms\Form;
-use Illuminate\Support\Str;
-use Filament\Schemas\Schema;
-use App\Enums\Project\ProjectType;
-use Filament\Infolists\Components;
-use Illuminate\Support\HtmlString;
-
-use Filament\Forms\Components\Grid;
-use App\Enums\Project\ProjectStatus;
-use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\Hidden;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Tabs;
-
 use App\Enums\Project\ProjectPriority;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Textarea;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Section;
+use App\Enums\Project\ProjectStatus;
+use App\Enums\Project\ProjectType;
+use App\Models\User;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
-use Illuminate\Database\Eloquent\Builder;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
-use Filament\Forms\Components\Actions\Action;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Schema;
+use Illuminate\Support\Str;
 
 class ProjectForm
 {
@@ -53,11 +40,11 @@ class ProjectForm
                                         TextInput::make('code')
                                             ->label('Code du projet')
                                             ->placeholder('Ex: PROJ-2024-001')
-                                            ->default(fn () => 'PROJ-' . date('Ym') . '-' . strtoupper(Str::random(6)))
+                                            ->default(fn () => 'PROJ-'.date('Ym').'-'.strtoupper(Str::random(6)))
                                             ->disabled()
                                             ->dehydrated(false)
                                             ->helperText('Code unique généré automatiquement (format: PROJ-YYYYMM-XXXXXX)'),
-                                        
+
                                         TextInput::make('title')
                                             ->label('Titre du projet')
                                             ->placeholder('Entrez le titre du projet')
@@ -65,7 +52,7 @@ class ProjectForm
                                             ->maxLength(255)
                                             ->live(onBlur: true)
                                             ->afterStateUpdated(fn ($state, callable $set) => $set('slug', Str::slug($state))),
-                                        
+
                                         TextInput::make('slug')
                                             ->label('URL du projet')
                                             ->placeholder('url-du-projet')
@@ -73,7 +60,7 @@ class ProjectForm
                                             ->dehydrated(false)
                                             ->helperText('URL unique générée automatiquement depuis le titre'),
                                     ]),
-                                
+
                                 Section::make('Description')
                                     ->description('Description détaillée du projet')
                                     ->icon('heroicon-o-document')
@@ -86,7 +73,7 @@ class ProjectForm
                                             ->columnSpanFull(),
                                     ]),
                             ]),
-                        
+
                         // ONGLET: ASSIGNATION ET STATUT
                         Tabs\Tab::make('Assignation et Statut')
                             ->icon('heroicon-o-user-group')
@@ -122,9 +109,10 @@ class ProjectForm
                                                     'status' => \App\Enums\Auth\UserStatus::ACTIVE,
                                                     'password' => bcrypt('password'),
                                                 ]);
+
                                                 return $client->id;
                                             }),
-                                        
+
                                         Select::make('developer_id')
                                             ->label('Développeur')
                                             ->placeholder('Sélectionner un développeur')
@@ -133,7 +121,7 @@ class ProjectForm
                                             ->preload()
                                             ->helperText('Laissez vide pour assigner plus tard'),
                                     ]),
-                                
+
                                 Section::make('Statut du Projet')
                                     ->description('Configuration du statut et priorité')
                                     ->icon('heroicon-o-flag')
@@ -146,12 +134,10 @@ class ProjectForm
                                             ->default('web')
                                             ->required()
                                             ->searchable()
-                                            ->getSearchResultsUsing(function (string $search) {
-                                                return collect(ProjectType::cases())
-                                                    ->filter(fn ($case) => str_contains($case->label(), $search))
-                                                    ->mapWithKeys(fn ($case) => [$case->value => $case->label()]);
-                                            }),
-                                        
+                                            ->getSearchResultsUsing(fn (string $search) => collect(ProjectType::cases())
+                                                ->filter(fn ($case) => str_contains($case->label(), $search))
+                                                ->mapWithKeys(fn ($case) => [$case->value => $case->label()])),
+
                                         Select::make('status')
                                             ->label('Statut')
                                             ->placeholder('Sélectionner le statut')
@@ -159,16 +145,16 @@ class ProjectForm
                                             ->default('pending')
                                             ->required()
                                             ->reactive()
-                                            ->afterStateUpdated(function ($state, callable $get, callable $set) {
+                                            ->afterStateUpdated(function ($state, callable $get, callable $set): void {
                                                 // Auto-compléter certaines dates selon le statut
-                                                if ($state === 'completed' && !$get('completed_at')) {
+                                                if ($state === 'completed' && ! $get('completed_at')) {
                                                     $set('completed_at', now()->format('Y-m-d'));
                                                 }
-                                                if ($state === 'in_progress' && !$get('started_at')) {
+                                                if ($state === 'in_progress' && ! $get('started_at')) {
                                                     $set('started_at', now()->format('Y-m-d'));
                                                 }
                                             }),
-                                        
+
                                         Select::make('priority')
                                             ->label('Priorité')
                                             ->placeholder('Sélectionner la priorité')
@@ -177,7 +163,7 @@ class ProjectForm
                                             ->required(),
                                     ]),
                             ]),
-                        
+
                         // ONGLET: BUDGET ET DATES
                         Tabs\Tab::make('Budget et Dates')
                             ->icon('heroicon-o-currency-dollar')
@@ -194,7 +180,7 @@ class ProjectForm
                                             ->prefix('XAF')
                                             ->step(0.01)
                                             ->helperText('Budget total estimé pour le projet'),
-                                        
+
                                         TextInput::make('final_cost')
                                             ->label('Coût final')
                                             ->placeholder('0.00')
@@ -202,7 +188,7 @@ class ProjectForm
                                             ->prefix('XAF')
                                             ->step(0.01)
                                             ->helperText('Coût réel final du projet'),
-                                        
+
                                         Select::make('currency')
                                             ->label('Devise')
                                             ->placeholder('Sélectionner la devise')
@@ -214,7 +200,7 @@ class ProjectForm
                                             ->default('XAF')
                                             ->required(),
                                     ]),
-                                
+
                                 Section::make('Planning')
                                     ->description('Dates importantes du projet')
                                     ->icon('heroicon-o-calendar')
@@ -226,14 +212,14 @@ class ProjectForm
                                             ->native(false)
                                             ->displayFormat('d/m/Y')
                                             ->helperText('Date de fin prévue du projet'),
-                                        
+
                                         DatePicker::make('started_at')
                                             ->label('Date de début')
                                             ->placeholder('Sélectionner la date de début')
                                             ->native(false)
                                             ->displayFormat('d/m/Y')
                                             ->helperText('Date réelle de début du projet'),
-                                        
+
                                         DatePicker::make('completed_at')
                                             ->label('Date de fin')
                                             ->placeholder('Sélectionner la date de fin')
@@ -242,7 +228,7 @@ class ProjectForm
                                             ->helperText('Date réelle de fin du projet'),
                                     ]),
                             ]),
-                        
+
                         // ONGLET: PROGRESSION ET CONTENU
                         Tabs\Tab::make('Progression et Contenu')
                             ->icon('heroicon-o-chart-bar')
@@ -261,7 +247,7 @@ class ProjectForm
                                             ->maxValue(100)
                                             ->suffix('%')
                                             ->helperText('Progression actuelle du projet (0-100%)'),
-                                        
+
                                         ToggleButtons::make('is_published')
                                             ->label('Publication')
                                             ->boolean()
@@ -270,7 +256,7 @@ class ProjectForm
                                             ->grouped()
                                             ->helperText('Rendre le projet visible publiquement'),
                                     ]),
-                                
+
                                 Section::make('Technologies et Contenu')
                                     ->description('Configuration technique et contenu du projet')
                                     ->icon('heroicon-o-cog')
@@ -280,13 +266,13 @@ class ProjectForm
                                             ->placeholder('Ex: Laravel, React, Vue.js (une par ligne)')
                                             ->helperText('Liste des technologies utilisées dans le projet')
                                             ->columnSpanFull(),
-                                        
+
                                         Textarea::make('milestones')
                                             ->label('Jalons du projet')
                                             ->placeholder('Ex: Phase 1 - Développement\nPhase 2 - Tests\nPhase 3 - Déploiement')
                                             ->helperText('Jalons importants du projet (un par ligne)')
                                             ->columnSpanFull(),
-                                        
+
                                         Textarea::make('tasks')
                                             ->label('Tâches du projet')
                                             ->placeholder('Ex: Configuration de la base de données\nDéveloppement des API\nTests unitaires')
@@ -294,7 +280,7 @@ class ProjectForm
                                             ->columnSpanFull(),
                                     ]),
                             ]),
-                        
+
                         // ONGLET: MÉDIAS ET VISIBILITÉ
                         Tabs\Tab::make('Médias et Visibilité')
                             ->icon('heroicon-o-photo')
@@ -305,16 +291,16 @@ class ProjectForm
                                     ->columns(2)
                                     ->schema([
                                         FileUpload::make('featured_image')
-                                        ->disk('public')
-                                        ->directory('projects')
-                                        ->label('Image principale')
-                                        ->placeholder('Télécharger l\'image principale')
-                                        ->image()
-                                        ->maxSize(2048)
-                                        ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                                        ->helperText('Image principale du projet (max 2MB, formats: JPG, PNG, WebP)')
-                                        ->visibility('public'),
-                                        
+                                            ->disk('public')
+                                            ->directory('projects')
+                                            ->label('Image principale')
+                                            ->placeholder('Télécharger l\'image principale')
+                                            ->image()
+                                            ->maxSize(2048)
+                                            ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
+                                            ->helperText('Image principale du projet (max 2MB, formats: JPG, PNG, WebP)')
+                                            ->visibility('public'),
+
                                         FileUpload::make('gallery_images')
                                             ->label('Galerie d\'images')
                                             ->placeholder('Télécharger les images de la galerie')
@@ -329,7 +315,7 @@ class ProjectForm
                                             ->helperText('Images additionnelles pour la galerie (max 1MB par image)')
                                             ->visibility('public'),
                                     ]),
-                                
+
                                 Section::make('Visibilité et Promotion')
                                     ->description('Options de visibilité et promotion')
                                     ->icon('heroicon-o-eye')
@@ -339,7 +325,7 @@ class ProjectForm
                                             ->label('Projet mis en avant')
                                             ->default(false)
                                             ->helperText('Mettre ce projet en avant sur la page d\'accueil'),
-                                        
+
                                         Textarea::make('collaborators')
                                             ->label('Collaborateurs')
                                             ->placeholder('Ex: John Doe - Développeur Frontend\nJane Smith - Designer UX')
@@ -347,7 +333,7 @@ class ProjectForm
                                             ->columnSpanFull(),
                                     ]),
                             ]),
-                        
+
                         // ONGLET: STATISTIQUES ET ADMINISTRATION
                         Tabs\Tab::make('Statistiques et Administration')
                             ->icon('heroicon-o-chart-bar')
@@ -364,7 +350,7 @@ class ProjectForm
                                             ->default(0)
                                             ->disabled()
                                             ->helperText('Nombre total de likes reçus'),
-                                        
+
                                         TextInput::make('views_count')
                                             ->label('Nombre de vues')
                                             ->placeholder('0')
@@ -372,7 +358,7 @@ class ProjectForm
                                             ->default(0)
                                             ->disabled()
                                             ->helperText('Nombre total de vues'),
-                                        
+
                                         TextInput::make('reviews_count')
                                             ->label('Nombre d\'avis')
                                             ->placeholder('0')
@@ -380,7 +366,7 @@ class ProjectForm
                                             ->default(0)
                                             ->disabled()
                                             ->helperText('Nombre total d\'avis reçus'),
-                                        
+
                                         TextInput::make('average_rating')
                                             ->label('Note moyenne')
                                             ->placeholder('0.0')
@@ -392,7 +378,7 @@ class ProjectForm
                                             ->disabled()
                                             ->helperText('Note moyenne des avis (0-5)'),
                                     ]),
-                                
+
                                 Section::make('Administration')
                                     ->description('Notes administratives et gestion')
                                     ->icon('heroicon-o-shield-check')
@@ -403,7 +389,7 @@ class ProjectForm
                                             ->rows(4)
                                             ->columnSpanFull()
                                             ->helperText('Notes visibles uniquement par les administrateurs'),
-                                        
+
                                         Textarea::make('cancellation_reason')
                                             ->label('Raison d\'annulation')
                                             ->placeholder('Raison de l\'annulation du projet...')
@@ -420,7 +406,7 @@ class ProjectForm
             ])
             ->columns(1);
     }
-    
+
     /**
      * Validation personnalisée pour le formulaire
      */
@@ -432,9 +418,9 @@ class ProjectForm
             'description' => ['required', 'string', 'min:10'],
             'client_id' => ['required', 'exists:users,id'],
             'developer_id' => ['nullable', 'exists:users,id'],
-            'type' => ['required', 'in:' . implode(',', array_column(ProjectType::cases(), 'value'))],
-            'status' => ['required', 'in:' . implode(',', array_column(ProjectStatus::cases(), 'value'))],
-            'priority' => ['required', 'in:' . implode(',', array_column(ProjectPriority::cases(), 'value'))],
+            'type' => ['required', 'in:'.implode(',', array_column(ProjectType::cases(), 'value'))],
+            'status' => ['required', 'in:'.implode(',', array_column(ProjectStatus::cases(), 'value'))],
+            'priority' => ['required', 'in:'.implode(',', array_column(ProjectPriority::cases(), 'value'))],
             'budget' => ['nullable', 'numeric', 'min:0'],
             'final_cost' => ['nullable', 'numeric', 'min:0'],
             'currency' => ['required', 'in:XAF,EUR,USD'],
@@ -446,7 +432,7 @@ class ProjectForm
             'gallery_images.*' => ['nullable', 'image', 'max:1024', 'mimes:jpeg,png,webp'],
         ];
     }
-    
+
     /**
      * Messages d'erreur personnalisés en français
      */
@@ -455,54 +441,54 @@ class ProjectForm
         return [
             'title.required' => 'Le titre du projet est obligatoire.',
             'title.max' => 'Le titre du projet ne peut pas dépasser 255 caractères.',
-            
+
             'slug.unique' => 'Cette URL de projet existe déjà.',
             'slug.max' => 'L\'URL du projet ne peut pas dépasser 255 caractères.',
-            
+
             'description.required' => 'La description du projet est obligatoire.',
             'description.min' => 'La description doit contenir au moins 10 caractères.',
-            
+
             'client_id.required' => 'La sélection d\'un client est obligatoire.',
             'client_id.exists' => 'Le client sélectionné n\'existe pas.',
-            
+
             'developer_id.exists' => 'Le développeur sélectionné n\'existe pas.',
-            
+
             'type.required' => 'Le type de projet est obligatoire.',
             'type.in' => 'Le type de projet sélectionné n\'est pas valide.',
-            
+
             'status.required' => 'Le statut du projet est obligatoire.',
             'status.in' => 'Le statut sélectionné n\'est pas valide.',
-            
+
             'priority.required' => 'La priorité du projet est obligatoire.',
             'priority.in' => 'La priorité sélectionnée n\'est pas valide.',
-            
+
             'budget.numeric' => 'Le budget doit être un nombre.',
             'budget.min' => 'Le budget doit être supérieur ou égal à 0.',
-            
+
             'final_cost.numeric' => 'Le coût final doit être un nombre.',
             'final_cost.min' => 'Le coût final doit être supérieur ou égal à 0.',
-            
+
             'currency.required' => 'La devise est obligatoire.',
             'currency.in' => 'La devise sélectionnée n\'est pas valide.',
-            
+
             'deadline.date' => 'La date limite doit être une date valide.',
             'deadline.after_or_equal' => 'La date limite doit être aujourd\'hui ou une date future.',
-            
+
             'started_at.date' => 'La date de début doit être une date valide.',
             'started_at.before_or_equal' => 'La date de début doit être avant ou égale à la date de fin.',
-            
+
             'completed_at.date' => 'La date de fin doit être une date valide.',
             'completed_at.after_or_equal' => 'La date de fin doit être après ou égale à la date de début.',
-            
+
             'progress_percentage.required' => 'Le pourcentage de progression est obligatoire.',
             'progress_percentage.numeric' => 'Le pourcentage de progression doit être un nombre.',
             'progress_percentage.min' => 'Le pourcentage de progression doit être au moins 0.',
             'progress_percentage.max' => 'Le pourcentage de progression ne peut pas dépasser 100.',
-            
+
             'featured_image.image' => 'Le fichier doit être une image.',
             'featured_image.max' => 'L\'image principale ne peut pas dépasser 2MB.',
             'featured_image.mimes' => 'L\'image principale doit être au format JPG, PNG ou WebP.',
-            
+
             'gallery_images.*.image' => 'Tous les fichiers de la galerie doivent être des images.',
             'gallery_images.*.max' => 'Chaque image de la galerie ne peut pas dépasser 1MB.',
             'gallery_images.*.mimes' => 'Les images de la galerie doivent être au format JPG, PNG ou WebP.',

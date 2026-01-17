@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Commission;
 
 enum CommissionStatus: string
@@ -12,7 +14,7 @@ enum CommissionStatus: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => 'En attente',
             self::APPROVED => 'Approuvée',
             self::PAID => 'Payée',
@@ -23,7 +25,7 @@ enum CommissionStatus: string
 
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => 'warning',
             self::APPROVED => 'info',
             self::PAID => 'success',

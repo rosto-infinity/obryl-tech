@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use App\Enums\Blog\ArticleCategory;
+use App\Enums\Blog\ArticleStatus;
 use App\Models\Article;
 use App\Models\User;
-use App\Enums\Blog\ArticleStatus;
-use App\Enums\Blog\ArticleCategory;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -27,7 +27,7 @@ class ArticleFactory extends Factory
     {
         $title = $this->faker->sentence(6);
         $publishedAt = $this->faker->boolean(70) ? $this->faker->dateTimeBetween('-6 months', 'now') : null;
-        
+
         return [
             'author_id' => User::where('user_type', 'admin')->inRandomOrder()->first()?->id ?? User::factory(),
             'title' => $title,
@@ -43,7 +43,7 @@ class ArticleFactory extends Factory
             'tags' => $this->faker->randomElements([
                 'Laravel', 'PHP', 'JavaScript', 'Vue.js', 'React', 'Tailwind CSS',
                 'MySQL', 'PostgreSQL', 'Docker', 'DevOps', 'API', 'REST',
-                'GraphQL', 'Testing', 'Security', 'Performance', 'SEO'
+                'GraphQL', 'Testing', 'Security', 'Performance', 'SEO',
             ], $this->faker->numberBetween(2, 5)),
             'category' => $this->faker->randomElement([
                 ArticleCategory::TUTORIAL->value,
@@ -72,20 +72,20 @@ class ArticleFactory extends Factory
      */
     private function generateMarkdownContent(): string
     {
-        $content = "# " . $this->faker->sentence(4) . "\n\n";
-        $content .= $this->faker->paragraph(3) . "\n\n";
-        
-        $content .= "## " . $this->faker->sentence(3) . "\n\n";
-        $content .= $this->faker->paragraph(5) . "\n\n";
-        
+        $content = '# '.$this->faker->sentence(4)."\n\n";
+        $content .= $this->faker->paragraph(3)."\n\n";
+
+        $content .= '## '.$this->faker->sentence(3)."\n\n";
+        $content .= $this->faker->paragraph(5)."\n\n";
+
         $content .= "### Points clés\n\n";
-        $content .= "- " . $this->faker->sentence(8) . "\n";
-        $content .= "- " . $this->faker->sentence(7) . "\n";
-        $content .= "- " . $this->faker->sentence(9) . "\n\n";
-        
-        $content .= "## " . $this->faker->sentence(3) . "\n\n";
-        $content .= $this->faker->paragraph(4) . "\n\n";
-        
+        $content .= '- '.$this->faker->sentence(8)."\n";
+        $content .= '- '.$this->faker->sentence(7)."\n";
+        $content .= '- '.$this->faker->sentence(9)."\n\n";
+
+        $content .= '## '.$this->faker->sentence(3)."\n\n";
+        $content .= $this->faker->paragraph(4)."\n\n";
+
         $content .= "```php\n";
         $content .= "<?php\n\n";
         $content .= "// Exemple de code\n";
@@ -93,12 +93,12 @@ class ArticleFactory extends Factory
         $content .= "    return 'Hello World';\n";
         $content .= "}\n";
         $content .= "```\n\n";
-        
-        $content .= $this->faker->paragraph(4) . "\n\n";
-        
+
+        $content .= $this->faker->paragraph(4)."\n\n";
+
         $content .= "## Conclusion\n\n";
-        $content .= $this->faker->paragraph(3) . "\n";
-        
+        $content .= $this->faker->paragraph(3)."\n";
+
         return $content;
     }
 

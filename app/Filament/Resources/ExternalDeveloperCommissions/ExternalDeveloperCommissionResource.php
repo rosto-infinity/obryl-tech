@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\ExternalDeveloperCommissions;
 
 use App\Filament\Resources\ExternalDeveloperCommissions\Pages\CreateExternalDeveloperCommission;
@@ -9,11 +11,11 @@ use App\Filament\Resources\ExternalDeveloperCommissions\Schemas\ExternalDevelope
 use App\Filament\Resources\ExternalDeveloperCommissions\Tables\ExternalDeveloperCommissionsTable;
 use App\Models\ExternalDeveloperCommission;
 use BackedEnum;
-use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class ExternalDeveloperCommissionResource extends Resource
 {

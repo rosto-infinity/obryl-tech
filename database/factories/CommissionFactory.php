@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Enums\Commission\CommissionStatus;
@@ -22,7 +24,7 @@ class CommissionFactory extends Factory
     {
         $project = Project::factory()->completed()->create();
         $amount = $this->faker->numberBetween(10000, 100000);
-        
+
         return [
             'project_id' => $project->id,
             'developer_id' => User::factory()->developer(),
@@ -42,7 +44,7 @@ class CommissionFactory extends Factory
             'approved_by' => null,
             'payment_details' => json_encode([
                 'method' => 'bank_transfer',
-                'account' => '****' . $this->faker->numerify('####'),
+                'account' => '****'.$this->faker->numerify('####'),
             ]),
         ];
     }

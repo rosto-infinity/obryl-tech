@@ -1,29 +1,25 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\Review;
-use App\Models\Profile;
-use App\Models\Project;
-use App\Models\Commission;
-use App\Models\WorkloadManagement;
-use App\Models\ExternalDeveloperCommission;
-use Illuminate\Support\Str;
-use App\Enums\Auth\UserType;
 use App\Enums\Auth\UserStatus;
-use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Illuminate\Database\Eloquent\Relations\HasOne;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use App\Enums\Auth\UserType;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
+use Laravel\Fortify\TwoFactorAuthenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles,TwoFactorAuthenticatable;
+    use HasFactory, HasRoles, Notifiable,TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -64,58 +60,58 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
             'user_type' => UserType::class,
-        'status' => UserStatus::class,
+            'status' => UserStatus::class,
         ];
     }
 
     /**
      * Boot the model.
      */
-    protected static function boot()
+    protected static function boot(): void
     {
         parent::boot();
 
         // Générer automatiquement le slug à partir du nom
-        static::creating(function ($user) {
+        static::creating(function ($user): void {
             if (empty($user->slug)) {
                 $user->slug = Str::slug($user->name);
-                
+
                 // S'assurer que le slug est unique
                 $originalSlug = $user->slug;
                 $counter = 1;
-                
+
                 while (static::where('slug', $user->slug)->exists()) {
-                    $user->slug = $originalSlug . '-' . $counter;
+                    $user->slug = $originalSlug.'-'.$counter;
                     $counter++;
                 }
             }
         });
 
         // Mettre à jour le slug si le nom change
-        static::updating(function ($user) {
+        static::updating(function ($user): void {
             if ($user->isDirty('name') && empty($user->slug)) {
                 $user->slug = Str::slug($user->name);
-                
+
                 // S'assurer que le slug est unique
                 $originalSlug = $user->slug;
                 $counter = 1;
-                
+
                 while (static::where('slug', $user->slug)->where('id', '!=', $user->id)->exists()) {
-                    $user->slug = $originalSlug . '-' . $counter;
+                    $user->slug = $originalSlug.'-'.$counter;
                     $counter++;
                 }
             }
         });
 
         // Assigner automatiquement le rôle correspondant au user_type
-        static::created(function ($user) {
+        static::created(function ($user): void {
             // user_type est une chaîne, pas un enum
             if ($user->user_type) {
                 $user->assignRole($user->user_type);
             }
         });
 
-        static::updated(function ($user) {
+        static::updated(function ($user): void {
             if ($user->isDirty('user_type')) {
                 // Synchroniser le rôle si le type a changé
                 $user->syncRoles([$user->user_type]);
@@ -134,7 +130,8 @@ class User extends Authenticatable
             ->map(fn ($word) => Str::substr($word, 0, 1))
             ->implode('');
     }
-     // Relations
+
+    // Relations
     public function profile(): HasOne
     {
         return $this->hasOne(Profile::class);
@@ -212,12 +209,12 @@ class User extends Authenticatable
      */
     public function getCurrentWorkload(): array
     {
-        if (!$this->workload) {
+        if (! $this->workload) {
             return [
                 'active_projects' => 0,
                 'max_capacity' => 3,
                 'workload_percentage' => 0,
-                'availability_status' => 'available'
+                'availability_status' => 'available',
             ];
         }
 
@@ -229,11 +226,11 @@ class User extends Authenticatable
      */
     public function isAvailableForWork(): bool
     {
-        if (!$this->isDeveloper() || !$this->isActive()) {
+        if (! $this->isDeveloper() || ! $this->isActive()) {
             return false;
         }
 
-        if (!$this->workload) {
+        if (! $this->workload) {
             return true;
         }
 
@@ -245,11 +242,11 @@ class User extends Authenticatable
      */
     public function getCommissionRate(): float
     {
-        if (!$this->profile) {
+        if (! $this->profile) {
             return 10.0;
         }
 
-        return match($this->profile->skill_level) {
+        return match ($this->profile->skill_level) {
             'junior' => 8.0,
             'intermediate' => 10.0,
             'senior' => 12.0,

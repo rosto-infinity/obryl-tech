@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Articles\Schemas;
 
 use App\Enums\Blog\ArticleCategory;
@@ -7,13 +9,13 @@ use App\Enums\Blog\ArticleStatus;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
-use Filament\Schemas\Schema;
+use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
-use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Schema;
 
 class ArticleForm
 {
@@ -34,7 +36,7 @@ class ArticleForm
                                     ->validationMessages([
                                         'required' => 'L\'auteur est obligatoire.',
                                     ]),
-                                
+
                                 TextInput::make('title')
                                     ->required()
                                     ->maxLength(255)
@@ -43,10 +45,10 @@ class ArticleForm
                                         'required' => 'Le titre est obligatoire.',
                                         'max_length' => 'Le titre ne peut pas dépasser 255 caractères.',
                                     ])
-                                    ->afterStateUpdated(fn (string $operation, $state, \Filament\Schemas\Components\Utilities\Set $set) => 
-                                        $operation === 'create' ? $set('slug', \Illuminate\Support\Str::slug($state)) : null
+                                    ->afterStateUpdated(
+                                        fn (string $operation, $state, \Filament\Schemas\Components\Utilities\Set $set) => $operation === 'create' ? $set('slug', \Illuminate\Support\Str::slug($state)) : null
                                     ),
-                                
+
                                 TextInput::make('slug')
                                     ->required()
                                     ->maxLength(255)
@@ -56,12 +58,12 @@ class ArticleForm
                                         'max_length' => 'Le slug ne peut pas dépasser 255 caractères.',
                                         'unique' => 'Ce slug existe déjà.',
                                     ]),
-                                
+
                                 Textarea::make('excerpt')
                                     ->label('Résumé')
                                     ->rows(3)
                                     ->columnSpanFull(),
-                                
+
                                 \Filament\Forms\Components\MarkdownEditor::make('content')
                                     ->label('Contenu Markdown')
                                     ->required()
@@ -72,7 +74,7 @@ class ArticleForm
                                         'required' => 'Le contenu est obligatoire.',
                                     ]),
                             ]),
-                        
+
                         Tab::make('Médias & Taxonomie')
                             ->icon('heroicon-o-tag')
                             ->schema([
@@ -83,7 +85,7 @@ class ArticleForm
                                     ->directory('articles/featured')
                                     ->visibility('public')
                                     ->columnSpanFull(),
-                                
+
                                 Select::make('category')
                                     ->label('Catégorie')
                                     ->options(ArticleCategory::class)
@@ -92,17 +94,17 @@ class ArticleForm
                                     ->validationMessages([
                                         'required' => 'La catégorie est obligatoire.',
                                     ]),
-                                
+
                                 \Filament\Forms\Components\TagsInput::make('tags')
                                     ->label('Tags')
                                     ->placeholder('Nouveau tag')
                                     ->separator(','),
                             ]),
-                        
+
                         Tab::make('Statut & SEO')
                             ->icon('heroicon-o-cog-6-tooth')
                             ->schema([
-                               Grid::make(2)
+                                Grid::make(2)
                                     ->schema([
                                         Select::make('status')
                                             ->options(ArticleStatus::class)
@@ -112,14 +114,14 @@ class ArticleForm
                                             ->validationMessages([
                                                 'required' => 'Le statut est obligatoire.',
                                             ]),
-                                        
+
                                         DateTimePicker::make('published_at')
                                             ->label('Date de publication'),
-                                        
+
                                         DateTimePicker::make('scheduled_at')
                                             ->label('Programmé pour'),
                                     ]),
-                                
+
                                 Section::make('SEO')
                                     ->description('Métadonnées pour les moteurs de recherche')
                                     ->collapsed()
@@ -131,7 +133,7 @@ class ArticleForm
                                             ->addActionLabel('Ajouter une métadonnée'),
                                     ]),
                             ]),
-                        
+
                         Tab::make('Commentaires')
                             ->icon('heroicon-o-chat-bubble-left-right')
                             ->schema([

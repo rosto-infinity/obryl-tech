@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Notifications;
 
 use App\Filament\Resources\Notifications\Pages\CreateNotification;
@@ -11,11 +13,10 @@ use App\Filament\Resources\Notifications\Schemas\NotificationInfolist;
 use App\Filament\Resources\Notifications\Tables\NotificationsTable;
 use App\Models\Notification;
 use BackedEnum;
-use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class NotificationResource extends Resource
 {

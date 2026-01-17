@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Developer;
 
 use App\Enums\Developer\Availability;
 use App\Enums\Developer\Specialization;
-use App\Enums\Developer\SkillLevel;
 use App\Models\Profile;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -14,14 +15,23 @@ class DeveloperFilter extends Component
     use WithPagination;
 
     public $search = '';
+
     public $specialization = '';
+
     public $availability = '';
+
     public $minHourlyRate = '';
+
     public $maxHourlyRate = '';
+
     public $minExperience = '';
+
     public $skills = '';
+
     public $sortBy = 'created_at';
+
     public $sortDirection = 'desc';
+
     public $perPage = 12;
 
     protected $queryString = [
@@ -37,42 +47,42 @@ class DeveloperFilter extends Component
         'perPage' => ['except' => 12],
     ];
 
-    public function updatingSearch()
+    public function updatingSearch(): void
     {
         $this->resetPage();
     }
 
-    public function updatingSpecialization()
+    public function updatingSpecialization(): void
     {
         $this->resetPage();
     }
 
-    public function updatingAvailability()
+    public function updatingAvailability(): void
     {
         $this->resetPage();
     }
 
-    public function updatingMinHourlyRate()
+    public function updatingMinHourlyRate(): void
     {
         $this->resetPage();
     }
 
-    public function updatingMaxHourlyRate()
+    public function updatingMaxHourlyRate(): void
     {
         $this->resetPage();
     }
 
-    public function updatingMinExperience()
+    public function updatingMinExperience(): void
     {
         $this->resetPage();
     }
 
-    public function updatingSkills()
+    public function updatingSkills(): void
     {
         $this->resetPage();
     }
 
-    public function sortBy($field)
+    public function sortBy($field): void
     {
         if ($this->sortBy === $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
@@ -83,7 +93,7 @@ class DeveloperFilter extends Component
         $this->resetPage();
     }
 
-    public function resetFilters()
+    public function resetFilters(): void
     {
         $this->reset([
             'search',
@@ -95,7 +105,7 @@ class DeveloperFilter extends Component
             'skills',
             'sortBy',
             'sortDirection',
-            'perPage'
+            'perPage',
         ]);
         $this->resetPage();
     }
@@ -103,38 +113,38 @@ class DeveloperFilter extends Component
     public function getFilteredDevelopers()
     {
         return Profile::with('user')
-            ->whereHas('user', function ($query) {
+            ->whereHas('user', function ($query): void {
                 $query->where('user_type', 'developer');
             })
-            ->when($this->search, function ($query) {
-                $query->where(function ($q) {
-                    $q->where('bio', 'like', '%' . $this->search . '%')
-                      ->orWhere('company', 'like', '%' . $this->search . '%')
-                      ->orWhereHas('user', function ($userQuery) {
-                          $userQuery->where('name', 'like', '%' . $this->search . '%')
-                                   ->orWhere('email', 'like', '%' . $this->search . '%');
-                      });
+            ->when($this->search, function ($query): void {
+                $query->where(function ($q): void {
+                    $q->where('bio', 'like', '%'.$this->search.'%')
+                        ->orWhere('company', 'like', '%'.$this->search.'%')
+                        ->orWhereHas('user', function ($userQuery): void {
+                            $userQuery->where('name', 'like', '%'.$this->search.'%')
+                                ->orWhere('email', 'like', '%'.$this->search.'%');
+                        });
                 });
             })
-            ->when($this->specialization, function ($query) {
+            ->when($this->specialization, function ($query): void {
                 $query->where('specialization', $this->specialization);
             })
-            ->when($this->availability, function ($query) {
+            ->when($this->availability, function ($query): void {
                 $query->where('availability', $this->availability);
             })
-            ->when($this->minHourlyRate, function ($query) {
+            ->when($this->minHourlyRate, function ($query): void {
                 $query->where('hourly_rate', '>=', $this->minHourlyRate);
             })
-            ->when($this->maxHourlyRate, function ($query) {
+            ->when($this->maxHourlyRate, function ($query): void {
                 $query->where('hourly_rate', '<=', $this->maxHourlyRate);
             })
-            ->when($this->minExperience, function ($query) {
+            ->when($this->minExperience, function ($query): void {
                 $query->where('years_experience', '>=', $this->minExperience);
             })
-            ->when($this->skills, function ($query) {
+            ->when($this->skills, function ($query): void {
                 $skills = array_map('trim', explode(',', $this->skills));
                 foreach ($skills as $skill) {
-                    if (!empty($skill)) {
+                    if (! empty($skill)) {
                         $query->whereJsonContains('skills', $skill);
                     }
                 }

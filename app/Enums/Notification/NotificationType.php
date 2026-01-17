@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Notification;
 
 enum NotificationType: string
@@ -15,7 +17,7 @@ enum NotificationType: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PROJECT_ASSIGNED => 'Projet assigné',
             self::MILESTONE_COMPLETED => 'Jalon complété',
             self::COMMISSION_APPROVED => 'Commission approuvée',
@@ -29,7 +31,7 @@ enum NotificationType: string
 
     public function icon(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PROJECT_ASSIGNED => '📋',
             self::MILESTONE_COMPLETED => '🎯',
             self::COMMISSION_APPROVED => '✅',

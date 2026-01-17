@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RoleSeeder extends Seeder
 {
@@ -56,12 +58,12 @@ class RoleSeeder extends Seeder
             'ViewAny:Notification',
             'View:Notification',
         ]);
-        
+
         // 5. Super Admin (Défini dans config/filament-shield.php)
         Role::firstOrCreate(['name' => 'super_admin']);
 
         // 6. Assigner les rôles aux utilisateurs existants
-        \App\Models\User::all()->each(function ($user) {
+        \App\Models\User::all()->each(function ($user): void {
             $user->syncRoles([$user->user_type->value]);
         });
     }

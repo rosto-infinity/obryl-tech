@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class ProjectReference extends Model
 {
@@ -21,7 +23,7 @@ class ProjectReference extends Model
         'internal_notes',
         'client_notes',
         'status',
-        'metadata'
+        'metadata',
     ];
 
     protected $casts = [
@@ -32,12 +34,16 @@ class ProjectReference extends Model
 
     // Types de plateforme
     const TYPE_REFERENCE = 'reference';
+
     const TYPE_COMPETITOR = 'competitor';
+
     const TYPE_INSPIRATION = 'inspiration';
 
     // Statuts
     const STATUS_ACTIVE = 'active';
+
     const STATUS_ARCHIVED = 'archived';
+
     const STATUS_REJECTED = 'rejected';
 
     /**
@@ -85,14 +91,14 @@ class ProjectReference extends Model
      */
     public function getFormattedUrl(): string
     {
-        if (!$this->platform_url) {
+        if (! $this->platform_url) {
             return '#';
         }
-        
-        if (!str_starts_with($this->platform_url, 'http')) {
-            return 'https://' . $this->platform_url;
+
+        if (! str_starts_with($this->platform_url, 'http')) {
+            return 'https://'.$this->platform_url;
         }
-        
+
         return $this->platform_url;
     }
 
@@ -101,11 +107,12 @@ class ProjectReference extends Model
      */
     public function getDomain(): string
     {
-        if (!$this->platform_url) {
+        if (! $this->platform_url) {
             return $this->platform_name;
         }
-        
+
         $url = parse_url($this->getFormattedUrl());
+
         return $url['host'] ?? $this->platform_name;
     }
 

@@ -11,7 +11,9 @@ use Livewire\Component;
 class ProjectLike extends Component
 {
     public Project $project;
+
     public bool $isLiked = false;
+
     public int $likeCount = 0;
 
     public function mount(Project $project): void
@@ -26,8 +28,8 @@ class ProjectLike extends Component
      */
     public function toggleLike(): void
     {
-        $this->isLiked = !$this->isLiked;
-        
+        $this->isLiked = ! $this->isLiked;
+
         if ($this->isLiked) {
             $this->project->increment('likes_count');
             $this->likeCount++;
@@ -35,7 +37,7 @@ class ProjectLike extends Component
             $this->project->decrement('likes_count');
             $this->likeCount--;
         }
-        
+
         $this->dispatch('projectLiked', [
             'projectId' => $this->project->id,
             'isLiked' => $this->isLiked,

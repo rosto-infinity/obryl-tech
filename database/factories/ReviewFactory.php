@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Project;
@@ -16,7 +18,7 @@ class ReviewFactory extends Factory
     public function definition(): array
     {
         $project = Project::factory()->completed()->create();
-        
+
         return [
             'project_id' => $project->id,
             'client_id' => $project->client_id,
@@ -37,7 +39,7 @@ class ReviewFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'rating' => 5,
-            'comment' => $this->faker->sentence() . ' Excellent travail !',
+            'comment' => $this->faker->sentence().' Excellent travail !',
             'criteria' => json_encode([
                 'quality' => 5,
                 'communication' => 5,
@@ -51,7 +53,7 @@ class ReviewFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'rating' => 4,
-            'comment' => $this->faker->sentence() . ' Bon travail.',
+            'comment' => $this->faker->sentence().' Bon travail.',
             'criteria' => json_encode([
                 'quality' => 4,
                 'communication' => 4,
@@ -65,7 +67,7 @@ class ReviewFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'rating' => 3,
-            'comment' => $this->faker->sentence() . ' Travail acceptable.',
+            'comment' => $this->faker->sentence().' Travail acceptable.',
             'criteria' => json_encode([
                 'quality' => 3,
                 'communication' => 3,

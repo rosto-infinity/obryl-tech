@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class WorkloadManagement extends Model
 {
@@ -47,8 +49,8 @@ class WorkloadManagement extends Model
             ->whereIn('status', ['in_progress', 'accepted'])
             ->count();
 
-        $workloadPercentage = $this->max_projects_capacity > 0 
-            ? ($activeProjects / $this->max_projects_capacity) * 100 
+        $workloadPercentage = $this->max_projects_capacity > 0
+            ? ($activeProjects / $this->max_projects_capacity) * 100
             : 0;
 
         // Update the record
@@ -72,7 +74,7 @@ class WorkloadManagement extends Model
      */
     private function determineAvailabilityStatus(float $percentage): string
     {
-        return match(true) {
+        return match (true) {
             $percentage >= 100 => 'overloaded',
             $percentage >= 75 => 'busy',
             default => 'available'

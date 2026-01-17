@@ -1,12 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
-use Illuminate\Support\Str;
-use App\Enums\Auth\UserType;
 use App\Enums\Auth\UserStatus;
-use Illuminate\Support\Facades\Hash;
+use App\Enums\Auth\UserType;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserFactory extends Factory
 {

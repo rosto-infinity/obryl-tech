@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Models\Notification;
@@ -16,7 +18,7 @@ class NotificationSeeder extends Seeder
             return;
         }
 
-        $this->command->info("🔔 Création des notifications...");
+        $this->command->info('🔔 Création des notifications...');
 
         // Créer 5-10 notifs par user
         foreach ($users as $user) {
@@ -26,7 +28,7 @@ class NotificationSeeder extends Seeder
                     'user_id' => $user->id,
                 ]);
         }
-        
-        $this->command->info('✅ ' . Notification::count() . ' Notifications créées !');
+
+        $this->command->info('✅ '.Notification::count().' Notifications créées !');
     }
 }

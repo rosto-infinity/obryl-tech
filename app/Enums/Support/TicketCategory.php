@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Support;
 
 enum TicketCategory: string
@@ -12,7 +14,7 @@ enum TicketCategory: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::BILLING => 'Facturation',
             self::TECHNICAL => 'Technique',
             self::GENERAL => 'Général',
@@ -23,7 +25,7 @@ enum TicketCategory: string
 
     public function icon(): string
     {
-        return match($this) {
+        return match ($this) {
             self::BILLING => '💳',
             self::TECHNICAL => '🔧',
             self::GENERAL => '❓',

@@ -1,14 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Enums\Notification\NotificationChannel;
-use App\Enums\Notification\NotificationStatus;
 use App\Enums\Notification\NotificationType;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class Notification extends Model
 {
@@ -38,13 +39,13 @@ class Notification extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
+
     // Helpers
     public function markAsRead(): void
     {
         $this->update(['read_at' => now()]);
     }
-    
+
     public function isRead(): bool
     {
         return $this->read_at !== null;

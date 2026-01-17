@@ -1,26 +1,28 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Support;
 
-use Livewire\Component;
-
 use App\Models\SupportTicket;
+use Livewire\Component;
 
 class TicketChat extends Component
 {
     public SupportTicket $ticket;
+
     public $message = '';
 
     protected $rules = [
         'message' => 'required|string|min:1',
     ];
 
-    public function mount(SupportTicket $ticket)
+    public function mount(SupportTicket $ticket): void
     {
         $this->ticket = $ticket;
     }
 
-    public function sendMessage()
+    public function sendMessage(): void
     {
         $this->validate();
 
@@ -36,7 +38,7 @@ class TicketChat extends Component
 
         $this->ticket->update(['messages' => $messages]);
         $this->message = '';
-        
+
         $this->dispatch('message-sent');
     }
 

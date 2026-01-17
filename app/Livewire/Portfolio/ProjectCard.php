@@ -11,7 +11,9 @@ use Livewire\Component;
 class ProjectCard extends Component
 {
     public Project $project;
+
     public bool $showDetails = false;
+
     public bool $isLiked = false;
 
     public function mount(Project $project): void
@@ -25,14 +27,14 @@ class ProjectCard extends Component
      */
     public function toggleLike(): void
     {
-        $this->isLiked = !$this->isLiked;
-        
+        $this->isLiked = ! $this->isLiked;
+
         if ($this->isLiked) {
             $this->project->increment('likes_count');
         } else {
             $this->project->decrement('likes_count');
         }
-        
+
         $this->dispatch('projectLiked', [
             'projectId' => $this->project->id,
             'isLiked' => $this->isLiked,
@@ -44,7 +46,7 @@ class ProjectCard extends Component
      */
     public function toggleDetails(): void
     {
-        $this->showDetails = !$this->showDetails;
+        $this->showDetails = ! $this->showDetails;
     }
 
     /**

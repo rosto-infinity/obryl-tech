@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Enums\Project\MilestoneStatus;
@@ -20,9 +22,9 @@ class ProjectFactory extends Factory
     public function definition(): array
     {
         $title = $this->faker->sentence(4);
-        
+
         return [
-            'code' => 'PRJ-' . $this->faker->unique()->numerify('######'),
+            'code' => 'PRJ-'.$this->faker->unique()->numerify('######'),
             'title' => $title,
             'description' => $this->faker->paragraph(5),
             'slug' => Str::slug($title),

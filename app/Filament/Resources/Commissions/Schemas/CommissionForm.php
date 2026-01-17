@@ -1,20 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Commissions\Schemas;
 
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Select;
-use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Tabs;
-
-
-use App\Enums\Commission\PaymentMethod;
-use Filament\Forms\Components\Textarea;
-use App\Enums\Commission\CommissionType;
-use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Section;
 use App\Enums\Commission\CommissionStatus;
+use App\Enums\Commission\CommissionType;
+use App\Enums\Commission\PaymentMethod;
 use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Schema;
 
 class CommissionForm
 {
@@ -39,7 +39,7 @@ class CommissionForm
                                             ->preload()
                                             ->required()
                                             ->helperText('Sélectionnez le projet concerné par cette commission'),
-                                        
+
                                         Select::make('developer_id')
                                             ->label('Développeur')
                                             ->relationship('developer', 'name')
@@ -47,7 +47,7 @@ class CommissionForm
                                             ->preload()
                                             ->required()
                                             ->helperText('Développeur qui reçoit cette commission'),
-                                        
+
                                         Select::make('type')
                                             ->label('Type de commission')
                                             ->options(CommissionType::class)
@@ -56,7 +56,7 @@ class CommissionForm
                                             ->helperText('Nature de la commission'),
                                     ])
                                     ->columns(2),
-                                
+
                                 Section::make('Montant et paiement')
                                     ->description('Informations financières de la commission')
                                     ->icon('heroicon-o-banknotes')
@@ -68,16 +68,15 @@ class CommissionForm
                                             ->required()
                                             ->step(0.01)
                                             ->helperText('Montant de la commission en FCFA'),
-                                        
+
                                         TextInput::make('percentage')
                                             ->label('Pourcentage (%)')
                                             ->suffix('%')
                                             ->numeric()
-                                           
-                                            
+
                                             ->step(0.1)
                                             ->helperText('Pourcentage prélevé sur le montant du projet'),
-                                        
+
                                         Select::make('currency')
                                             ->label('Devise')
                                             ->options([
@@ -91,7 +90,7 @@ class CommissionForm
                                     ])
                                     ->columns(3),
                             ]),
-                        
+
                         // ONGLET: STATUT ET VALIDATION
                         Tabs\Tab::make('Statut et Validation')
                             ->icon('heroicon-o-check-circle')
@@ -106,14 +105,14 @@ class CommissionForm
                                             ->default(CommissionStatus::PENDING->value)
                                             ->required()
                                             ->helperText('État actuel de la commission'),
-                                        
+
                                         Toggle::make('is_approved')
                                             ->label('Approuvée')
                                             ->default(false)
                                             ->helperText('Cochez si cette commission a été approuvée'),
                                     ])
                                     ->columns(2),
-                                
+
                                 Section::make('Validation et paiement')
                                     ->description('Dates et responsables')
                                     ->icon('heroicon-o-calendar')
@@ -122,12 +121,12 @@ class CommissionForm
                                             ->label('Date d\'approbation')
                                             ->displayFormat('d/m/Y H:i')
                                             ->helperText('Date à laquelle la commission a été approuvée'),
-                                        
+
                                         DateTimePicker::make('paid_at')
                                             ->label('Date de paiement')
                                             ->displayFormat('d/m/Y H:i')
                                             ->helperText('Date à laquelle la commission a été payée'),
-                                        
+
                                         TextInput::make('approved_by')
                                             ->label('Approuvé par (ID)')
                                             ->numeric()
@@ -135,7 +134,7 @@ class CommissionForm
                                     ])
                                     ->columns(3),
                             ]),
-                        
+
                         // ONGLET: DÉTAILS SUPPLÉMENTAIRES
                         Tabs\Tab::make('Détails Supplémentaires')
                             ->icon('heroicon-o-document-text')
@@ -149,14 +148,14 @@ class CommissionForm
                                             ->rows(4)
                                             ->columnSpanFull()
                                             ->helperText('Description détaillée de la commission'),
-                                        
+
                                         Textarea::make('breakdown')
                                             ->label('Répartition détaillée')
                                             ->rows(3)
                                             ->columnSpanFull()
                                             ->helperText('Détail de la répartition des montants si applicable'),
                                     ]),
-                                
+
                                 Section::make('Informations de paiement')
                                     ->description('Détails bancaires et méthodes')
                                     ->icon('heroicon-o-credit-card')
@@ -165,7 +164,7 @@ class CommissionForm
                                             ->label('Méthode de paiement')
                                             ->options(PaymentMethod::class)
                                             ->helperText('Méthode utilisée pour cette commission'),
-                                        
+
                                         Textarea::make('payment_details')
                                             ->label('Détails de paiement')
                                             ->rows(3)

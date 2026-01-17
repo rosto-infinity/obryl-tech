@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Enums\Project\ProjectStatus;
+use App\Enums\ReviewStatus;
 use App\Models\Review;
 use App\Models\User;
-use App\Enums\ReviewStatus;
-use App\Enums\Project\ProjectStatus;
 
 class ReviewService
 {
@@ -51,7 +51,7 @@ class ReviewService
     public function updateDeveloperRating(int $developerId): void
     {
         $developer = User::find($developerId);
-        if (!$developer || !$developer->profile) {
+        if (! $developer || ! $developer->profile) {
             return;
         }
 
@@ -61,6 +61,7 @@ class ReviewService
 
         if ($approvedReviews->isEmpty()) {
             $developer->profile->update(['average_rating' => null]);
+
             return;
         }
 
@@ -95,7 +96,7 @@ class ReviewService
         }
 
         // Only clients can review projects
-        if (!$user->isClient()) {
+        if (! $user->isClient()) {
             return false;
         }
 
@@ -105,7 +106,7 @@ class ReviewService
         }
 
         // Project must be completed or published
-        if (!in_array($project->status, [ProjectStatus::COMPLETED, ProjectStatus::PUBLISHED])) {
+        if (! in_array($project->status, [ProjectStatus::COMPLETED, ProjectStatus::PUBLISHED])) {
             return false;
         }
 

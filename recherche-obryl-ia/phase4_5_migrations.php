@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 // ============================================
 // PHASE 4 : REVIEWS
 // ============================================
@@ -14,7 +16,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('reviews', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('project_id')->constrained()->cascadeOnDelete();
             $table->foreignId('reviewer_id')->constrained('users')->cascadeOnDelete(); // Client
@@ -24,10 +26,10 @@ return new class extends Migration
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('approved');
             $table->text('admin_notes')->nullable();
             $table->timestamps();
-            
+
             // Contraintes
             $table->unique(['project_id', 'reviewer_id', 'developer_id']);
-            
+
             // Indexes
             $table->index(['developer_id', 'status']);
             $table->index('rating');
@@ -52,17 +54,17 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('portfolio_likes', function (Blueprint $table) {
+        Schema::create('portfolio_likes', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('portfolio_project_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
             $table->string('ip_address', 45)->nullable(); // Pour likes anonymes
             $table->timestamps();
-            
+
             // Contrainte unique
             $table->unique(['portfolio_project_id', 'user_id']);
             $table->unique(['portfolio_project_id', 'ip_address']);
-            
+
             // Indexes
             $table->index('portfolio_project_id');
             $table->index('user_id');
@@ -82,7 +84,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('blog_comments', function (Blueprint $table) {
+        Schema::create('blog_comments', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('blog_post_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->nullable()->constrained('users')->cascadeOnDelete();
@@ -93,7 +95,7 @@ return new class extends Migration
             $table->enum('status', ['pending', 'approved', 'rejected', 'spam'])->default('pending');
             $table->string('ip_address', 45)->nullable();
             $table->timestamps();
-            
+
             // Indexes
             $table->index(['blog_post_id', 'status']);
             $table->index('user_id');
@@ -115,14 +117,14 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('notifications', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table): void {
             $table->uuid('id')->primary();
             $table->string('type');
             $table->morphs('notifiable');
             $table->text('data');
             $table->timestamp('read_at')->nullable();
             $table->timestamps();
-            
+
             // Indexes
             $table->index(['notifiable_type', 'notifiable_id']);
         });
@@ -141,7 +143,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('activity_log', function (Blueprint $table) {
+        Schema::create('activity_log', function (Blueprint $table): void {
             $table->id();
             $table->string('log_name')->nullable();
             $table->text('description');
@@ -150,7 +152,7 @@ return new class extends Migration
             $table->json('properties')->nullable();
             $table->uuid('batch_uuid')->nullable();
             $table->timestamps();
-            
+
             // Indexes
             $table->index('log_name');
             $table->index(['subject_type', 'subject_id']);
@@ -171,7 +173,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('media', function (Blueprint $table) {
+        Schema::create('media', function (Blueprint $table): void {
             $table->id();
             $table->morphs('model');
             $table->uuid('uuid')->nullable()->unique();
@@ -188,7 +190,7 @@ return new class extends Migration
             $table->json('responsive_images');
             $table->unsignedInteger('order_column')->nullable()->index();
             $table->timestamps();
-            
+
             // Indexes
             $table->index(['model_type', 'model_id']);
         });

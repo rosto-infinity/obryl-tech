@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Livewire\Developer;
 
-use App\Models\User;
-use App\Models\Profile;
-use App\Enums\Developer\Specialization;
 use App\Enums\Developer\Availability;
-use App\Enums\Developer\SkillLevel;
+use App\Enums\Developer\Specialization;
+use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -19,12 +17,19 @@ class DeveloperList extends Component
     use WithPagination;
 
     public string $search = '';
+
     public string $specializationFilter = 'all';
+
     public string $availabilityFilter = 'all';
+
     public string $skillLevelFilter = 'all';
+
     public string $sortBy = 'name';
+
     public string $sortDirection = 'asc';
+
     public int $perPage = 12;
+
     public bool $showVerifiedOnly = false;
 
     /**
@@ -66,7 +71,7 @@ class DeveloperList extends Component
             $this->sortBy = $field;
             $this->sortDirection = 'asc';
         }
-        
+
         $this->resetPage();
     }
 
@@ -79,31 +84,31 @@ class DeveloperList extends Component
             ->where('user_type', 'developer')
             ->where('status', 'active')
             ->with(['profile'])
-            ->when($this->search, function ($query, $search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('name', 'like', '%' . $search . '%')
-                      ->orWhere('email', 'like', '%' . $search . '%')
-                      ->orWhereHas('profile', function ($profileQuery) use ($search) {
-                          $profileQuery->where('bio', 'like', '%' . $search . '%');
-                      });
+            ->when($this->search, function ($query, $search): void {
+                $query->where(function ($q) use ($search): void {
+                    $q->where('name', 'like', '%'.$search.'%')
+                        ->orWhere('email', 'like', '%'.$search.'%')
+                        ->orWhereHas('profile', function ($profileQuery) use ($search): void {
+                            $profileQuery->where('bio', 'like', '%'.$search.'%');
+                        });
                 });
             })
-            ->when($this->specializationFilter !== 'all', function ($query) {
-                $query->whereHas('profile', function ($profileQuery) {
+            ->when($this->specializationFilter !== 'all', function ($query): void {
+                $query->whereHas('profile', function ($profileQuery): void {
                     $profileQuery->where('specialization', $this->specializationFilter);
                 });
             })
-            ->when($this->availabilityFilter !== 'all', function ($query) {
-                $query->whereHas('profile', function ($profileQuery) {
+            ->when($this->availabilityFilter !== 'all', function ($query): void {
+                $query->whereHas('profile', function ($profileQuery): void {
                     $profileQuery->where('availability', $this->availabilityFilter);
                 });
             })
-            ->when($this->skillLevelFilter !== 'all', function ($query) {
+            ->when($this->skillLevelFilter !== 'all', function ($query): void {
                 // This would need to be implemented based on how skill level is determined
                 // For now, we'll skip this filter
             })
-            ->when($this->showVerifiedOnly, function ($query) {
-                $query->whereHas('profile', function ($profileQuery) {
+            ->when($this->showVerifiedOnly, function ($query): void {
+                $query->whereHas('profile', function ($profileQuery): void {
                     $profileQuery->where('is_verified', true);
                 });
             });
@@ -112,13 +117,13 @@ class DeveloperList extends Component
         match ($this->sortBy) {
             'name' => $query->orderBy('name', $this->sortDirection),
             'rating' => $query->leftJoin('profiles', 'profiles.user_id', '=', 'users.id')
-                           ->orderBy('profiles.average_rating', $this->sortDirection),
+                ->orderBy('profiles.average_rating', $this->sortDirection),
             'experience' => $query->leftJoin('profiles', 'profiles.user_id', '=', 'users.id')
-                               ->orderBy('profiles.years_experience', $this->sortDirection),
+                ->orderBy('profiles.years_experience', $this->sortDirection),
             'projects' => $query->leftJoin('profiles', 'profiles.user_id', '=', 'users.id')
-                           ->orderBy('profiles.completed_projects_count', $this->sortDirection),
+                ->orderBy('profiles.completed_projects_count', $this->sortDirection),
             'hourly_rate' => $query->leftJoin('profiles', 'profiles.user_id', '=', 'users.id')
-                               ->orderBy('profiles.hourly_rate', $this->sortDirection),
+                ->orderBy('profiles.hourly_rate', $this->sortDirection),
             'created_at' => $query->orderBy('created_at', $this->sortDirection),
             default => $query->orderBy('name', 'asc')
         };
@@ -132,7 +137,7 @@ class DeveloperList extends Component
     public function getSpecializationsProperty(): array
     {
         return collect(Specialization::cases())
-            ->map(fn($case) => ['value' => $case->value, 'label' => $case->label()])
+            ->map(fn ($case) => ['value' => $case->value, 'label' => $case->label()])
             ->toArray();
     }
 
@@ -142,7 +147,7 @@ class DeveloperList extends Component
     public function getAvailabilityOptionsProperty(): array
     {
         return collect(Availability::cases())
-            ->map(fn($case) => ['value' => $case->value, 'label' => $case->label()])
+            ->map(fn ($case) => ['value' => $case->value, 'label' => $case->label()])
             ->toArray();
     }
 
@@ -155,14 +160,15 @@ class DeveloperList extends Component
             'total' => User::where('user_type', 'developer')->where('status', 'active')->count(),
             'verified' => User::where('user_type', 'developer')
                 ->where('status', 'active')
-                ->whereHas('profile', fn($q) => $q->where('is_verified', true))
+                ->whereHas('profile', fn ($q) => $q->where('is_verified', true))
                 ->count(),
             'available' => User::where('user_type', 'developer')
                 ->where('status', 'active')
-                ->whereHas('profile', fn($q) => $q->where('availability', 'available'))
+                ->whereHas('profile', fn ($q) => $q->where('availability', 'available'))
                 ->count(),
         ];
     }
+
     /**
      * Render component.
      */

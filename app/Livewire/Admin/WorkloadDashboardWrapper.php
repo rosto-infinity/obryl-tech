@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Livewire\Admin;
+declare(strict_types=1);
 
-use App\Livewire\Admin\WorkloadDashboard;
+namespace App\Livewire\Admin;
 
 class WorkloadDashboardWrapper extends WorkloadDashboard
 {

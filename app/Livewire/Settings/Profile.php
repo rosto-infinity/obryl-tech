@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Settings;
 
 use App\Models\User;
@@ -14,15 +16,23 @@ class Profile extends Component
     use WithFileUploads;
 
     public string $name = '';
+
     public string $email = '';
+
     public string $phone = '';
+
     public string $bio = '';
+
     public string $company = '';
+
     public string $country = '';
+
     public string $github_url = '';
+
     public string $linkedin_url = '';
-    
-    public $avatar; 
+
+    public $avatar;
+
     public $currentAvatar;
 
     /**
@@ -103,7 +113,7 @@ class Profile extends Component
         );
 
         $this->dispatch('profile-updated', name: $user->name);
-        
+
         // Refresh current avatar if changed
         if ($this->avatar) {
             $this->currentAvatar = $user->avatar;

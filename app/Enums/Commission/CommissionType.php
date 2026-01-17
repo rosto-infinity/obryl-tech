@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Commission;
 
 enum CommissionType: string
@@ -11,7 +13,7 @@ enum CommissionType: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PROJECT_COMPLETION => 'Complément de projet',
             self::MILESTONE => 'Jalon',
             self::REFERRAL => 'Parrainage',

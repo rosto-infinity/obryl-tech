@@ -17,7 +17,7 @@ enum ArticleCategory: string
      */
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::TUTORIAL => 'Tutoriel',
             self::NEWS => 'Actualité',
             self::CASE_STUDY => 'Étude de cas',
@@ -31,7 +31,7 @@ enum ArticleCategory: string
      */
     public function icon(): string
     {
-        return match($this) {
+        return match ($this) {
             self::TUTORIAL => '📚',
             self::NEWS => '📰',
             self::CASE_STUDY => '📊',
@@ -45,7 +45,7 @@ enum ArticleCategory: string
      */
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::TUTORIAL => 'bg-purple-100 text-purple-800 border-purple-200',
             self::NEWS => 'bg-blue-100 text-blue-800 border-blue-200',
             self::CASE_STUDY => 'bg-indigo-100 text-indigo-800 border-indigo-200',

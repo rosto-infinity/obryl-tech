@@ -1,17 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Reviews\Schemas;
 
 use App\Enums\ReviewStatus;
-use Filament\Schemas\Schema;
-use Filament\Forms\Components\Select;
-use Filament\Schemas\Components\Grid;
-
-
-use Filament\Forms\Components\Textarea;
-use Filament\Forms\Components\TextInput;
-use Filament\Schemas\Components\Section;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
+use Filament\Schemas\Schema;
 
 class ReviewForm
 {
@@ -30,7 +29,7 @@ class ReviewForm
                                     ->preload()
                                     ->required()
                                     ->helperText('Sélectionnez le projet concerné'),
-                                
+
                                 Select::make('client_id')
                                     ->label('Client')
                                     ->relationship('client', 'name')
@@ -39,7 +38,7 @@ class ReviewForm
                                     ->required()
                                     ->helperText('Client qui donne l\'avis'),
                             ]),
-                        
+
                         Grid::make(2)
                             ->schema([
                                 Select::make('developer_id')
@@ -49,7 +48,7 @@ class ReviewForm
                                     ->preload()
                                     ->required()
                                     ->helperText('Développeur évalué'),
-                                
+
                                 Select::make('rating')
                                     ->label('Note')
                                     ->options([
@@ -64,7 +63,7 @@ class ReviewForm
                                     ->helperText('Note globale du développeur'),
                             ]),
                     ]),
-                
+
                 Section::make('Critères d\'Évaluation')
                     ->schema([
                         Grid::make(2)
@@ -80,7 +79,7 @@ class ReviewForm
                                     ])
                                     ->default(3)
                                     ->required(),
-                                
+
                                 Select::make('criteria.communication')
                                     ->label('Communication')
                                     ->options([
@@ -93,7 +92,7 @@ class ReviewForm
                                     ->default(3)
                                     ->required(),
                             ]),
-                        
+
                         Grid::make(2)
                             ->schema([
                                 Select::make('criteria.deadline')
@@ -107,7 +106,7 @@ class ReviewForm
                                     ])
                                     ->default(3)
                                     ->required(),
-                                
+
                                 Select::make('criteria.professionalism')
                                     ->label('Professionnalisme')
                                     ->options([
@@ -121,7 +120,7 @@ class ReviewForm
                                     ->required(),
                             ]),
                     ]),
-                
+
                 Section::make('Commentaires')
                     ->schema([
                         Textarea::make('comment')
@@ -129,18 +128,18 @@ class ReviewForm
                             ->columnSpanFull()
                             ->rows(4)
                             ->helperText('Décrivez votre expérience avec ce développeur'),
-                        
+
                         Textarea::make('strengths')
                             ->label('Points forts')
                             ->rows(3)
                             ->helperText('Quelles sont les qualités remarquables ?'),
-                        
+
                         Textarea::make('improvements')
                             ->label('Axes d\'amélioration')
                             ->rows(3)
                             ->helperText('Quels aspects pourraient être améliorés ?'),
                     ]),
-                
+
                 Section::make('Statut')
                     ->schema([
                         Grid::make(2)
@@ -151,7 +150,7 @@ class ReviewForm
                                     ->default(ReviewStatus::APPROVED->value)
                                     ->required()
                                     ->helperText('Statut de validation de l\'avis'),
-                                
+
                                 Placeholder::make('created_at')
                                     ->label('Date de création')
                                     ->content(fn ($record) => $record?->created_at?->format('d/m/Y H:i') ?? now()->format('d/m/Y H:i'))

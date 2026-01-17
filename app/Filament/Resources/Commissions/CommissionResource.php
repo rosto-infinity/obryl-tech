@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Commissions;
 
 use App\Filament\Resources\Commissions\Pages\CreateCommission;
@@ -11,11 +13,11 @@ use App\Filament\Resources\Commissions\Schemas\CommissionInfolist;
 use App\Filament\Resources\Commissions\Tables\CommissionsTable;
 use App\Models\Commission;
 use BackedEnum;
-use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class CommissionResource extends Resource
 {

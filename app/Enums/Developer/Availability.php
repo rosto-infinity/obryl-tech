@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Developer;
 
 enum Availability: string
@@ -10,7 +12,7 @@ enum Availability: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::AVAILABLE => 'Disponible',
             self::BUSY => 'Occupé',
             self::UNAVAILABLE => 'Indisponible',
@@ -19,7 +21,7 @@ enum Availability: string
 
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::AVAILABLE => 'success',
             self::BUSY => 'warning',
             self::UNAVAILABLE => 'danger',
@@ -28,7 +30,7 @@ enum Availability: string
 
     public function badge(): string
     {
-        return match($this) {
+        return match ($this) {
             self::AVAILABLE => '🟢',
             self::BUSY => '🟡',
             self::UNAVAILABLE => '🔴',

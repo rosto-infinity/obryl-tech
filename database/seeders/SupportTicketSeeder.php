@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
+use App\Models\Project;
 use App\Models\SupportTicket;
 use App\Models\User;
-use App\Models\Project;
 use Illuminate\Database\Seeder;
 
 class SupportTicketSeeder extends Seeder
@@ -17,13 +19,14 @@ class SupportTicketSeeder extends Seeder
 
         if ($users->isEmpty()) {
             $this->command->info('⚠️ Aucun utilisateur trouvé, skipping tickets...');
+
             return;
         }
 
-        $this->command->info("🎫 Création des tickets de support...");
+        $this->command->info('🎫 Création des tickets de support...');
 
         // Créer 20 tickets
-        foreach(range(1, 20) as $i) {
+        foreach (range(1, 20) as $i) {
             $user = $users->random();
             $project = $projects->isNotEmpty() && fake()->boolean(70) ? $projects->random() : null;
             $assigned = $admins->isNotEmpty() && fake()->boolean(60) ? $admins->random() : null;
@@ -34,7 +37,7 @@ class SupportTicketSeeder extends Seeder
                 'assigned_to' => $assigned?->id,
             ]);
         }
-        
+
         $this->command->info('✅ 20 Tickets créés !');
     }
 }

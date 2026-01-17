@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use App\Enums\Blog\ArticleStatus;
 use App\Enums\Blog\ArticleCategory;
+use App\Enums\Blog\ArticleStatus;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Builder;
 
 class Article extends Model
 {
@@ -65,13 +65,13 @@ class Article extends Model
         static::creating(function (Article $article): void {
             if (empty($article->slug)) {
                 $article->slug = Str::slug($article->title);
-                
+
                 // S'assurer que le slug est unique
                 $originalSlug = $article->slug;
                 $counter = 1;
-                
+
                 while (static::where('slug', $article->slug)->exists()) {
-                    $article->slug = $originalSlug . '-' . $counter;
+                    $article->slug = $originalSlug.'-'.$counter;
                     $counter++;
                 }
             }
@@ -81,13 +81,13 @@ class Article extends Model
         static::updating(function (Article $article): void {
             if ($article->isDirty('title') && empty($article->slug)) {
                 $article->slug = Str::slug($article->title);
-                
+
                 // S'assurer que le slug est unique
                 $originalSlug = $article->slug;
                 $counter = 1;
-                
+
                 while (static::where('slug', $article->slug)->where('id', '!=', $article->id)->exists()) {
-                    $article->slug = $originalSlug . '-' . $counter;
+                    $article->slug = $originalSlug.'-'.$counter;
                     $counter++;
                 }
             }
@@ -95,7 +95,7 @@ class Article extends Model
 
         // Auto-publier si le statut passe à published
         static::saving(function (Article $article): void {
-            if ($article->isDirty('status') && $article->status === ArticleStatus::PUBLISHED && !$article->published_at) {
+            if ($article->isDirty('status') && $article->status === ArticleStatus::PUBLISHED && ! $article->published_at) {
                 $article->published_at = now();
             }
         });
@@ -131,6 +131,7 @@ class Article extends Model
     public function getReadingTimeAttribute(): int
     {
         $wordCount = str_word_count(strip_tags($this->content));
+
         return (int) ceil($wordCount / 200); // Average reading speed: 200 words per minute
     }
 
@@ -154,8 +155,10 @@ class Article extends Model
             if (filter_var($this->featured_image, FILTER_VALIDATE_URL)) {
                 return $this->featured_image;
             }
+
             return Storage::disk('public')->url($this->featured_image);
         }
+
         return asset('images/placeholder-blog.jpg');
     }
 
@@ -167,16 +170,17 @@ class Article extends Model
         if (is_null($value)) {
             return [];
         }
-        
+
         if (is_array($value)) {
             return $value;
         }
-        
-        if (is_string($value) && !empty($value)) {
+
+        if (is_string($value) && ! empty($value)) {
             $decoded = json_decode($value, true);
+
             return is_array($decoded) ? $decoded : [];
         }
-        
+
         return [];
     }
 
@@ -188,16 +192,17 @@ class Article extends Model
         if (is_null($value)) {
             return [];
         }
-        
+
         if (is_array($value)) {
             return $value;
         }
-        
-        if (is_string($value) && !empty($value)) {
+
+        if (is_string($value) && ! empty($value)) {
             $decoded = json_decode($value, true);
+
             return is_array($decoded) ? $decoded : [];
         }
-        
+
         return [];
     }
 
@@ -215,8 +220,8 @@ class Article extends Model
     public function scopePublished(Builder $query): Builder
     {
         return $query->where('status', ArticleStatus::PUBLISHED)
-                     ->whereNotNull('published_at')
-                     ->where('published_at', '<=', now());
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now());
     }
 
     /**
@@ -225,6 +230,7 @@ class Article extends Model
     public function scopeByCategory(Builder $query, ArticleCategory|string $category): Builder
     {
         $categoryValue = $category instanceof ArticleCategory ? $category->value : $category;
+
         return $query->where('category', $categoryValue);
     }
 
@@ -242,8 +248,8 @@ class Article extends Model
     public function scopeFeatured(Builder $query): Builder
     {
         return $query->published()
-                     ->orderBy('views_count', 'desc')
-                     ->orderBy('likes_count', 'desc');
+            ->orderBy('views_count', 'desc')
+            ->orderBy('likes_count', 'desc');
     }
 
     /**
@@ -252,8 +258,8 @@ class Article extends Model
     public function scopeRecent(Builder $query, int $limit = 5): Builder
     {
         return $query->published()
-                     ->orderBy('published_at', 'desc')
-                     ->limit($limit);
+            ->orderBy('published_at', 'desc')
+            ->limit($limit);
     }
 
     /**
@@ -263,8 +269,8 @@ class Article extends Model
     {
         return $query->where(function (Builder $q) use ($search): void {
             $q->where('title', 'like', "%{$search}%")
-              ->orWhere('excerpt', 'like', "%{$search}%")
-              ->orWhere('content', 'like', "%{$search}%");
+                ->orWhere('excerpt', 'like', "%{$search}%")
+                ->orWhere('content', 'like', "%{$search}%");
         });
     }
 
@@ -290,7 +296,7 @@ class Article extends Model
     public function addComment(int $userId, string $content, string $status = 'pending'): void
     {
         $comments = $this->comments ?? [];
-        
+
         $comments[] = [
             'id' => uniqid(),
             'user_id' => $userId,
@@ -298,7 +304,7 @@ class Article extends Model
             'status' => $status,
             'created_at' => now()->toIso8601String(),
         ];
-        
+
         $this->update([
             'comments' => $comments,
             'comments_count' => count($comments),
@@ -314,7 +320,7 @@ class Article extends Model
             ->published()
             ->where(function (Builder $query): void {
                 $query->where('category', $this->category?->value)
-                      ->orWhereJsonContains('tags', $this->tags);
+                    ->orWhereJsonContains('tags', $this->tags);
             })
             ->orderByRaw('RAND()')
             ->limit($limit)

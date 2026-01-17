@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Livewire\Developer;
 
 use App\Models\User;
-use App\Models\Project;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -13,7 +12,9 @@ use Livewire\Component;
 class DeveloperProfile extends Component
 {
     public User $developer;
+
     public Collection $projects;
+
     public Collection $reviews;
 
     public function mount(User $developer): void
@@ -42,19 +43,19 @@ class DeveloperProfile extends Component
     public function getSkillsWithLevelsProperty(): array
     {
         $skills = $this->developer->profile?->skills ?? '[]';
-        
+
         // Handle JSON string
         if (is_string($skills)) {
             $skills = json_decode($skills, true) ?? [];
         }
-        
+
         // Ensure it's an array
-        if (!is_array($skills)) {
+        if (! is_array($skills)) {
             $skills = [];
         }
-        
+
         $skillLevels = [];
-        
+
         foreach ($skills as $skill) {
             // Extract skill name properly
             if (is_array($skill)) {
@@ -64,13 +65,13 @@ class DeveloperProfile extends Component
                 // If skill is already a string
                 $skillName = (string) $skill;
             }
-            
+
             $skillLevels[] = [
                 'name' => $skillName,
                 'level' => rand(3, 5), // Simulated skill level
             ];
         }
-        
+
         return $skillLevels;
     }
 

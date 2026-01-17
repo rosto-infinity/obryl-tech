@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Enums\Auth\UserStatus;
@@ -18,7 +20,7 @@ class UserSeeder extends Seeder
     {
         // ✅ FIXÉ : Vérifier si l'admin existe déjà
         if (User::where('email', 'admin@obryl.tech')->exists()) {
-            $this->command->info("⚠️  Admin existe déjà, passage...");
+            $this->command->info('⚠️  Admin existe déjà, passage...');
             $admin = User::where('email', 'admin@obryl.tech')->first();
         } else {
             // 1. Créer l'administrateur
@@ -43,7 +45,7 @@ class UserSeeder extends Seeder
                 'bio' => 'Administrateur de la plateforme Obryl Tech',
             ]);
 
-            $this->command->info("✅ Admin créé : admin@obryl.tech");
+            $this->command->info('✅ Admin créé : admin@obryl.tech');
         }
 
         // 2. Créer 5 clients
@@ -65,7 +67,7 @@ class UserSeeder extends Seeder
         }
         Profile::insert($clientProfiles);
 
-        $this->command->info("✅ 5 Clients créés");
+        $this->command->info('✅ 5 Clients créés');
 
         // 3. Créer 10 développeurs expérimentés
         $developers = User::factory()
@@ -81,7 +83,7 @@ class UserSeeder extends Seeder
                 ->create();
         }
 
-        $this->command->info("✅ 10 Développeurs expérimentés créés");
+        $this->command->info('✅ 10 Développeurs expérimentés créés');
 
         // 4. Créer 5 développeurs juniors
         $juniorDevelopers = User::factory()
@@ -96,24 +98,24 @@ class UserSeeder extends Seeder
                 ->create();
         }
 
-        $this->command->info("✅ 5 Développeurs juniors créés");
+        $this->command->info('✅ 5 Développeurs juniors créés');
 
         // Résumé
-        $this->command->info("");
-        $this->command->info("╔════════════════════════════════════════════════════════════╗");
-        $this->command->info("║                                                            ║");
-        $this->command->info("║     ✅ UTILISATEURS CRÉÉS AVEC SUCCÈS !                    ║");
-        $this->command->info("║                                                            ║");
-        $this->command->info("║  📊 Résumé :                                               ║");
-        $this->command->info("║     • 1 Admin (admin@obryl.tech)                           ║");
-        $this->command->info("║     • 5 Clients                                            ║");
-        $this->command->info("║     • 10 Développeurs expérimentés                         ║");
-        $this->command->info("║     • 5 Développeurs juniors                               ║");
-        $this->command->info("║                                                            ║");
-        $this->command->info("║  🔐 Identifiants de connexion :                            ║");
-        $this->command->info("║     Email : admin@obryl.tech                               ║");
-        $this->command->info("║     Mot de passe : password                                ║");
-        $this->command->info("║                                                            ║");
-        $this->command->info("╚════════════════════════════════════════════════════════════╝");
+        $this->command->info('');
+        $this->command->info('╔════════════════════════════════════════════════════════════╗');
+        $this->command->info('║                                                            ║');
+        $this->command->info('║     ✅ UTILISATEURS CRÉÉS AVEC SUCCÈS !                    ║');
+        $this->command->info('║                                                            ║');
+        $this->command->info('║  📊 Résumé :                                               ║');
+        $this->command->info('║     • 1 Admin (admin@obryl.tech)                           ║');
+        $this->command->info('║     • 5 Clients                                            ║');
+        $this->command->info('║     • 10 Développeurs expérimentés                         ║');
+        $this->command->info('║     • 5 Développeurs juniors                               ║');
+        $this->command->info('║                                                            ║');
+        $this->command->info('║  🔐 Identifiants de connexion :                            ║');
+        $this->command->info('║     Email : admin@obryl.tech                               ║');
+        $this->command->info('║     Mot de passe : password                                ║');
+        $this->command->info('║                                                            ║');
+        $this->command->info('╚════════════════════════════════════════════════════════════╝');
     }
 }

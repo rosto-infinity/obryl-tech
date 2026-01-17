@@ -16,7 +16,7 @@ enum ArticleStatus: string
      */
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::DRAFT => 'Brouillon',
             self::PUBLISHED => 'Publié',
             self::ARCHIVED => 'Archivé',
@@ -29,7 +29,7 @@ enum ArticleStatus: string
      */
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::DRAFT => 'bg-yellow-100 text-yellow-800 border-yellow-200',
             self::PUBLISHED => 'bg-green-100 text-green-800 border-green-200',
             self::ARCHIVED => 'bg-gray-100 text-gray-800 border-gray-200',
@@ -42,7 +42,7 @@ enum ArticleStatus: string
      */
     public function icon(): string
     {
-        return match($this) {
+        return match ($this) {
             self::DRAFT => '📝',
             self::PUBLISHED => '✅',
             self::ARCHIVED => '📦',

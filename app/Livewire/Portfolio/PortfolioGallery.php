@@ -6,7 +6,6 @@ namespace App\Livewire\Portfolio;
 
 use App\Models\Project;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -17,9 +16,13 @@ class PortfolioGallery extends Component
     use WithPagination;
 
     public string $search = '';
+
     public string $categoryFilter = 'all';
+
     public string $techFilter = 'all';
+
     public string $sortBy = 'created_at';
+
     public int $perPage = 12;
 
     /**
@@ -30,10 +33,10 @@ class PortfolioGallery extends Component
         $query = Project::query()
             ->with(['client', 'reviews'])
             ->where('status', 'published')
-            ->when($this->search, fn($q) => $q->where('title', 'like', '%' . $this->search . '%')
-                ->orWhere('description', 'like', '%' . $this->search . '%'))
-            ->when($this->categoryFilter !== 'all', fn($q) => $q->where('type', $this->categoryFilter))
-            ->when($this->techFilter !== 'all', fn($q) => $q->whereJsonContains('technologies', $this->techFilter))
+            ->when($this->search, fn ($q) => $q->where('title', 'like', '%'.$this->search.'%')
+                ->orWhere('description', 'like', '%'.$this->search.'%'))
+            ->when($this->categoryFilter !== 'all', fn ($q) => $q->where('type', $this->categoryFilter))
+            ->when($this->techFilter !== 'all', fn ($q) => $q->whereJsonContains('technologies', $this->techFilter))
             ->orderByDesc($this->sortBy);
 
         return $query->paginate($this->perPage);
@@ -74,7 +77,7 @@ class PortfolioGallery extends Component
     {
         $technologies = Project::whereNotNull('technologies')
             ->get()
-            ->flatMap(fn($project) => $project->technologies ?? [])
+            ->flatMap(fn ($project) => $project->technologies ?? [])
             ->unique()
             ->sort()
             ->values();

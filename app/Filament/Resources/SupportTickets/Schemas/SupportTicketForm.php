@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\SupportTickets\Schemas;
 
 use App\Enums\Support\TicketCategory;
@@ -8,10 +10,10 @@ use App\Enums\Support\TicketSeverity;
 use App\Enums\Support\TicketStatus;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
-use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
-use Filament\Schemas\Components\Section;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class SupportTicketForm
@@ -81,9 +83,9 @@ class SupportTicketForm
                             ]),
                     ]),
 
-               Section::make('Assignation & Résolution')
+                Section::make('Assignation & Résolution')
                     ->schema([
-                       Grid::make(2)
+                        Grid::make(2)
                             ->schema([
                                 Select::make('assigned_to')
                                     ->relationship('assignedTo', 'name')

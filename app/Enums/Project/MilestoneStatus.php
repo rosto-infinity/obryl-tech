@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Project;
 
 enum MilestoneStatus: string
@@ -11,7 +13,7 @@ enum MilestoneStatus: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => 'En attente',
             self::IN_PROGRESS => 'En cours',
             self::COMPLETED => 'Complété',
@@ -21,7 +23,7 @@ enum MilestoneStatus: string
 
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => 'warning',
             self::IN_PROGRESS => 'primary',
             self::COMPLETED => 'success',

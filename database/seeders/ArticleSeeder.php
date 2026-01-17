@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Database\Seeders;
 
 use App\Models\Article;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class ArticleSeeder extends Seeder
@@ -20,7 +19,7 @@ class ArticleSeeder extends Seeder
         Article::factory()->count(5)->draft()->create();
         Article::factory()->count(3)->published()->featured()->create();
         Article::factory()->count(2)->create(['status' => 'archived']);
-        
+
         $this->command->info('✅ 30 articles créés avec succès !');
     }
 }

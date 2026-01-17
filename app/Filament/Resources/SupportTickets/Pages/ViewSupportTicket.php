@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\SupportTickets\Pages;
 
 use App\Filament\Resources\SupportTickets\SupportTicketResource;

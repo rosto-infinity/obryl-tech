@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Support;
 
 use Livewire\Component;
-
 use Livewire\WithPagination;
 
 class TicketList extends Component
@@ -11,11 +12,12 @@ class TicketList extends Component
     use WithPagination;
 
     public $search = '';
+
     public $status = '';
 
     protected $queryString = ['search', 'status'];
 
-    public function updatingSearch()
+    public function updatingSearch(): void
     {
         $this->resetPage();
     }
@@ -27,7 +29,7 @@ class TicketList extends Component
             ->latest();
 
         if ($this->search) {
-            $query->where('title', 'like', '%' . $this->search . '%');
+            $query->where('title', 'like', '%'.$this->search.'%');
         }
 
         if ($this->status) {
@@ -35,7 +37,7 @@ class TicketList extends Component
         }
 
         return view('livewire.support.ticket-list', [
-            'tickets' => $query->paginate(10)
+            'tickets' => $query->paginate(10),
         ]);
     }
 }

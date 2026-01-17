@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Developer;
 
 enum VerificationLevel: string
@@ -11,7 +13,7 @@ enum VerificationLevel: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::UNVERIFIED => 'Non vérifié',
             self::BASIC => 'Vérification basique',
             self::ADVANCED => 'Vérification avancée',
@@ -21,7 +23,7 @@ enum VerificationLevel: string
 
     public function badge(): string
     {
-        return match($this) {
+        return match ($this) {
             self::UNVERIFIED => '❌',
             self::BASIC => '✅',
             self::ADVANCED => '⭐',

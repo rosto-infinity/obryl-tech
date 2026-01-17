@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace App\Livewire\Commission;
 
-use App\Models\Commission;
-use App\Models\User;
 use App\Enums\Commission\CommissionStatus;
-use App\Enums\Commission\CommissionType;
-use Illuminate\Database\Eloquent\Collection;
+use App\Models\Commission;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -20,9 +17,13 @@ class CommissionHistory extends Component
     use WithPagination;
 
     public string $periodFilter = 'all';
+
     public string $statusFilter = 'all';
+
     public string $typeFilter = 'all';
+
     public string $search = '';
+
     public int $perPage = 10;
 
     /**
@@ -32,7 +33,7 @@ class CommissionHistory extends Component
     {
         $query = Commission::query()
             ->with(['project.client', 'developer.profile', 'approvedBy'])
-            ->when($this->periodFilter !== 'all', function ($q) {
+            ->when($this->periodFilter !== 'all', function ($q): void {
                 match ($this->periodFilter) {
                     'today' => $q->whereDate('created_at', today()),
                     'week' => $q->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()]),
@@ -41,9 +42,9 @@ class CommissionHistory extends Component
                     default => $q,
                 };
             })
-            ->when($this->statusFilter !== 'all', fn($q) => $q->where('status', $this->statusFilter))
-            ->when($this->typeFilter !== 'all', fn($q) => $q->where('type', $this->typeFilter))
-            ->when($this->search, fn($q) => $q->where('description', 'like', '%' . $this->search . '%'))
+            ->when($this->statusFilter !== 'all', fn ($q) => $q->where('status', $this->statusFilter))
+            ->when($this->typeFilter !== 'all', fn ($q) => $q->where('type', $this->typeFilter))
+            ->when($this->search, fn ($q) => $q->where('description', 'like', '%'.$this->search.'%'))
             ->orderByDesc('created_at');
 
         return $query->paginate($this->perPage);
@@ -55,7 +56,7 @@ class CommissionHistory extends Component
     public function getStatsProperty(): array
     {
         $query = Commission::query();
-        
+
         return [
             'total' => $query->count(),
             'paid' => $query->where('status', CommissionStatus::PAID->value)->count(),
@@ -70,14 +71,14 @@ class CommissionHistory extends Component
     public function approveCommission(int $commissionId): void
     {
         $commission = Commission::findOrFail($commissionId);
-        
+
         if (Auth::user()->can('approve', $commission)) {
             $commission->update([
                 'status' => CommissionStatus::APPROVED->value,
                 'approved_by' => Auth::id(),
                 'approved_at' => now(),
             ]);
-            
+
             $this->dispatch('commissionApproved', commissionId: $commissionId);
         }
     }
@@ -88,13 +89,13 @@ class CommissionHistory extends Component
     public function markAsPaid(int $commissionId): void
     {
         $commission = Commission::findOrFail($commissionId);
-        
+
         if (Auth::user()->can('pay', $commission)) {
             $commission->update([
                 'status' => CommissionStatus::PAID->value,
                 'paid_at' => now(),
             ]);
-            
+
             $this->dispatch('commissionPaid', commissionId: $commissionId);
         }
     }

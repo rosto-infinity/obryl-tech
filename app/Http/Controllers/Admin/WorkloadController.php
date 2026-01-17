@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Admin;
 
-use App\Models\User;
-use App\Models\Project;
 use App\Models\Commission;
+use App\Models\Project;
+use App\Models\User;
 use App\Services\ProjectAssignmentService;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\DB;
 
 class WorkloadController extends Controller
 {
@@ -35,17 +36,17 @@ class WorkloadController extends Controller
     {
         try {
             $redistributedProjects = $this->assignmentService->handleOverload();
-            
+
             return response()->json([
                 'success' => true,
-                'message' => count($redistributedProjects) . ' projet(s) réassigné(s) avec succès',
+                'message' => count($redistributedProjects).' projet(s) réassigné(s) avec succès',
                 'data' => $redistributedProjects,
                 'statistics' => $this->assignmentService->getDevelopersByWorkloadStatus(),
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Erreur lors de la gestion de la surcharge: ' . $e->getMessage(),
+                'message' => 'Erreur lors de la gestion de la surcharge: '.$e->getMessage(),
             ], 500);
         }
     }
@@ -58,9 +59,9 @@ class WorkloadController extends Controller
         try {
             $statistics = [
                 'total_developers' => User::where('user_type', 'developer')->count(),
-                'available' => User::whereHas('workload', fn($q) => $q->where('availability_status', 'available'))->count(),
-                'busy' => User::whereHas('workload', fn($q) => $q->where('availability_status', 'busy'))->count(),
-                'overloaded' => User::whereHas('workload', fn($q) => $q->where('availability_status', 'overloaded'))->count(),
+                'available' => User::whereHas('workload', fn ($q) => $q->where('availability_status', 'available'))->count(),
+                'busy' => User::whereHas('workload', fn ($q) => $q->where('availability_status', 'busy'))->count(),
+                'overloaded' => User::whereHas('workload', fn ($q) => $q->where('availability_status', 'overloaded'))->count(),
                 'avg_workload' => \DB::table('workload_management')->avg('workload_percentage'),
                 'total_projects' => Project::count(),
                 'pending_assignments' => Project::whereNull('developer_id')->whereIn('status', ['pending', 'accepted'])->count(),
@@ -77,7 +78,7 @@ class WorkloadController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Erreur lors de la récupération des statistiques: ' . $e->getMessage(),
+                'message' => 'Erreur lors de la récupération des statistiques: '.$e->getMessage(),
             ], 500);
         }
     }
@@ -90,14 +91,14 @@ class WorkloadController extends Controller
         try {
             $projectType = $request->get('project_type');
             $limit = $request->get('limit', 10);
-            
+
             $query = User::where('user_type', 'developer')
-                ->whereHas('profile', function($query) use ($projectType) {
+                ->whereHas('profile', function ($query) use ($projectType): void {
                     if ($projectType) {
                         $query->whereJsonContains('specializations', [$projectType]);
                     }
                 })
-                ->whereHas('workload', function($query) {
+                ->whereHas('workload', function ($query): void {
                     $query->where('availability_status', 'available');
                 })
                 ->with(['profile', 'workload']);
@@ -106,22 +107,20 @@ class WorkloadController extends Controller
 
             return response()->json([
                 'success' => true,
-                'data' => $developers->map(function ($developer) {
-                    return [
-                        'id' => $developer->id,
-                        'name' => $developer->name,
-                        'email' => $developer->email,
-                        'specializations' => $developer->profile->specializations ?? [],
-                        'skill_level' => $developer->profile->skill_level ?? 'unknown',
-                        'workload' => $developer->getCurrentWorkload(),
-                        'commission_rate' => $developer->getCommissionRate(),
-                    ];
-                }),
+                'data' => $developers->map(fn ($developer) => [
+                    'id' => $developer->id,
+                    'name' => $developer->name,
+                    'email' => $developer->email,
+                    'specializations' => $developer->profile->specializations ?? [],
+                    'skill_level' => $developer->profile->skill_level ?? 'unknown',
+                    'workload' => $developer->getCurrentWorkload(),
+                    'commission_rate' => $developer->getCommissionRate(),
+                ]),
             ]);
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Erreur lors de la récupération des développeurs: ' . $e->getMessage(),
+                'message' => 'Erreur lors de la récupération des développeurs: '.$e->getMessage(),
             ], 500);
         }
     }
@@ -135,7 +134,7 @@ class WorkloadController extends Controller
             $developerId = $request->get('developer_id');
             $developer = User::find($developerId);
 
-            if (!$developer || !$developer->isDeveloper()) {
+            if (! $developer || ! $developer->isDeveloper()) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Développeur non valide',
@@ -144,7 +143,7 @@ class WorkloadController extends Controller
 
             // Assign project
             $project->update(['developer_id' => $developer->id]);
-            
+
             // Update workload
             if ($developer->workload) {
                 $developer->workload->calculateWorkload();
@@ -162,7 +161,7 @@ class WorkloadController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Erreur lors de l\'assignation: ' . $e->getMessage(),
+                'message' => 'Erreur lors de l\'assignation: '.$e->getMessage(),
             ], 500);
         }
     }

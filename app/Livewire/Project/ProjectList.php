@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Livewire\Project;
 
-use App\Models\Project;
-use App\Models\User;
+use App\Enums\Project\ProjectPriority;
 use App\Enums\Project\ProjectStatus;
 use App\Enums\Project\ProjectType;
-use App\Enums\Project\ProjectPriority;
+use App\Models\Project;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\View\View;
 use Livewire\Component;
@@ -19,13 +18,21 @@ class ProjectList extends Component
     use WithPagination;
 
     public string $search = '';
+
     public string $statusFilter = 'all';
+
     public string $typeFilter = 'all';
+
     public string $priorityFilter = 'all';
+
     public string $sortBy = 'created_at';
+
     public string $sortDirection = 'desc';
+
     public int $perPage = 12;
+
     public bool $showFeaturedOnly = false;
+
     public bool $showPublishedOnly = true;
 
     /**
@@ -72,7 +79,7 @@ class ProjectList extends Component
             $this->sortBy = $field;
             $this->sortDirection = 'desc';
         }
-        
+
         $this->resetPage();
     }
 
@@ -83,18 +90,18 @@ class ProjectList extends Component
     {
         $query = Project::query()
             ->with(['client', 'reviews', 'commissions'])
-            ->when($this->showPublishedOnly, fn($q) => $q->where('is_published', true))
-            ->when($this->showFeaturedOnly, fn($q) => $q->where('is_featured', true))
-            ->when($this->search, function ($query, $search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('title', 'like', '%' . $search . '%')
-                      ->orWhere('description', 'like', '%' . $search . '%')
-                      ->orWhere('code', 'like', '%' . $search . '%');
+            ->when($this->showPublishedOnly, fn ($q) => $q->where('is_published', true))
+            ->when($this->showFeaturedOnly, fn ($q) => $q->where('is_featured', true))
+            ->when($this->search, function ($query, $search): void {
+                $query->where(function ($q) use ($search): void {
+                    $q->where('title', 'like', '%'.$search.'%')
+                        ->orWhere('description', 'like', '%'.$search.'%')
+                        ->orWhere('code', 'like', '%'.$search.'%');
                 });
             })
-            ->when($this->statusFilter !== 'all', fn($q) => $q->where('status', $this->statusFilter))
-            ->when($this->typeFilter !== 'all', fn($q) => $q->where('type', $this->typeFilter))
-            ->when($this->priorityFilter !== 'all', fn($q) => $q->where('priority', $this->priorityFilter));
+            ->when($this->statusFilter !== 'all', fn ($q) => $q->where('status', $this->statusFilter))
+            ->when($this->typeFilter !== 'all', fn ($q) => $q->where('type', $this->typeFilter))
+            ->when($this->priorityFilter !== 'all', fn ($q) => $q->where('priority', $this->priorityFilter));
 
         // Apply sorting
         match ($this->sortBy) {
@@ -115,7 +122,7 @@ class ProjectList extends Component
     public function getProjectTypesProperty(): array
     {
         return collect(ProjectType::cases())
-            ->map(fn($case) => ['value' => $case->value, 'label' => $case->label()])
+            ->map(fn ($case) => ['value' => $case->value, 'label' => $case->label()])
             ->toArray();
     }
 
@@ -125,7 +132,7 @@ class ProjectList extends Component
     public function getProjectStatusesProperty(): array
     {
         return collect(ProjectStatus::cases())
-            ->map(fn($case) => ['value' => $case->value, 'label' => $case->label()])
+            ->map(fn ($case) => ['value' => $case->value, 'label' => $case->label()])
             ->toArray();
     }
 
@@ -135,7 +142,7 @@ class ProjectList extends Component
     public function getPrioritiesProperty(): array
     {
         return collect(ProjectPriority::cases())
-            ->map(fn($case) => ['value' => $case->value, 'label' => $case->label()])
+            ->map(fn ($case) => ['value' => $case->value, 'label' => $case->label()])
             ->toArray();
     }
 
@@ -152,6 +159,7 @@ class ProjectList extends Component
             'in_progress' => Project::where('status', ProjectStatus::IN_PROGRESS->value)->count(),
         ];
     }
+
     /**
      * Render the component.
      */

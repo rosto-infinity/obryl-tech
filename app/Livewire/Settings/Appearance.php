@@ -13,7 +13,9 @@ class Appearance extends Component
      * Les options de thème disponibles
      */
     public const THEME_LIGHT = 'light';
+
     public const THEME_DARK = 'dark';
+
     public const THEME_SYSTEM = 'system';
 
     /**
@@ -33,4 +35,3 @@ class Appearance extends Component
         // Aucune donnée à récupérer en base de données pour l'instant
     }
 }
-

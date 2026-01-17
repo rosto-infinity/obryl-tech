@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Developer;
 
 enum SkillLevel: string
@@ -11,7 +13,7 @@ enum SkillLevel: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::JUNIOR => 'Junior',
             self::INTERMEDIATE => 'Intermédiaire',
             self::SENIOR => 'Senior',
@@ -21,7 +23,7 @@ enum SkillLevel: string
 
     public function stars(): int
     {
-        return match($this) {
+        return match ($this) {
             self::JUNIOR => 1,
             self::INTERMEDIATE => 2,
             self::SENIOR => 3,

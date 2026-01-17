@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Project;
 
 enum ProjectStatus: string
@@ -15,7 +17,7 @@ enum ProjectStatus: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::REQUESTED => 'Demandé',
             self::PENDING => 'En attente',
             self::ACCEPTED => 'Accepté',
@@ -29,7 +31,7 @@ enum ProjectStatus: string
 
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::REQUESTED => 'info',
             self::PENDING => 'warning',
             self::ACCEPTED => 'info',
@@ -43,7 +45,7 @@ enum ProjectStatus: string
 
     public function icon(): string
     {
-        return match($this) {
+        return match ($this) {
             self::REQUESTED => '📝',
             self::PENDING => '⏳',
             self::ACCEPTED => '✅',

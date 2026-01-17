@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Common;
 
 enum Language: string
@@ -10,7 +12,7 @@ enum Language: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::FRENCH => 'Français',
             self::ENGLISH => 'English',
             self::SPANISH => 'Español',
@@ -19,7 +21,7 @@ enum Language: string
 
     public function flag(): string
     {
-        return match($this) {
+        return match ($this) {
             self::FRENCH => '🇫🇷',
             self::ENGLISH => '🇬🇧',
             self::SPANISH => '🇪🇸',

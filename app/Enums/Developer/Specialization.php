@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Developer;
 
 enum Specialization: string
@@ -14,7 +16,7 @@ enum Specialization: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::WEB => 'Web',
             self::MOBILE => 'Mobile',
             self::FULLSTACK => 'Fullstack',
@@ -27,7 +29,7 @@ enum Specialization: string
 
     public function icon(): string
     {
-        return match($this) {
+        return match ($this) {
             self::WEB => '🌐',
             self::MOBILE => '📱',
             self::FULLSTACK => '🔄',

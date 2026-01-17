@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\SupportTickets;
 
 use App\Filament\Resources\SupportTickets\Pages\CreateSupportTicket;
@@ -11,11 +13,11 @@ use App\Filament\Resources\SupportTickets\Schemas\SupportTicketInfolist;
 use App\Filament\Resources\SupportTickets\Tables\SupportTicketsTable;
 use App\Models\SupportTicket;
 use BackedEnum;
-use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class SupportTicketResource extends Resource
 {

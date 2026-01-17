@@ -1,26 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Project;
 
+use App\Enums\ReviewStatus;
 use App\Models\Project;
 use App\Services\ReviewService;
 use Livewire\Component;
-use App\Enums\ReviewStatus;
 
 class ReviewForm extends Component
 {
     public Project $project;
-    
+
     public int $rating = 5;
+
     public string $comment = '';
+
     public array $criteria = [
         'communication' => 5,
         'qualité' => 5,
         'délais' => 5,
-        'expertise' => 5
+        'expertise' => 5,
     ];
 
     public bool $canReview = false;
+
     public bool $reviewSubmitted = false;
 
     protected $rules = [
@@ -29,18 +34,18 @@ class ReviewForm extends Component
         'criteria.*' => 'required|integer|min:1|max:5',
     ];
 
-    public function mount(Project $project, ReviewService $reviewService)
+    public function mount(Project $project, ReviewService $reviewService): void
     {
         $this->project = $project;
-        
+
         if (auth()->check()) {
             $this->canReview = $reviewService->canUserReviewProject(auth()->user(), $project);
         }
     }
 
-    public function submit(ReviewService $reviewService)
+    public function submit(ReviewService $reviewService): void
     {
-        if (!$this->canReview) {
+        if (! $this->canReview) {
             return;
         }
 
@@ -58,7 +63,7 @@ class ReviewForm extends Component
 
         $this->reviewSubmitted = true;
         $this->canReview = false;
-        
+
         $this->dispatch('notify', message: 'Votre avis a été soumis et sera visible après modération.', type: 'success');
     }
 

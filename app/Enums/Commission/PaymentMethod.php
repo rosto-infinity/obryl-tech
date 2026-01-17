@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Commission;
 
 enum PaymentMethod: string
@@ -11,7 +13,7 @@ enum PaymentMethod: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::BANK_TRANSFER => 'Virement bancaire',
             self::MOBILE_MONEY => 'Mobile Money',
             self::WALLET => 'Portefeuille',
@@ -21,7 +23,7 @@ enum PaymentMethod: string
 
     public function icon(): string
     {
-        return match($this) {
+        return match ($this) {
             self::BANK_TRANSFER => '🏦',
             self::MOBILE_MONEY => '📱',
             self::WALLET => '💳',

@@ -14,24 +14,27 @@ use Livewire\Component;
 class ProjectDetail extends Component
 {
     public Project $project;
+
     public EloquentCollection $similarProjects;
+
     public SupportCollection $teamMembers;
-    
+
     public array $stats = [];
+
     public array $milestoneProgress = [];
 
     public function mount(Project $project): void
     {
         // 1. Charger les relations
         $this->project = $project->load(['client', 'developer', 'reviews']);
-        
+
         // 2. Récupérer les projets similaires
         $this->similarProjects = $project->getSimilarProjects(6);
-        
+
         // --- CORRECTION : NORMALISATION DES CHAMPS JSON ---
         // On s'assure que Milestones, Technologies et Collaborators sont des tableaux PHP
         // Cela résout l'erreur "count(): Argument must be... string given" dans la Vue
-        
+
         $this->project->milestones = $this->toArray($this->project->milestones);
         $this->project->technologies = $this->toArray($this->project->technologies);
         $this->project->collaborators = $this->toArray($this->project->collaborators);
@@ -40,10 +43,10 @@ class ProjectDetail extends Component
         // 3. Initialiser les stats (ces méthodes recevront désormais de vrais tableaux)
         $this->stats = $this->getStatsProperty();
         $this->milestoneProgress = $this->getMilestoneProgressProperty();
-        
+
         // 4. Gérer les membres de l'équipe
         $collaborators = $this->project->collaborators; // Maintenant garanti être un tableau
-        
+
         $this->teamMembers = collect($collaborators)
             ->map(fn ($id) => User::find($id))
             ->filter()
@@ -57,9 +60,10 @@ class ProjectDetail extends Component
     {
         if (is_string($value)) {
             $decoded = json_decode($value, true);
+
             return is_array($decoded) ? $decoded : [];
         }
-        
+
         return is_array($value) ? $value : [];
     }
 
@@ -77,10 +81,10 @@ class ProjectDetail extends Component
     {
         // Maintenant $this->project->milestones est garanti être un tableau grâce au mount()
         $milestones = $this->project->milestones ?? [];
-        
+
         $completed = collect($milestones)->where('status', 'completed')->count();
         $total = count($milestones);
-        
+
         return [
             'completed' => $completed,
             'total' => $total,

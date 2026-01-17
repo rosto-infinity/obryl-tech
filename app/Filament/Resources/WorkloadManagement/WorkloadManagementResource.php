@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\WorkloadManagement;
 
 use App\Filament\Resources\WorkloadManagement\Pages\CreateWorkloadManagement;
@@ -9,11 +11,11 @@ use App\Filament\Resources\WorkloadManagement\Schemas\WorkloadManagementForm;
 use App\Filament\Resources\WorkloadManagement\Tables\WorkloadManagementTable;
 use App\Models\WorkloadManagement;
 use BackedEnum;
-use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class WorkloadManagementResource extends Resource
 {

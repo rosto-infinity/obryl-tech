@@ -1,15 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Project;
 
+use App\Enums\Project\ProjectStatus;
 use App\Models\Project;
 use App\Models\ProjectReference;
-use App\Enums\Project\ProjectType;
-use App\Enums\Project\ProjectStatus;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Auth;
 
 class ProjectRequest extends Component
 {
@@ -17,29 +18,39 @@ class ProjectRequest extends Component
 
     // Informations du projet
     public $title = '';
+
     public $description = '';
+
     public $type = 'web';
+
     public $budget = '';
+
     public $deadline = '';
+
     public $technologies = [];
+
     public $priority = 'medium';
+
     public $attachments = [];
 
     // Références de plateformes
     public $references = [];
+
     public $newReference = [
         'platform_name' => '',
         'platform_url' => '',
         'platform_type' => 'reference',
-        'description' => ''
+        'description' => '',
     ];
 
     // État du formulaire
     public $step = 1;
+
     public $showReferenceForm = false;
 
     // Messages
     public $successMessage = '';
+
     public $errorMessage = '';
 
     protected $rules = [
@@ -64,7 +75,7 @@ class ProjectRequest extends Component
         'technologies.required' => 'Veuillez spécifier au moins une technologie',
     ];
 
-    public function mount()
+    public function mount(): void
     {
         $this->technologies = ['Laravel', 'Vue.js']; // Valeurs par défaut
     }
@@ -72,7 +83,7 @@ class ProjectRequest extends Component
     /**
      * Passer à l'étape suivante
      */
-    public function nextStep()
+    public function nextStep(): void
     {
         $this->validateStep();
         $this->step++;
@@ -81,7 +92,7 @@ class ProjectRequest extends Component
     /**
      * Revenir à l'étape précédente
      */
-    public function previousStep()
+    public function previousStep(): void
     {
         $this->step--;
     }
@@ -89,7 +100,7 @@ class ProjectRequest extends Component
     /**
      * Valider l'étape actuelle
      */
-    public function validateStep()
+    public function validateStep(): void
     {
         if ($this->step === 1) {
             $this->validate([
@@ -111,9 +122,9 @@ class ProjectRequest extends Component
     /**
      * Ajouter une technologie
      */
-    public function addTechnology($technology)
+    public function addTechnology($technology): void
     {
-        if (!in_array($technology, $this->technologies) && !empty($technology)) {
+        if (! in_array($technology, $this->technologies) && ! empty($technology)) {
             $this->technologies[] = $technology;
         }
     }
@@ -121,7 +132,7 @@ class ProjectRequest extends Component
     /**
      * Supprimer une technologie
      */
-    public function removeTechnology($key)
+    public function removeTechnology($key): void
     {
         unset($this->technologies[$key]);
         $this->technologies = array_values($this->technologies);
@@ -130,12 +141,12 @@ class ProjectRequest extends Component
     /**
      * Ajouter une référence de plateforme
      */
-    public function addReference()
+    public function addReference(): void
     {
         $this->validate([
             'newReference.platform_name' => 'required|string|max:255',
             'newReference.platform_url' => 'nullable|url',
-            'newReference.description' => 'nullable|string|max:500'
+            'newReference.description' => 'nullable|string|max:500',
         ]);
 
         $this->references[] = [
@@ -143,7 +154,7 @@ class ProjectRequest extends Component
             'platform_url' => $this->newReference['platform_url'],
             'platform_type' => $this->newReference['platform_type'],
             'description' => $this->newReference['description'],
-            'similarity_score' => $this->calculateSimilarity($this->newReference['platform_name'])
+            'similarity_score' => $this->calculateSimilarity($this->newReference['platform_name']),
         ];
 
         // Réinitialiser le formulaire de référence
@@ -151,7 +162,7 @@ class ProjectRequest extends Component
             'platform_name' => '',
             'platform_url' => '',
             'platform_type' => 'reference',
-            'description' => ''
+            'description' => '',
         ];
 
         $this->showReferenceForm = false;
@@ -160,7 +171,7 @@ class ProjectRequest extends Component
     /**
      * Supprimer une référence
      */
-    public function removeReference($key)
+    public function removeReference($key): void
     {
         unset($this->references[$key]);
         $this->references = array_values($this->references);
@@ -171,28 +182,28 @@ class ProjectRequest extends Component
      */
     public function calculateSimilarity($platformName)
     {
-        $keywords = strtolower($this->title . ' ' . $this->description);
+        $keywords = strtolower($this->title.' '.$this->description);
         $platformKeywords = strtolower($platformName);
-        
+
         similar_text($keywords, $platformKeywords, $percent);
-        
+
         return min(100, max(0, (int) $percent));
     }
 
     /**
      * Soumettre le projet
      */
-    public function submitProject()
+    public function submitProject(): void
     {
         $this->validate();
 
         try {
             // Créer le projet
             $project = Project::create([
-                'code' => 'PRJ-' . strtoupper(Str::random(6)),
+                'code' => 'PRJ-'.strtoupper(Str::random(6)),
                 'title' => $this->title,
                 'description' => $this->description,
-                'slug' => Str::slug($this->title) . '-' . Str::random(4),
+                'slug' => Str::slug($this->title).'-'.Str::random(4),
                 'client_id' => Auth::id(),
                 'type' => $this->type,
                 'status' => ProjectStatus::REQUESTED,
@@ -226,13 +237,13 @@ class ProjectRequest extends Component
             }
 
             $this->successMessage = 'Votre projet a été soumis avec succès ! Notre équipe vous contactera dans les 24h.';
-            
+
             // Réinitialiser le formulaire
             $this->reset(['title', 'description', 'type', 'budget', 'deadline', 'technologies', 'priority', 'references', 'attachments']);
             $this->step = 1;
 
         } catch (\Exception $e) {
-            $this->errorMessage = 'Une erreur est survenue : ' . $e->getMessage();
+            $this->errorMessage = 'Une erreur est survenue : '.$e->getMessage();
         }
     }
 
@@ -242,19 +253,19 @@ class ProjectRequest extends Component
     public function getSuggestedPlatforms()
     {
         $suggestions = [];
-        
+
         // Basé sur le type de projet
         if ($this->type === 'web') {
             $suggestions = [
                 ['name' => 'Shopify', 'url' => 'shopify.com', 'description' => 'Plateforme e-commerce complète'],
                 ['name' => 'WooCommerce', 'url' => 'woocommerce.com', 'description' => 'Solution e-commerce WordPress'],
-                ['name' => 'Squarespace', 'url' => 'squarespace.com', 'description' => 'Créateur de sites web']
+                ['name' => 'Squarespace', 'url' => 'squarespace.com', 'description' => 'Créateur de sites web'],
             ];
         } elseif ($this->type === 'mobile') {
             $suggestions = [
                 ['name' => 'Uber', 'url' => 'uber.com', 'description' => 'Application de transport'],
                 ['name' => 'Airbnb', 'url' => 'airbnb.com', 'description' => 'Application de location'],
-                ['name' => 'Instagram', 'url' => 'instagram.com', 'description' => 'Application de partage photo']
+                ['name' => 'Instagram', 'url' => 'instagram.com', 'description' => 'Application de partage photo'],
             ];
         }
 

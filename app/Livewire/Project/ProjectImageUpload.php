@@ -1,19 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Project;
 
 use App\Models\Project;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Component;
 use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\Storage;
 
 class ProjectImageUpload extends Component
 {
     use WithFileUploads;
 
     public Project $project;
+
     public $featuredImage;
+
     public $galleryImages = [];
+
     public bool $isUploading = false;
 
     protected $rules = [
@@ -31,7 +36,7 @@ class ProjectImageUpload extends Component
     /**
      * Upload de l'image featured
      */
-    public function uploadFeaturedImage()
+    public function uploadFeaturedImage(): void
     {
         $this->validate(['featuredImage' => 'required|image|max:10240']);
 
@@ -39,7 +44,7 @@ class ProjectImageUpload extends Component
 
         try {
             // Supprimer l'ancienne image si elle existe
-            if ($this->project->featured_image && !str_starts_with($this->project->featured_image, 'http')) {
+            if ($this->project->featured_image && ! str_starts_with($this->project->featured_image, 'http')) {
                 Storage::disk('public')->delete($this->project->featured_image);
             }
 
@@ -51,13 +56,13 @@ class ProjectImageUpload extends Component
 
             $this->dispatch('imageUploaded', [
                 'type' => 'featured',
-                'message' => 'Image principale uploadée avec succès!'
+                'message' => 'Image principale uploadée avec succès!',
             ]);
 
             $this->reset('featuredImage');
         } catch (\Exception $e) {
             $this->dispatch('uploadError', [
-                'message' => 'Erreur lors de l\'upload: ' . $e->getMessage()
+                'message' => 'Erreur lors de l\'upload: '.$e->getMessage(),
             ]);
         } finally {
             $this->isUploading = false;
@@ -67,7 +72,7 @@ class ProjectImageUpload extends Component
     /**
      * Upload des images de galerie
      */
-    public function uploadGalleryImages()
+    public function uploadGalleryImages(): void
     {
         $this->validate(['galleryImages.*' => 'required|image|max:5120']);
 
@@ -90,13 +95,13 @@ class ProjectImageUpload extends Component
 
             $this->dispatch('imageUploaded', [
                 'type' => 'gallery',
-                'message' => count($newImages) . ' image(s) ajoutée(s) à la galerie!'
+                'message' => count($newImages).' image(s) ajoutée(s) à la galerie!',
             ]);
 
             $this->reset('galleryImages');
         } catch (\Exception $e) {
             $this->dispatch('uploadError', [
-                'message' => 'Erreur lors de l\'upload: ' . $e->getMessage()
+                'message' => 'Erreur lors de l\'upload: '.$e->getMessage(),
             ]);
         } finally {
             $this->isUploading = false;
@@ -106,7 +111,7 @@ class ProjectImageUpload extends Component
     /**
      * Supprimer une image de la galerie
      */
-    public function deleteGalleryImage($index)
+    public function deleteGalleryImage($index): void
     {
         try {
             $images = $this->project->gallery_images ?? [];
@@ -115,7 +120,7 @@ class ProjectImageUpload extends Component
                 $imagePath = $images[$index];
 
                 // Supprimer du storage si ce n'est pas une URL externe
-                if (!str_starts_with($imagePath, 'http')) {
+                if (! str_starts_with($imagePath, 'http')) {
                     Storage::disk('public')->delete($imagePath);
                 }
 
@@ -127,12 +132,12 @@ class ProjectImageUpload extends Component
                 $this->project->update(['gallery_images' => $images]);
 
                 $this->dispatch('imageDeleted', [
-                    'message' => 'Image supprimée avec succès!'
+                    'message' => 'Image supprimée avec succès!',
                 ]);
             }
         } catch (\Exception $e) {
             $this->dispatch('deleteError', [
-                'message' => 'Erreur lors de la suppression: ' . $e->getMessage()
+                'message' => 'Erreur lors de la suppression: '.$e->getMessage(),
             ]);
         }
     }

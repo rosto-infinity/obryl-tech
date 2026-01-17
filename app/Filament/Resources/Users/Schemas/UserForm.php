@@ -1,21 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Users\Schemas;
 
 use App\Enums\Auth\Country;
-use App\Enums\Auth\UserType;
-use Filament\Schemas\Schema;
 use App\Enums\Auth\UserStatus;
-
+use App\Enums\Auth\UserType;
+use Filament\Forms\Components\DateTimePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
-
-use Filament\Forms\Components\Toggle;
-use Filament\Schemas\Components\Tabs;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
-use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\DateTimePicker;
+use Filament\Schemas\Components\Tabs;
+use Filament\Schemas\Schema;
 
 class UserForm
 {
@@ -38,7 +38,7 @@ class UserForm
                                             ->required()
                                             ->maxLength(255)
                                             ->helperText('Nom et prénom de l\'utilisateur'),
-                                        
+
                                         TextInput::make('email')
                                             ->label('Adresse email')
                                             ->email()
@@ -46,7 +46,7 @@ class UserForm
                                             ->maxLength(255)
                                             ->unique(ignoreRecord: true)
                                             ->helperText('Adresse email de connexion'),
-                                        
+
                                         TextInput::make('phone')
                                             ->label('Téléphone')
                                             ->tel()
@@ -54,7 +54,7 @@ class UserForm
                                             ->helperText('Numéro de téléphone (optionnel)'),
                                     ])
                                     ->columns(2),
-                                
+
                                 Section::make('Avatar et profil')
                                     ->description('Photo de profil et informations publiques')
                                     ->icon('heroicon-o-photo')
@@ -69,7 +69,7 @@ class UserForm
                                             ->helperText('Image de profil (max 1MB, formats: JPG, PNG, WebP)'),
                                     ]),
                             ]),
-                        
+
                         // ONGLET: SÉCURITÉ ET ACCÈS
                         Tabs\Tab::make('Sécurité et Accès')
                             ->icon('heroicon-o-shield-check')
@@ -85,7 +85,7 @@ class UserForm
                                             ->helperText('Laissez vide pour ne pas modifier le mot de passe')
                                             ->dehydrateStateUsing(fn ($state) => $state ? bcrypt($state) : null),
                                     ]),
-                                
+
                                 Section::make('Authentification à deux facteurs')
                                     ->description('Configuration 2FA pour la sécurité renforcée')
                                     ->icon('heroicon-o-lock-closed')
@@ -95,13 +95,13 @@ class UserForm
                                             ->rows(2)
                                             ->columnSpanFull()
                                             ->helperText('Secret pour l\'authentification à deux facteurs (généré automatiquement)'),
-                                        
+
                                         Textarea::make('two_factor_recovery_codes')
                                             ->label('Codes de récupération')
                                             ->rows(3)
                                             ->columnSpanFull()
                                             ->helperText('Codes de récupération 2FA (un par ligne)'),
-                                        
+
                                         DateTimePicker::make('two_factor_confirmed_at')
                                             ->label('Date de confirmation 2FA')
                                             ->displayFormat('d/m/Y H:i')
@@ -109,7 +109,7 @@ class UserForm
                                             ->disabled(),
                                     ]),
                             ]),
-                        
+
                         // ONGLET: STATUT ET PERMISSIONS
                         Tabs\Tab::make('Statut et Permissions')
                             ->icon('heroicon-o-shield-check')
@@ -124,7 +124,7 @@ class UserForm
                                             ->default(UserType::CLIENT->value)
                                             ->required()
                                             ->helperText('Rôle de l\'utilisateur dans la plateforme'),
-                                        
+
                                         Select::make('status')
                                             ->label('Statut du compte')
                                             ->options(UserStatus::class)
@@ -133,7 +133,7 @@ class UserForm
                                             ->helperText('État actuel du compte utilisateur'),
                                     ])
                                     ->columns(2),
-                                
+
                                 Section::make('Vérification et localisation')
                                     ->description('Informations de vérification et géographiques')
                                     ->icon('heroicon-o-globe-alt')
@@ -143,7 +143,7 @@ class UserForm
                                             ->options(Country::class)
                                             ->searchable()
                                             ->helperText('Pays de résidence de l\'utilisateur'),
-                                        
+
                                         DateTimePicker::make('email_verified_at')
                                             ->label('Email vérifié le')
                                             ->displayFormat('d/m/Y H:i')
@@ -152,7 +152,7 @@ class UserForm
                                     ])
                                     ->columns(2),
                             ]),
-                        
+
                         // ONGLET: PRÉFÉRENCES
                         Tabs\Tab::make('Préférences')
                             ->icon('heroicon-o-cog')
@@ -165,17 +165,17 @@ class UserForm
                                             ->label('Notifications email')
                                             ->default(true)
                                             ->helperText('Recevoir les notifications par email'),
-                                        
+
                                         Toggle::make('sms_notifications')
                                             ->label('Notifications SMS')
                                             ->default(false)
                                             ->helperText('Recevoir les notifications par SMS'),
-                                        
+
                                         Toggle::make('marketing_emails')
                                             ->label('Emails marketing')
                                             ->default(false)
                                             ->helperText('Recevoir les emails marketing et promotionnels'),
-                                        
+
                                         Select::make('language')
                                             ->label('Langue préférée')
                                             ->options([

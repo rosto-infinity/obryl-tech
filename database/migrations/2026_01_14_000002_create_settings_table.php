@@ -1,29 +1,32 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
-        Schema::create('settings', function (Blueprint $table) {
+        Schema::create('settings', function (Blueprint $table): void {
             $table->id();
-            
+
             // Clé-Valeur
             $table->string('key')->unique();
             $table->text('value');
             $table->string('type')->default('string');            // string, integer, boolean, json, decimal
             $table->text('description')->nullable();
-            
+
             // Timestamps
             $table->timestamps();
-            
+
             // Index
             $table->index('key');
         });
-        
+
         // Données par défaut
         DB::table('settings')->insert([
             [
@@ -32,7 +35,7 @@ return new class extends Migration {
                 'type' => 'decimal',
                 'description' => 'Commission de la plateforme en %',
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => now(),
             ],
             [
                 'key' => 'currency',
@@ -40,7 +43,7 @@ return new class extends Migration {
                 'type' => 'string',
                 'description' => 'Devise par défaut (Code ISO)',
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => now(),
             ],
             [
                 'key' => 'min_project_budget',
@@ -48,7 +51,7 @@ return new class extends Migration {
                 'type' => 'integer',
                 'description' => 'Budget minimum pour un projet',
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => now(),
             ],
             [
                 'key' => 'platform_config',
@@ -57,12 +60,12 @@ return new class extends Migration {
                     'site_url' => 'https://obryl.tech',
                     'support_email' => 'support@obryl.tech',
                     'phone' => '+237...',
-                    'address' => 'Yaoundé, Cameroun'
+                    'address' => 'Yaoundé, Cameroun',
                 ]),
                 'type' => 'json',
                 'description' => 'Configuration générale du site',
                 'created_at' => now(),
-                'updated_at' => now()
+                'updated_at' => now(),
             ],
         ]);
     }

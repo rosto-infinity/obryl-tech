@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Notification;
 
 enum NotificationStatus: string
@@ -11,7 +13,7 @@ enum NotificationStatus: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => 'En attente',
             self::SENT => 'Envoyée',
             self::FAILED => 'Échouée',
@@ -21,7 +23,7 @@ enum NotificationStatus: string
 
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => 'warning',
             self::SENT => 'info',
             self::FAILED => 'danger',

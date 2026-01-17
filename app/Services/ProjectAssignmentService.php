@@ -1,12 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
-use App\Models\User;
 use App\Models\Project;
-use App\Models\WorkloadManagement;
+use App\Models\User;
 use App\Notifications\ProjectReassigned;
-use App\Notifications\WorkloadAlert;
 
 class ProjectAssignmentService
 {
@@ -17,7 +17,7 @@ class ProjectAssignmentService
     {
         // 1. Get available developers with their specializations
         $availableDevelopers = User::where('user_type', 'developer')
-            ->whereHas('profile', function($query) {
+            ->whereHas('profile', function ($query): void {
                 $query->where('availability', 'available');
             })
             ->with(['profile', 'workload'])
@@ -29,23 +29,27 @@ class ProjectAssignmentService
 
         // 2. Filter by project type specialization
         $specializedDevelopers = $availableDevelopers
-            ->filter(function($developer) use ($project) {
-                if (!$developer->profile) return false;
-                
+            ->filter(function ($developer) use ($project) {
+                if (! $developer->profile) {
+                    return false;
+                }
+
                 $specializations = $developer->profile->specializations ?? [];
+
                 return in_array($project->type, $specializations);
             });
 
         // If no specialized developers, use all available
-        $candidateDevelopers = $specializedDevelopers->isNotEmpty() 
-            ? $specializedDevelopers 
+        $candidateDevelopers = $specializedDevelopers->isNotEmpty()
+            ? $specializedDevelopers
             : $availableDevelopers;
 
         // 3. Sort by skill level and workload
         $sortedDevelopers = $candidateDevelopers
-            ->sortByDesc(function($developer) {
+            ->sortByDesc(function ($developer) {
                 $skillScore = $this->getSkillScore($developer);
                 $workloadScore = $this->getWorkloadScore($developer);
+
                 return $skillScore - $workloadScore; // Higher skill, lower workload is better
             });
 
@@ -59,7 +63,7 @@ class ProjectAssignmentService
     {
         // Find overloaded developers
         $overloadedDevelopers = User::where('user_type', 'developer')
-            ->whereHas('workload', function($query) {
+            ->whereHas('workload', function ($query): void {
                 $query->where('availability_status', 'overloaded');
             })
             ->with(['projects', 'workload'])
@@ -69,21 +73,21 @@ class ProjectAssignmentService
 
         foreach ($overloadedDevelopers as $developer) {
             $projectsToReassign = $this->getProjectsToReassign($developer);
-            
+
             foreach ($projectsToReassign as $project) {
                 $newDeveloper = $this->assignProject($project);
-                
+
                 if ($newDeveloper) {
                     // Reassign the project
                     $project->update(['developer_id' => $newDeveloper->id]);
-                    
+
                     // Update workloads
                     $developer->workload->calculateWorkload();
                     $newDeveloper->workload->calculateWorkload();
-                    
+
                     // Notify both developers
                     $this->notifyReassignment($project, $developer, $newDeveloper);
-                    
+
                     $redistributedProjects[] = [
                         'project' => $project,
                         'from_developer' => $developer,
@@ -113,9 +117,11 @@ class ProjectAssignmentService
      */
     private function getSkillScore(User $developer): int
     {
-        if (!$developer->profile) return 0;
-        
-        return match($developer->profile->skill_level) {
+        if (! $developer->profile) {
+            return 0;
+        }
+
+        return match ($developer->profile->skill_level) {
             'expert' => 100,
             'senior' => 80,
             'intermediate' => 60,
@@ -129,8 +135,10 @@ class ProjectAssignmentService
      */
     private function getWorkloadScore(User $developer): int
     {
-        if (!$developer->workload) return 0;
-        
+        if (! $developer->workload) {
+            return 0;
+        }
+
         return (int) $developer->workload->workload_percentage;
     }
 
@@ -141,10 +149,10 @@ class ProjectAssignmentService
     {
         // Notify previous developer
         $previousDeveloper->notify(new ProjectReassigned($project, $previousDeveloper, $newDeveloper));
-        
+
         // Notify new developer
         $newDeveloper->notify(new ProjectReassigned($project, $previousDeveloper, $newDeveloper));
-        
+
         // Notify admin
         $admins = User::where('user_type', 'admin')->get();
         foreach ($admins as $admin) {
@@ -158,9 +166,9 @@ class ProjectAssignmentService
     public function getDevelopersByWorkloadStatus(): array
     {
         return [
-            'available' => User::whereHas('workload', fn($q) => $q->where('availability_status', 'available'))->count(),
-            'busy' => User::whereHas('workload', fn($q) => $q->where('availability_status', 'busy'))->count(),
-            'overloaded' => User::whereHas('workload', fn($q) => $q->where('availability_status', 'overloaded'))->count(),
+            'available' => User::whereHas('workload', fn ($q) => $q->where('availability_status', 'available'))->count(),
+            'busy' => User::whereHas('workload', fn ($q) => $q->where('availability_status', 'busy'))->count(),
+            'overloaded' => User::whereHas('workload', fn ($q) => $q->where('availability_status', 'overloaded'))->count(),
         ];
     }
 
@@ -171,7 +179,7 @@ class ProjectAssignmentService
     {
         User::where('user_type', 'developer')
             ->with('workload')
-            ->chunk(100, function($developers) {
+            ->chunk(100, function ($developers): void {
                 foreach ($developers as $developer) {
                     if ($developer->workload) {
                         $developer->workload->calculateWorkload();

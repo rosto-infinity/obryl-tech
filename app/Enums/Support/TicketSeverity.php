@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Support;
 
 enum TicketSeverity: string
@@ -10,7 +12,7 @@ enum TicketSeverity: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::MINOR => 'Mineure',
             self::MAJOR => 'Majeure',
             self::CRITICAL => 'Critique',
@@ -19,7 +21,7 @@ enum TicketSeverity: string
 
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::MINOR => 'info',
             self::MAJOR => 'warning',
             self::CRITICAL => 'danger',

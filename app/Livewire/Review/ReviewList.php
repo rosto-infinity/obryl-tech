@@ -4,22 +4,26 @@ declare(strict_types=1);
 
 namespace App\Livewire\Review;
 
-use App\Models\Review;
-use App\Models\User;
 use App\Enums\ReviewStatus;
+use App\Models\Review;
 use App\Services\ReviewService;
-use Livewire\WithPagination;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class ReviewList extends Component
 {
     use WithPagination;
 
     public string $search = '';
+
     public string $statusFilter = 'all';
+
     public string $ratingFilter = 'all';
+
     public string $sortBy = 'created_at';
+
     public string $sortDirection = 'desc';
+
     public int $perPage = 12;
 
     protected ReviewService $reviewService;
@@ -75,26 +79,26 @@ class ReviewList extends Component
         }
         // Admins see everything by default
 
-        $query->when($this->search, function ($query) {
-                $query->where(function ($q) {
-                    $q->where('comment', 'like', '%' . $this->search . '%')
-                      ->orWhereHas('project', function ($pq) {
-                          $pq->where('title', 'like', '%' . $this->search . '%');
-                      })
-                      ->orWhereHas('client', function ($cq) {
-                          $cq->where('name', 'like', '%' . $this->search . '%');
-                      })
-                      ->orWhereHas('developer', function ($dq) {
-                          $dq->where('name', 'like', '%' . $this->search . '%');
-                      });
-                });
-            })
-            ->when($this->statusFilter !== 'all', function ($query) {
+        $query->when($this->search, function ($query): void {
+            $query->where(function ($q): void {
+                $q->where('comment', 'like', '%'.$this->search.'%')
+                    ->orWhereHas('project', function ($pq): void {
+                        $pq->where('title', 'like', '%'.$this->search.'%');
+                    })
+                    ->orWhereHas('client', function ($cq): void {
+                        $cq->where('name', 'like', '%'.$this->search.'%');
+                    })
+                    ->orWhereHas('developer', function ($dq): void {
+                        $dq->where('name', 'like', '%'.$this->search.'%');
+                    });
+            });
+        })
+            ->when($this->statusFilter !== 'all', function ($query): void {
                 $query->where('status', $this->statusFilter);
             })
-            ->when($this->ratingFilter !== 'all', function ($query) {
+            ->when($this->ratingFilter !== 'all', function ($query): void {
                 $query->where('rating', '>=', (int) $this->ratingFilter)
-                      ->where('rating', '<', (int) $this->ratingFilter + 1);
+                    ->where('rating', '<', (int) $this->ratingFilter + 1);
             });
 
         // Apply sorting
@@ -111,13 +115,13 @@ class ReviewList extends Component
     public function approveReview(int $reviewId): void
     {
         $review = Review::findOrFail($reviewId);
-        
-        if (!auth()->user()->can('updateReview')) {
+
+        if (! auth()->user()->can('updateReview')) {
             abort(403, 'Vous n\'avez pas la permission d\'approuver les avis.');
         }
 
         $this->reviewService->updateReviewStatus($review, ReviewStatus::APPROVED);
-        
+
         $this->dispatch('reviewApproved', reviewId: $reviewId);
         $this->dispatch('notify', message: 'Avis approuvé avec succès', type: 'success');
     }
@@ -125,13 +129,13 @@ class ReviewList extends Component
     public function rejectReview(int $reviewId): void
     {
         $review = Review::findOrFail($reviewId);
-        
-        if (!auth()->user()->can('updateReview')) {
+
+        if (! auth()->user()->can('updateReview')) {
             abort(403, 'Vous n\'avez pas la permission de rejeter les avis.');
         }
 
         $this->reviewService->updateReviewStatus($review, ReviewStatus::REJECTED);
-        
+
         $this->dispatch('reviewRejected', reviewId: $reviewId);
         $this->dispatch('notify', message: 'Avis rejeté', type: 'warning');
     }
@@ -139,8 +143,8 @@ class ReviewList extends Component
     public function deleteReview(int $reviewId): void
     {
         $review = Review::findOrFail($reviewId);
-        
-        if (!auth()->user()->can('deleteReview')) {
+
+        if (! auth()->user()->can('deleteReview')) {
             abort(403, 'Vous n\'avez pas la permission de supprimer les avis.');
         }
 
@@ -150,7 +154,7 @@ class ReviewList extends Component
         }
 
         $review->delete();
-        
+
         $this->dispatch('reviewDeleted', reviewId: $reviewId);
         $this->dispatch('notify', message: 'Avis supprimé avec succès', type: 'success');
     }
@@ -158,20 +162,20 @@ class ReviewList extends Component
     public function getReviewStatsProperty(): array
     {
         $reviews = Review::all();
-        
+
         return [
             'total' => $reviews->count(),
-            'approved' => $reviews->filter(fn($r) => $r->status === ReviewStatus::APPROVED)->count(),
-            'pending' => $reviews->filter(fn($r) => $r->status === ReviewStatus::PENDING)->count(),
-            'rejected' => $reviews->filter(fn($r) => $r->status === ReviewStatus::REJECTED)->count(),
-            'average_rating' => $reviews->filter(fn($r) => $r->status === ReviewStatus::APPROVED)->avg('rating'),
+            'approved' => $reviews->filter(fn ($r) => $r->status === ReviewStatus::APPROVED)->count(),
+            'pending' => $reviews->filter(fn ($r) => $r->status === ReviewStatus::PENDING)->count(),
+            'rejected' => $reviews->filter(fn ($r) => $r->status === ReviewStatus::REJECTED)->count(),
+            'average_rating' => $reviews->filter(fn ($r) => $r->status === ReviewStatus::APPROVED)->avg('rating'),
         ];
     }
 
     public function getRatingDistributionProperty(): array
     {
         $approvedReviews = Review::where('status', ReviewStatus::APPROVED)->get();
-        
+
         return [
             5 => $approvedReviews->where('rating', '>=', 4.5)->count(),
             4 => $approvedReviews->where('rating', '>=', 3.5)->where('rating', '<', 4.5)->count(),

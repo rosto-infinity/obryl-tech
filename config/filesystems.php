@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 return [
 
     /*
@@ -37,7 +39,6 @@ return [
             'throw' => false,
             'report' => false,
         ],
-         
 
         'public' => [
             'driver' => 'local',

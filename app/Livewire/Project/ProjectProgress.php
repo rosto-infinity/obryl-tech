@@ -12,18 +12,21 @@ use Livewire\Component;
 class ProjectProgress extends Component
 {
     public Project $project;
+
     public array $milestoneProgress = [];
+
     public array $stats = [];
+
     public Collection $teamMembers;
 
     public function mount(Project $project): void
     {
         $this->project = $project->load(['client', 'developer.profile']);
-        
+
         // Initialize computed properties
         $this->stats = $this->getStatsProperty();
         $this->milestoneProgress = $this->getMilestoneProgressProperty();
-        
+
         // Initialize team members
         $collaborators = $this->project->collaborators ?? [];
         if (is_string($collaborators)) {
@@ -51,15 +54,15 @@ class ProjectProgress extends Component
     public function getMilestoneProgressProperty(): array
     {
         $milestones = $this->project->milestones ?? [];
-        
+
         // Handle JSON string
         if (is_string($milestones)) {
             $milestones = json_decode($milestones, true) ?? [];
         }
-        
+
         $completed = collect($milestones)->where('status', 'completed')->count();
         $total = count($milestones);
-        
+
         return [
             'completed' => $completed,
             'total' => $total,
@@ -75,11 +78,11 @@ class ProjectProgress extends Component
         $this->project->update([
             'status' => 'completed',
             'completed_at' => now(),
-            'progress_percentage' => 100
+            'progress_percentage' => 100,
         ]);
 
         $this->dispatch('projectCompleted', [
-            'project' => $this->project
+            'project' => $this->project,
         ]);
 
         // Redirect to project detail

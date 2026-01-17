@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Admin;
 
-use App\Models\Project;
-use App\Models\ProjectReference;
 use App\Enums\Project\ProjectStatus;
+use App\Models\Project;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -13,10 +14,15 @@ class ProjectRequests extends Component
     use WithPagination;
 
     public $search = '';
+
     public $statusFilter = 'all';
+
     public $typeFilter = 'all';
+
     public $sortBy = 'created_at';
+
     public $sortDirection = 'desc';
+
     public $perPage = 10;
 
     protected $queryString = [
@@ -27,20 +33,18 @@ class ProjectRequests extends Component
         'sortDirection' => ['except' => 'desc'],
     ];
 
-    
-
     protected function getProjects()
     {
         return Project::with(['client', 'references'])
             ->where('status', ProjectStatus::REQUESTED->value)
-            ->when($this->search, function ($query) {
-                $query->where(function ($q) {
-                    $q->where('title', 'like', '%' . $this->search . '%')
-                      ->orWhere('description', 'like', '%' . $this->search . '%')
-                      ->orWhere('code', 'like', '%' . $this->search . '%');
+            ->when($this->search, function ($query): void {
+                $query->where(function ($q): void {
+                    $q->where('title', 'like', '%'.$this->search.'%')
+                        ->orWhere('description', 'like', '%'.$this->search.'%')
+                        ->orWhere('code', 'like', '%'.$this->search.'%');
                 });
             })
-            ->when($this->typeFilter !== 'all', function ($query) {
+            ->when($this->typeFilter !== 'all', function ($query): void {
                 $query->where('type', $this->typeFilter);
             })
             ->orderBy($this->sortBy, $this->sortDirection)
@@ -52,15 +56,15 @@ class ProjectRequests extends Component
         return [
             'total' => Project::where('status', ProjectStatus::REQUESTED->value)->count(),
             'today' => Project::where('status', ProjectStatus::REQUESTED->value)
-                           ->whereDate('created_at', today())->count(),
+                ->whereDate('created_at', today())->count(),
             'this_week' => Project::where('status', ProjectStatus::REQUESTED->value)
-                               ->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count(),
+                ->whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count(),
             'with_references' => Project::where('status', ProjectStatus::REQUESTED->value)
-                                       ->whereHas('references')->count(),
+                ->whereHas('references')->count(),
         ];
     }
 
-    public function sortBy($field)
+    public function sortBy($field): void
     {
         if ($this->sortBy === $field) {
             $this->sortDirection = $this->sortDirection === 'asc' ? 'desc' : 'asc';
@@ -70,7 +74,7 @@ class ProjectRequests extends Component
         }
     }
 
-    public function acceptProject($projectId)
+    public function acceptProject($projectId): void
     {
         $project = Project::find($projectId);
         if ($project) {
@@ -80,7 +84,7 @@ class ProjectRequests extends Component
         }
     }
 
-    public function rejectProject($projectId)
+    public function rejectProject($projectId): void
     {
         $project = Project::find($projectId);
         if ($project) {
@@ -90,14 +94,13 @@ class ProjectRequests extends Component
         }
     }
 
-
     public function render()
     {
         $projects = $this->getProjects();
-        
+
         return view('livewire.admin.project-requests', [
             'projects' => $projects,
-            'stats' => $this->getStats()
+            'stats' => $this->getStats(),
         ]);
     }
 }

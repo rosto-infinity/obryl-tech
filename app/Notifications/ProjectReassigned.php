@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
+use Illuminate\Notifications\Notification;
 
 class ProjectReassigned extends Notification implements ShouldQueue
 {
@@ -37,9 +39,9 @@ class ProjectReassigned extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
-        $message = match($notifiable->user_type) {
+        $message = match ($notifiable->user_type) {
             'admin' => "Le projet {$this->project->title} a été réassigné de {$this->previousDeveloper->name} à {$this->newDeveloper->name}",
-            'developer' => $notifiable->id === $this->previousDeveloper->id 
+            'developer' => $notifiable->id === $this->previousDeveloper->id
                 ? "Le projet {$this->project->title} vous a été retiré et réassigné à {$this->newDeveloper->name}"
                 : "Le projet {$this->project->title} vous a été assigné",
             default => "Le projet {$this->project->title} a été réassigné"
@@ -63,9 +65,9 @@ class ProjectReassigned extends Notification implements ShouldQueue
      */
     public function toArray(object $notifiable): array
     {
-        $message = match($notifiable->user_type) {
+        $message = match ($notifiable->user_type) {
             'admin' => "Le projet {$this->project->title} a été réassigné de {$this->previousDeveloper->name} à {$this->newDeveloper->name}",
-            'developer' => $notifiable->id === $this->previousDeveloper->id 
+            'developer' => $notifiable->id === $this->previousDeveloper->id
                 ? "Le projet {$this->project->title} vous a été retiré et réassigné à {$this->newDeveloper->name}"
                 : "Le projet {$this->project->title} vous a été assigné",
             default => "Le projet {$this->project->title} a été réassigné"

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Support;
 
 enum TicketStatus: string
@@ -12,7 +14,7 @@ enum TicketStatus: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::OPEN => 'Ouvert',
             self::IN_PROGRESS => 'En cours',
             self::RESOLVED => 'Résolu',
@@ -23,7 +25,7 @@ enum TicketStatus: string
 
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::OPEN => 'danger',
             self::IN_PROGRESS => 'primary',
             self::RESOLVED => 'success',

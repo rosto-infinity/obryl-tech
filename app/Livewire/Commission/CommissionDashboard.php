@@ -4,14 +4,13 @@ declare(strict_types=1);
 
 namespace App\Livewire\Commission;
 
+use App\Enums\Commission\CommissionStatus;
 use App\Models\Commission;
 use App\Models\User;
-use App\Enums\Commission\CommissionStatus;
-use App\Enums\Commission\CommissionType;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -20,9 +19,13 @@ class CommissionDashboard extends Component
     use WithPagination;
 
     public string $statusFilter = 'all';
+
     public string $typeFilter = 'all';
+
     public int $developerId = 0;
+
     public string $search = '';
+
     public int $perPage = 10;
 
     /**
@@ -70,10 +73,10 @@ class CommissionDashboard extends Component
     {
         $query = Commission::query()
             ->with(['project.client', 'developer.profile', 'approvedBy'])
-            ->when($this->developerId > 0, fn($q) => $q->where('developer_id', $this->developerId))
-            ->when($this->statusFilter !== 'all', fn($q) => $q->where('status', $this->statusFilter))
-            ->when($this->typeFilter !== 'all', fn($q) => $q->where('type', $this->typeFilter))
-            ->when($this->search, fn($q) => $q->where('description', 'like', '%' . $this->search . '%'))
+            ->when($this->developerId > 0, fn ($q) => $q->where('developer_id', $this->developerId))
+            ->when($this->statusFilter !== 'all', fn ($q) => $q->where('status', $this->statusFilter))
+            ->when($this->typeFilter !== 'all', fn ($q) => $q->where('type', $this->typeFilter))
+            ->when($this->search, fn ($q) => $q->where('description', 'like', '%'.$this->search.'%'))
             ->orderByDesc('created_at');
 
         return $query->paginate($this->perPage);
@@ -97,11 +100,11 @@ class CommissionDashboard extends Component
     public function approveCommission(int $commissionId): void
     {
         $commission = Commission::findOrFail($commissionId);
-        
+
         $this->authorize('approve', $commission);
-        
+
         $commission->markAsApproved(Auth::id());
-        
+
         $this->dispatch('commission-approved', commissionId: $commissionId);
     }
 
@@ -111,16 +114,17 @@ class CommissionDashboard extends Component
     public function markAsPaid(int $commissionId): void
     {
         $commission = Commission::findOrFail($commissionId);
-        
+
         $this->authorize('pay', $commission);
-        
-        if (!$commission->canBePaid()) {
+
+        if (! $commission->canBePaid()) {
             $this->addError('payment', 'Cette commission ne peut pas être payée.');
+
             return;
         }
-        
+
         $commission->markAsPaid();
-        
+
         $this->dispatch('commission-paid', commissionId: $commissionId);
     }
 

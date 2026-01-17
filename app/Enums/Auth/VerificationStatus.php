@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Auth;
 
 enum VerificationStatus: string
@@ -10,7 +12,7 @@ enum VerificationStatus: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => 'En attente',
             self::VERIFIED => 'Vérifié',
             self::REJECTED => 'Rejeté',
@@ -19,7 +21,7 @@ enum VerificationStatus: string
 
     public function color(): string
     {
-        return match($this) {
+        return match ($this) {
             self::PENDING => 'warning',
             self::VERIFIED => 'success',
             self::REJECTED => 'danger',

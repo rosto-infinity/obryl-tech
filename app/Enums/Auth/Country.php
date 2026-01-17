@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Auth;
 
 enum Country: string
@@ -17,7 +19,7 @@ enum Country: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::CAMEROON => 'Cameroun',
             self::FRANCE => 'France',
             self::USA => 'États-Unis',
@@ -33,7 +35,7 @@ enum Country: string
 
     public function flag(): string
     {
-        return match($this) {
+        return match ($this) {
             self::CAMEROON => '🇨🇲',
             self::FRANCE => '🇫🇷',
             self::USA => '🇺🇸',

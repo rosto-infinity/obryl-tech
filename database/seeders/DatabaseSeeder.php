@@ -1,14 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Database\Seeders\UserSeeder;
-use Database\Seeders\FixUserSlugSeeder;
-use Database\Seeders\ProjectSeeder;
-use Database\Seeders\ArticleSeeder;
-use Database\Seeders\SupportTicketSeeder;
-use Database\Seeders\NotificationSeeder;
 
 class DatabaseSeeder extends Seeder
 {

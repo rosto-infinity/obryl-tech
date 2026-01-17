@@ -1,4 +1,6 @@
 <?php
+
+declare(strict_types=1);
 // ============================================
 // PHASE 2 : TABLES DÉPENDANTES DE USERS
 // ============================================
@@ -14,7 +16,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('developer_profiles', function (Blueprint $table) {
+        Schema::create('developer_profiles', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->enum('specialization', ['web', 'mobile', 'fullstack', 'backend', 'frontend', 'devops'])->default('web');
@@ -33,7 +35,7 @@ return new class extends Migration
             $table->decimal('average_rating', 3, 2)->default(0); // 0-5
             $table->timestamp('verified_at')->nullable();
             $table->timestamps();
-            
+
             // Indexes
             $table->unique('user_id');
             $table->index('is_verified');
@@ -55,7 +57,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('projects', function (Blueprint $table) {
+        Schema::create('projects', function (Blueprint $table): void {
             $table->id();
             $table->string('code', 20)->unique(); // PRJ-2025-001
             $table->foreignId('client_id')->constrained('users')->cascadeOnDelete();
@@ -75,7 +77,7 @@ return new class extends Migration
                 'completed',    // Terminé
                 'published',    // Publié portfolio
                 'cancelled',    // Annulé
-                'dispute'       // Litige
+                'dispute',       // Litige
             ])->default('pending');
             $table->integer('progress_percentage')->default(0);
             $table->json('technologies')->nullable(); // ['Laravel', 'Vue.js']
@@ -89,14 +91,14 @@ return new class extends Migration
             $table->integer('views_count')->default(0);
             $table->timestamps();
             $table->softDeletes();
-            
+
             // Indexes
             $table->index('code');
             $table->index(['client_id', 'status']);
             $table->index('status');
             $table->index(['is_published', 'is_featured']);
             $table->index('created_at');
-            
+
             // Fulltext search
             $table->fullText(['title', 'description']);
         });
@@ -115,7 +117,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('blog_posts', function (Blueprint $table) {
+        Schema::create('blog_posts', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('author_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('category_id')->nullable()->constrained('blog_categories')->nullOnDelete();
@@ -134,14 +136,14 @@ return new class extends Migration
             $table->timestamp('published_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            
+
             // Indexes
             $table->index('slug');
             $table->index(['status', 'published_at']);
             $table->index(['is_featured', 'published_at']);
             $table->index('author_id');
             $table->index('category_id');
-            
+
             // Fulltext search
             $table->fullText(['title', 'excerpt', 'content']);
         });

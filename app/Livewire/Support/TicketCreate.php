@@ -1,21 +1,24 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Support;
 
-use Livewire\Component;
-
-use App\Models\SupportTicket;
-use App\Enums\Support\TicketStatus;
 use App\Enums\Support\TicketPriority;
-use App\Enums\Support\TicketCategory;
-use App\Enums\Support\TicketSeverity;
+use App\Enums\Support\TicketStatus;
+use App\Models\SupportTicket;
+use Livewire\Component;
 
 class TicketCreate extends Component
 {
     public $title = '';
+
     public $description = '';
+
     public $project_id = null;
+
     public $category = 'general';
+
     public $severity = 'minor';
 
     protected $rules = [
@@ -49,7 +52,7 @@ class TicketCreate extends Component
     public function render()
     {
         return view('livewire.support.ticket-create', [
-            'projects' => auth()->user()->projects()->get()
+            'projects' => auth()->user()->projects()->get(),
         ]);
     }
 }

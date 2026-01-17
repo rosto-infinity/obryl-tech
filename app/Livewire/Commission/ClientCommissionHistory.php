@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Livewire\Commission;
 
 use App\Models\Commission;
-use App\Models\ExternalDeveloperCommission;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,9 +13,13 @@ class ClientCommissionHistory extends Component
     use WithPagination;
 
     public $status = '';
+
     public $dateFrom = '';
+
     public $dateTo = '';
+
     public $amountMin = '';
+
     public $amountMax = '';
 
     protected $queryString = [
@@ -28,23 +33,23 @@ class ClientCommissionHistory extends Component
     public function render()
     {
         $user = auth()->user();
-        
+
         if ($user->user_type === 'developer') {
             // Développeur : voir ses commissions
             $commissions = $user->externalCommissions()
-                ->when($this->status, function($query) {
+                ->when($this->status, function ($query): void {
                     $query->where('status', $this->status);
                 })
-                ->when($this->dateFrom, function($query) {
+                ->when($this->dateFrom, function ($query): void {
                     $query->whereDate('created_at', '>=', $this->dateFrom);
                 })
-                ->when($this->dateTo, function($query) {
+                ->when($this->dateTo, function ($query): void {
                     $query->whereDate('created_at', '<=', $this->dateTo);
                 })
-                ->when($this->amountMin, function($query) {
+                ->when($this->amountMin, function ($query): void {
                     $query->where('amount', '>=', $this->amountMin);
                 })
-                ->when($this->amountMax, function($query) {
+                ->when($this->amountMax, function ($query): void {
                     $query->where('amount', '<=', $this->amountMax);
                 })
                 ->with(['project', 'approver'])
@@ -52,22 +57,22 @@ class ClientCommissionHistory extends Component
                 ->paginate(10);
         } else {
             // Client : voir les commissions de ses projets
-            $commissions = Commission::whereHas('project', function($query) use ($user) {
+            $commissions = Commission::whereHas('project', function ($query) use ($user): void {
                 $query->where('client_id', $user->id);
             })
-                ->when($this->status, function($query) {
+                ->when($this->status, function ($query): void {
                     $query->where('status', $this->status);
                 })
-                ->when($this->dateFrom, function($query) {
+                ->when($this->dateFrom, function ($query): void {
                     $query->whereDate('created_at', '>=', $this->dateFrom);
                 })
-                ->when($this->dateTo, function($query) {
+                ->when($this->dateTo, function ($query): void {
                     $query->whereDate('created_at', '<=', $this->dateTo);
                 })
-                ->when($this->amountMin, function($query) {
+                ->when($this->amountMin, function ($query): void {
                     $query->where('amount', '>=', $this->amountMin);
                 })
-                ->when($this->amountMax, function($query) {
+                ->when($this->amountMax, function ($query): void {
                     $query->where('amount', '<=', $this->amountMax);
                 })
                 ->with(['project', 'developer'])
@@ -85,30 +90,30 @@ class ClientCommissionHistory extends Component
     private function getTotalAmount(): float
     {
         $user = auth()->user();
-        
+
         if ($user->user_type === 'developer') {
             return $user->externalCommissions()
-                ->when($this->status, function($query) {
+                ->when($this->status, function ($query): void {
                     $query->where('status', $this->status);
                 })
-                ->when($this->dateFrom, function($query) {
+                ->when($this->dateFrom, function ($query): void {
                     $query->whereDate('created_at', '>=', $this->dateFrom);
                 })
-                ->when($this->dateTo, function($query) {
+                ->when($this->dateTo, function ($query): void {
                     $query->whereDate('created_at', '<=', $this->dateTo);
                 })
                 ->sum('amount');
         } else {
-            return Commission::whereHas('project', function($query) use ($user) {
+            return Commission::whereHas('project', function ($query) use ($user): void {
                 $query->where('client_id', $user->id);
             })
-                ->when($this->status, function($query) {
+                ->when($this->status, function ($query): void {
                     $query->where('status', $this->status);
                 })
-                ->when($this->dateFrom, function($query) {
+                ->when($this->dateFrom, function ($query): void {
                     $query->whereDate('created_at', '>=', $this->dateFrom);
                 })
-                ->when($this->dateTo, function($query) {
+                ->when($this->dateTo, function ($query): void {
                     $query->whereDate('created_at', '<=', $this->dateTo);
                 })
                 ->sum('amount');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Seeders;
 
 use App\Enums\Project\ProjectStatus;
@@ -20,7 +22,7 @@ class ProjectSeeder extends Seeder
         $developers = User::where('user_type', 'developer')->get();
 
         // 1. Créer 5 projets en attente
-        $this->command->info("📋 Création des projets en attente...");
+        $this->command->info('📋 Création des projets en attente...');
         Project::factory()
             ->count(5)
             ->create([
@@ -28,21 +30,21 @@ class ProjectSeeder extends Seeder
             ]);
 
         // 2. Créer 8 projets en cours
-        $this->command->info("⚙️ Création des projets en cours...");
+        $this->command->info('⚙️ Création des projets en cours...');
         Project::factory()
             ->count(8)
             ->inProgress()
             ->create();
 
         // 3. Créer 5 projets complétés
-        $this->command->info("✅ Création des projets complétés...");
+        $this->command->info('✅ Création des projets complétés...');
         $completedProjects = Project::factory()
             ->count(5)
             ->completed()
             ->create();
 
         // 4. Créer 5 projets publiés en vedette
-        $this->command->info("⭐ Création des projets publiés...");
+        $this->command->info('⭐ Création des projets publiés...');
         Project::factory()
             ->count(5)
             ->published()
@@ -50,8 +52,8 @@ class ProjectSeeder extends Seeder
             ->create();
 
         // 5. Pour chaque projet complété, créer des avis et commissions
-        $this->command->info("📝 Création des avis et commissions...");
-        
+        $this->command->info('📝 Création des avis et commissions...');
+
         foreach ($completedProjects as $project) {
             // ✅ FIXÉ : Créer des avis avec des développeurs DIFFÉRENTS
             // Puisqu'il y a une contrainte unique (project_id, developer_id)
@@ -98,25 +100,25 @@ class ProjectSeeder extends Seeder
                     'approved_by' => User::where('user_type', 'admin')->first()->id,
                     'payment_details' => json_encode([
                         'method' => 'bank_transfer',
-                        'account' => '****' . rand(1000, 9999),
+                        'account' => '****'.rand(1000, 9999),
                     ]),
                 ]);
             }
         }
 
         // 6. Créer quelques commissions payées supplémentaires
-        $this->command->info("💰 Création des commissions payées...");
-        
+        $this->command->info('💰 Création des commissions payées...');
+
         $projects = Project::inRandomOrder()->limit(3)->get();
         foreach ($projects as $project) {
             $developer = $developers->random();
-            
+
             // Vérifier si une commission existe déjà pour ce projet/développeur
             $existingCommission = Commission::where('project_id', $project->id)
                 ->where('developer_id', $developer->id)
                 ->exists();
 
-            if (!$existingCommission) {
+            if (! $existingCommission) {
                 Commission::create([
                     'project_id' => $project->id,
                     'developer_id' => $developer->id,
@@ -136,29 +138,29 @@ class ProjectSeeder extends Seeder
                     'approved_by' => User::where('user_type', 'admin')->first()->id,
                     'payment_details' => json_encode([
                         'method' => 'bank_transfer',
-                        'account' => '****' . rand(1000, 9999),
+                        'account' => '****'.rand(1000, 9999),
                     ]),
                 ]);
             }
         }
 
         // Résumé
-        $this->command->info("");
-        $this->command->info("╔════════════════════════════════════════════════════════════╗");
-        $this->command->info("║  ✅ PROJETS CRÉÉS AVEC SUCCÈS !                            ║");
-        $this->command->info("║                                                            ║");
-        $this->command->info("║  📊 Résumé :                                               ║");
-        $this->command->info("║     • 5 Projets en attente                                 ║");
-        $this->command->info("║     • 8 Projets en cours                                   ║");
-        $this->command->info("║     • 5 Projets complétés (avec avis et commissions)       ║");
-        $this->command->info("║     • 5 Projets publiés en vedette                         ║");
-        $this->command->info("║     • 3+ Commissions payées                                ║");
-        $this->command->info("║                                                            ║");
-        $this->command->info("║  📈 Statistiques :                                         ║");
-        $this->command->info("║     • " . Project::count() . " Projets total");
-        $this->command->info("║     • " . Review::count() . " Avis total");
-        $this->command->info("║     • " . Commission::count() . " Commissions total");
-        $this->command->info("║                                                            ║");
-        $this->command->info("╚════════════════════════════════════════════════════════════╝");
+        $this->command->info('');
+        $this->command->info('╔════════════════════════════════════════════════════════════╗');
+        $this->command->info('║  ✅ PROJETS CRÉÉS AVEC SUCCÈS !                            ║');
+        $this->command->info('║                                                            ║');
+        $this->command->info('║  📊 Résumé :                                               ║');
+        $this->command->info('║     • 5 Projets en attente                                 ║');
+        $this->command->info('║     • 8 Projets en cours                                   ║');
+        $this->command->info('║     • 5 Projets complétés (avec avis et commissions)       ║');
+        $this->command->info('║     • 5 Projets publiés en vedette                         ║');
+        $this->command->info('║     • 3+ Commissions payées                                ║');
+        $this->command->info('║                                                            ║');
+        $this->command->info('║  📈 Statistiques :                                         ║');
+        $this->command->info('║     • '.Project::count().' Projets total');
+        $this->command->info('║     • '.Review::count().' Avis total');
+        $this->command->info('║     • '.Commission::count().' Commissions total');
+        $this->command->info('║                                                            ║');
+        $this->command->info('╚════════════════════════════════════════════════════════════╝');
     }
 }

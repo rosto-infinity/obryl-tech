@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Common;
 
 enum Currency: string
@@ -13,7 +15,7 @@ enum Currency: string
 
     public function label(): string
     {
-        return match($this) {
+        return match ($this) {
             self::XAF => 'Franc CFA (XAF)',
             self::USD => 'Dollar américain (USD)',
             self::EUR => 'Euro (EUR)',
@@ -25,7 +27,7 @@ enum Currency: string
 
     public function symbol(): string
     {
-        return match($this) {
+        return match ($this) {
             self::XAF => 'Fr',
             self::USD => '$',
             self::EUR => '€',

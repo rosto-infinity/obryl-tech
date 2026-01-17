@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Filament\Resources\Settings;
 
 use App\Filament\Resources\Settings\Pages\CreateSetting;
@@ -11,11 +13,11 @@ use App\Filament\Resources\Settings\Schemas\SettingInfolist;
 use App\Filament\Resources\Settings\Tables\SettingsTable;
 use App\Models\Setting;
 use BackedEnum;
-use UnitEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class SettingResource extends Resource
 {
