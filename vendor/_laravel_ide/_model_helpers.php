@@ -2473,6 +2473,8 @@ namespace App\Models {
      * @property \Illuminate\Support\Carbon|null $deleted_at
      * @property \Illuminate\Support\Carbon|null $updated_at
      * @property \Illuminate\Support\Carbon|null $created_at
+     * @property array|null $gallery_images
+     * @property string|null $featured_image
      * @property string|null $cancellation_reason
      * @property string|null $admin_notes
      * @property float $average_rating
@@ -2503,12 +2505,11 @@ namespace App\Models {
      * @property-read mixed $tasks
      * @property-read mixed $collaborators
      * @property-read mixed $is_published
-     * @property-read mixed $featured_image
-     * @property-read mixed $gallery_images
      * @property-read mixed $url
      * @property-read mixed $admin_url
      * @property-read mixed $formatted_code
      * @property-read mixed $featured_image_url
+     * @property-read mixed $gallery_image_urls
      * @property-read \App\Models\User $client
      * @property-read \App\Models\User $developer
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Review> $reviews
@@ -2541,6 +2542,8 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereAverageRating($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereAdminNotes($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereCancellationReason($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereFeaturedImage($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereGalleryImages($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereCreatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereUpdatedAt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Project>|Project whereDeletedAt($value)
