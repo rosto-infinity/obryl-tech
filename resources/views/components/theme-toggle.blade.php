@@ -4,63 +4,42 @@
     x-data="themeToggle()"
     @click="toggleTheme()"
     type="button"
-    class="inline-flex items-center justify-center w-10 h-10 rounded-lg text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 {{ $class }}"
-    :aria-label="isDark ? 'Passer au thème clair' : 'Passer au thème sombre'"
-    x-tooltip="isDark ? 'Thème clair' : 'Thème sombre'">
-    <!-- Icône Soleil -->
-    <svg
-        x-show="isDark"
-        class="w-5 h-5"
-        fill="currentColor"
-        viewBox="0 0 20 20">
-        <path fill-rule="evenodd"
-            d="M10 2a1 1 0 011 1v2a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l-2.12-2.12a1 1 0 00-1.414 1.414l2.12 2.12a1 1 0 001.414-1.414zM2.05 2.05a1 1 0 011.414 0l2.12 2.12a1 1 0 00-1.414 1.414L2.05 3.464a1 1 0 010-1.414zM17.95 17.95a1 1 0 011.414-1.414l2.12 2.12a1 1 0 01-1.414 1.414l-2.12-2.12z"
-            clip-rule="evenodd" />
-    </svg>
+    class="relative inline-flex items-center justify-center w-12 h-12 rounded-md bg-muted/50 text-foreground border-2 border-border/50 hover:border-primary/50 transition-all duration-300 {{ $class }} group overflow-hidden"
+    :aria-label="isDark ? 'Mode Lumineux' : 'Mode Sombre'">
+    
+    <!-- Sun Icon -->
+    <div x-show="isDark" x-transition.duration.500ms class="flex items-center justify-center">
+        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1m-16 0H1m15.657 5.657l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+        </svg>
+    </div>
 
-    <!-- Icône Lune -->
-    <svg
-        x-show="!isDark"
-        class="w-5 h-5"
-        fill="currentColor"
-        viewBox="0 0 20 20">
-        <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
-    </svg>
+    <!-- Moon Icon -->
+    <div x-show="!isDark" x-transition.duration.500ms class="flex items-center justify-center">
+        <svg class="w-6 h-6 text-primary" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+        </svg>
+    </div>
 </button>
 
 <script>
 function themeToggle() {
     return {
-        isDark: localStorage.getItem('theme') === 'dark' ||
-            (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches),
+        isDark: document.documentElement.classList.contains('dark'),
 
         init() {
-            // Initialiser le thème au chargement
-            this.applyTheme();
-
-            // Écouter les changements de préférence système
-            window.matchMedia('(prefers-color-scheme: dark)').addListener((e) => {
-                if (!localStorage.getItem('theme')) {
-                    this.isDark = e.matches;
-                    this.applyTheme();
-                }
-            });
+            this.isDark = document.documentElement.classList.contains('dark');
         },
 
         toggleTheme() {
             this.isDark = !this.isDark;
-            localStorage.setItem('theme', this.isDark ? 'dark' : 'light');
-            this.applyTheme();
-        },
-
-        applyTheme() {
-            const html = document.documentElement;
             if (this.isDark) {
-                html.classList.add('dark');
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
             } else {
-                html.classList.remove('dark');
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
             }
-            // Émettre un événement personnalisé pour d'autres composants
             window.dispatchEvent(new CustomEvent('theme-changed', { detail: { isDark: this.isDark } }));
         }
     }

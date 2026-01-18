@@ -1,221 +1,172 @@
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="max-w-7xl mx-auto px-6 pt-16 pb-24">
     {{-- Header --}}
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-2">Portfolio Gallery</h1>
-        <p class="text-gray-600 dark:text-gray-300">Découvrez les réalisations exceptionnelles de nos développeurs</p>
+    <div class="mb-20 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-foreground mb-6 tracking-tight">
+            archives <span class="text-primary italic">visuelles</span>
+        </h1>
+        <p class="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed font-medium">
+            une immersion dans nos déploiements technologiques les plus audacieux.
+        </p>
     </div>
 
     {{-- Statistiques --}}
-    <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Total Projets</p>
-                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $stats['total_projects'] }}</p>
-                </div>
-                <div class="bg-primary/20 p-3 rounded-full">
-                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
-                    </svg>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+        <div class="bg-card p-6 rounded-md border border-border transition-all hover:border-primary/20 group shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-[10px] font-bold text-muted-foreground group-hover:text-primary transition-colors">réalisations</span>
+                <div class="w-8 h-8 bg-primary/5 rounded-md flex items-center justify-center border border-primary/10">
+                    <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" /></svg>
                 </div>
             </div>
+            <p class="text-3xl font-bold text-foreground tracking-tight">{{ $stats['total_projects'] }}</p>
         </div>
         
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Développeurs</p>
-                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $stats['developers'] }}</p>
-                </div>
-                <div class="bg-secondary/20 p-3 rounded-full">
-                    <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 100 5.646 5.646L17 14l-1.646-1.646A4 4 0 0012 4.354z" />
-                    </svg>
+        <div class="bg-card p-6 rounded-md border border-border transition-all hover:border-secondary/20 group shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-[10px] font-bold text-muted-foreground group-hover:text-secondary transition-colors">architectes</span>
+                <div class="w-8 h-8 bg-secondary/5 rounded-md flex items-center justify-center border border-secondary/10">
+                    <svg class="w-4 h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 100 5.646 5.646L17 14l-1.646-1.646A4 4 0 0012 4.354z" /></svg>
                 </div>
             </div>
+            <p class="text-3xl font-bold text-foreground tracking-tight">{{ $stats['developers'] }}</p>
         </div>
         
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Likes Total</p>
-                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $stats['total_likes'] }}</p>
-                </div>
-                <div class="bg-red-100 dark:bg-red-900/30 p-3 rounded-full">
-                    <svg class="w-6 h-6 text-red-600 dark:text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                    </svg>
+        <div class="bg-card p-6 rounded-md border border-border transition-all hover:border-primary/20 group shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-[10px] font-bold text-muted-foreground group-hover:text-primary transition-colors">engagement</span>
+                <div class="w-8 h-8 bg-primary/5 rounded-md flex items-center justify-center border border-primary/10">
+                    <svg class="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 24 24"><path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
                 </div>
             </div>
+            <p class="text-3xl font-bold text-foreground tracking-tight">{{ number_format($stats['total_likes']) }}</p>
         </div>
         
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-4">
-            <div class="flex items-center justify-between">
-                <div>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">Catégories</p>
-                    <p class="text-2xl font-bold text-gray-900 dark:text-white">{{ $stats['categories'] }}</p>
-                </div>
-                <div class="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-full">
-                    <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
-                    </svg>
+        <div class="bg-card p-6 rounded-md border border-border transition-all hover:border-foreground/20 group shadow-sm">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-[10px] font-bold text-muted-foreground group-hover:text-foreground transition-colors">taxonomies</span>
+                <div class="w-8 h-8 bg-muted rounded-md flex items-center justify-center border border-border">
+                    <svg class="w-4 h-4 text-foreground/40" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" /></svg>
                 </div>
             </div>
+            <p class="text-3xl font-bold text-foreground tracking-tight">{{ $stats['categories'] }}</p>
         </div>
     </div>
 
     {{-- Filtres --}}
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6 mb-8">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Recherche</label>
-                <input
-                    type="text"
-                    wire:model.live="search"
-                    placeholder="Titre, description..."
-                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                />
+    <div class="bg-card rounded-md border border-border p-8 mb-16 shadow-sm">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div class="md:col-span-1">
+                <label class="block text-[10px] font-bold text-muted-foreground mb-3 px-1">scanner</label>
+                <div class="relative">
+                    <input
+                        type="text"
+                        wire:model.live="search"
+                        placeholder="recherche..."
+                        class="w-full px-4 py-2 bg-muted border border-transparent rounded-md focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm font-medium text-foreground"
+                    />
+                </div>
             </div>
             
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Catégorie</label>
-                <select wire:model.live="categoryFilter" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                    <option value="all">Toutes</option>
-                    @foreach($categories as $category)
-                        <option value="{{ $category['value'] }}">{{ $category['label'] }}</option>
-                    @endforeach
-                </select>
+                <label class="block text-[10px] font-bold text-muted-foreground mb-3 px-1">dimension</label>
+                <div class="relative">
+                    <select wire:model.live="categoryFilter" class="appearance-none w-full px-4 py-2 bg-muted border border-transparent rounded-md focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm font-bold text-foreground">
+                        <option value="all">toutes</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category['value'] }}">{{ $category['label'] }}</option>
+                        @endforeach
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-muted-foreground">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </div>
+                </div>
             </div>
             
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Technologie</label>
-                <select wire:model.live="techFilter" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                    <option value="all">Toutes</option>
-                    @foreach($technologies as $tech)
-                        <option value="{{ $tech }}">{{ $tech }}</option>
-                    @endforeach
-                </select>
+                <label class="block text-[10px] font-bold text-muted-foreground mb-3 px-1">stack</label>
+                <div class="relative">
+                    <select wire:model.live="techFilter" class="appearance-none w-full px-4 py-2 bg-muted border border-transparent rounded-md focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm font-bold text-foreground">
+                        <option value="all">toutes</option>
+                        @foreach($technologies as $tech)
+                            <option value="{{ $tech }}">{{ $tech }}</option>
+                        @endforeach
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-muted-foreground">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </div>
+                </div>
             </div>
             
             <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Trier par</label>
-                <select wire:model.live="sortBy" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-primary bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                    <option value="created_at">Date</option>
-                    <option value="likes">Likes</option>
-                    <option value="views">Vues</option>
-                    <option value="title">Titre</option>
-                </select>
+                <label class="block text-[10px] font-bold text-muted-foreground mb-3 px-1">ordonner</label>
+                <div class="relative">
+                    <select wire:model.live="sortBy" class="appearance-none w-full px-4 py-2 bg-muted border border-transparent rounded-md focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm font-bold text-foreground">
+                        <option value="recent">plus récents</option>
+                        <option value="popular">plus visionnés</option>
+                        <option value="rating">mieux notés</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-muted-foreground">
+                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
     <!-- Gallery Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
         @forelse($projects as $project)
-            <div wire:key="project-{{ $project->id }}" class="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition-all duration-300 transform hover:scale-105">
-                <!-- Image -->
-                <div class="relative h-48 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-t-lg overflow-hidden">
-                    @if($project->image_url)
-                        <img src="{{ $project->image_url }}" alt="{{ $project->title }}" class="w-full h-full object-cover">
-                    @else
-                        <div class="flex items-center justify-center h-full">
-                            <svg class="w-16 h-16 text-primary/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 013.657-3.657 3.657h3.414a2 2 0 011.414 1.414L16 16l-4.586 4.586a2 2 0 01-3.657-3.657 3.657H6.414A2 2 0 015 14.586 12L4 16z" />
-                            </svg>
-                        </div>
-                    @endif
-                    
-                    <!-- Overlay Actions -->
-                    <div class="absolute inset-0 bg-black/50 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-2">
-                        <button wire:click="likeProject({{ $project->id }})" class="bg-white/90 p-2 rounded-full hover:bg-white transition-colors duration-200">
-                            <svg class="w-5 h-5 {{ $project->is_liked ? 'text-red-500' : 'text-gray-600' }}" fill="{{ $project->is_liked ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                            </svg>
-                        </button>
-                        <a href="{{ route('projects.detail', $project->slug) }}"   wire:navigate
-                       class="block w-full bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/80 transition-colors duration-200 text-center">
-                        Voir le projet
-                    </a>
-                    </div>
-                    
-                    {{-- Type Badge --}}
-                    <div class="absolute top-4 left-4">
-                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary/90 text-white">
-                            {{ $project->type->label() }}
-                        </span>
-                    </div>
-                    
-                    @if($project->is_featured)
-                        <div class="absolute top-4 right-4">
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-400 text-yellow-900">
-                                ⭐ Vedette
-                            </span>
-                        </div>
-                    @endif
-                </div>
-                
-                <!-- Content -->
-                <div class="p-4">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-1">{{ $project->title }}</h3>
-                    <p class="text-sm text-gray-600 dark:text-gray-400 line-clamp-2 mb-3">{{ $project->description }}</p>
-                    
-                    <!-- Developer Info -->
-                    <div class="flex items-center mb-3">
-                        <div class="w-8 h-8 bg-primary/20 rounded-full flex items-center justify-center mr-2">
-                            @if($project->developer)
-                                <span class="text-primary font-semibold text-xs">{{ $project->developer->initials() }}</span>
-                            @else
-                                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 100 5.646 5.646L17 14l-1.646-1.646A4 4 0 0012 4.354z" />
-                                </svg>
-                            @endif
-                        </div>
-                        <div>
-                            @if($project->developer)
-                                <p class="text-sm font-medium text-gray-900 dark:text-white">{{ $project->developer->name }}</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">{{ $project->developer->profile?->specialization?->label() ?? 'Non spécifié' }}</p>
-                            @else
-                                <p class="text-sm font-medium text-gray-900 dark:text-white">Client</p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">{{ $project->client->name }}</p>
-                            @endif
-                        </div>
-                    </div>
-                    
-                    <!-- Stats -->
-                    <div class="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                        <div class="flex items-center space-x-3">
-                            <span class="flex items-center">
-                                <svg class="w-4 h-4 text-red-500 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                                </svg>
-                                {{ $project->likes_count }}
-                            </span>
-                            <span class="flex items-center">
-                                <svg class="w-4 h-4 text-blue-500 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                                </svg>
-                                {{ $project->views_count }}
-                            </span>
-                        </div>
-                        <span class="text-xs">{{ $project->created_at->diffForHumans() }}</span>
-                    </div>
-                </div>
-            </div>
+            <livewire:portfolio.project-card :project="$project" :key="'project-'.$project->id" />
         @empty
-            <div class="col-span-full text-center py-12">
-                <div class="text-gray-400 dark:text-gray-500 text-lg mb-2">Aucun projet trouvé</div>
-                <div class="text-gray-500 dark:text-gray-400">Essayez d'ajuster vos filtres de recherche</div>
+            <div class="col-span-full py-20 text-center border-2 border-dashed border-border rounded-md">
+                <p class="text-muted-foreground font-medium">innover pour demain...</p>
             </div>
         @endforelse
     </div>
 
-    {{-- Pagination --}}
-    @if($projects->hasPages())
-        <div class="mt-8">
-            <div class="bg-white dark:bg-gray-800 px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-700 rounded-lg shadow">
-                {{ $projects->links() }}
-            </div>
+    <div class="mt-16">
+        {{ $projects->links() }}
+    </div>
+
+    {{-- Modal Image --}}
+    <div 
+        id="imageModal" 
+        class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-black/90 backdrop-blur-xl animate-in fade-in duration-300"
+        onclick="closeImageModal()"
+    >
+        <button class="absolute top-8 right-8 text-white/50 hover:text-white transition-colors" onclick="closeImageModal()">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+        </button>
+        
+        <div class="max-w-5xl w-full flex flex-col items-center" onclick="event.stopPropagation()">
+            <img id="modalImage" src="" alt="" class="max-w-full max-h-[80vh] rounded-md shadow-2xl border border-white/10">
+            <p id="modalTitle" class="mt-8 text-white font-bold text-xl tracking-tight"></p>
         </div>
-    @endif
+    </div>
+
+    <script>
+        function openImageModal(src, title) {
+            const modal = document.getElementById('imageModal');
+            const img = document.getElementById('modalImage');
+            const txt = document.getElementById('modalTitle');
+            
+            img.src = src;
+            txt.textContent = title;
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeImageModal() {
+            const modal = document.getElementById('imageModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // Close on ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeImageModal();
+        });
+    </script>
 </div>

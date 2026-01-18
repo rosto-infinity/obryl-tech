@@ -253,13 +253,17 @@ class Project extends Model
     /**
      * Get the featured image URL.
      */
-    public function getFeaturedImageUrlAttribute(): ?string
+    public function getFeaturedImageUrlAttribute(): string
     {
         if ($this->featured_image) {
+            if (filter_var($this->featured_image, FILTER_VALIDATE_URL)) {
+                return $this->featured_image;
+            }
+
             return Storage::disk('public')->url($this->featured_image);
         }
 
-        return asset('images/placeholder.jpg');
+        return asset('images/placeholder-project.jpg');
     }
 
     // Relations

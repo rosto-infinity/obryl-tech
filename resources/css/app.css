@@ -1,217 +1,261 @@
+/* ============================================================================
+   IMPORTS - Polices Google Fonts
+   ============================================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+/* ============================================================================
+   IMPORTS - Tailwind CSS & Packages
+   ============================================================================ */
 @import 'tailwindcss';
 @import '../../vendor/livewire/flux/dist/flux.css';
+@import "../../vendor/mckenziearts/livewire-markdown-editor/resources/css/markdown-editor.css";
 
+/* ============================================================================
+   SOURCE PATHS - Tailwind Content
+   ============================================================================ */
 @source '../views';
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../vendor/livewire/flux-pro/stubs/**/*.blade.php';
 @source '../../vendor/livewire/flux/stubs/**/*.blade.php';
 
+/* ============================================================================
+   CUSTOM VARIANTS
+   ============================================================================ */
 @custom-variant dark (&:where(.dark, .dark *));
 
+/* ============================================================================
+   THEME CONFIGURATION
+   ============================================================================ */
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --color-chart-1: var(--chart-1);
+    --color-chart-2: var(--chart-2);
+    --color-chart-3: var(--chart-3);
+    --color-chart-4: var(--chart-4);
+    --color-chart-5: var(--chart-5);
+    --color-sidebar: var(--sidebar);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-ring: var(--sidebar-ring);
 
-    /* Couleurs pour le thème clair */
-    --color-primary: #359a69;
-    --color-primary-light: #4bb085;
-    --color-primary-dark: #2a7a54;
+    --font-sans: 'Roboto', var(--font-sans-fallback);
+    --font-mono: var(--font-mono);
+    --font-serif: var(--font-serif);
 
-    --color-secondary: #f7b100;
-    --color-secondary-light: #fac238;
-    --color-secondary-dark: #e6a100;
+    --radius-sm: calc(var(--radius) - 4px);
+    --radius-md: calc(var(--radius) - 2px);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) + 4px);
 
-    --color-zinc-50: #fafafa;
-    --color-zinc-100: #f5f5f5;
-    --color-zinc-200: #e5e5e5;
-    --color-zinc-900: #121212;
+    --shadow-2xs: var(--shadow-2xs);
+    --shadow-xs: var(--shadow-xs);
+    --shadow-sm: var(--shadow-sm);
+    --shadow: var(--shadow);
+    --shadow-md: var(--shadow-md);
+    --shadow-lg: var(--shadow-lg);
+    --shadow-xl: var(--shadow-xl);
+    --shadow-2xl: var(--shadow-2xl);
+
+    /* Keep custom animations if any */
+    --animate-accordion-down: accordion-down 0.2s ease-out;
+    --animate-accordion-up: accordion-up 0.2s ease-out;
+
+    @keyframes accordion-down {
+        from {
+            height: 0;
+        }
+
+        to {
+            height: var(--radix-accordion-content-height);
+        }
+    }
+
+    @keyframes accordion-up {
+        from {
+            height: var(--radix-accordion-content-height);
+        }
+
+        to {
+            height: 0;
+        }
+    }
 }
 
-/* Thème clair (mode par défaut) */
+/* ============================================================================
+   ROOT VARIABLES - Light Mode
+   ============================================================================ */
 :root {
-    color-scheme: light;
+    --background: rgb(250, 255, 253);
+    --foreground: hsl(223.8136 0.0000% 3.9388%);
+    --card: hsl(0 0% 100%);
+    --card-foreground: hsl(223.8136 0.0000% 3.9388%);
+    --popover: hsl(223.8136 -172.5242% 100.0000%);
+    --popover-foreground: hsl(223.8136 0.0000% 3.9388%);
+    --primary: hsl(150.8911 48.7923% 40.5882%);
+    --primary-foreground: hsl(0 0% 96.0784%);
+    --secondary: hsl(29.8824 100% 50%);
+    --secondary-foreground: hsl(223.8136 0.0000% 9.0527%);
+    --muted: hsl(223.8136 0.0002% 96.0587%);
+    --muted-foreground: hsl(223.8136 0.0000% 45.1519%);
+    --accent: hsl(223.8136 0.0002% 96.0587%);
+    --accent-foreground: hsl(223.8136 0.0000% 9.0527%);
+    --destructive: hsl(351.7303 123.6748% 40.5257%);
+    --destructive-foreground: hsl(223.8136 -172.5242% 100.0000%);
+    --border: hsl(223.8136 0.0001% 89.8161%);
+    --input: hsl(223.8136 0.0001% 89.8161%);
+    --ring: hsl(223.8136 0.0000% 63.0163%);
+    --chart-1: hsl(211.7880 101.9718% 78.6759%);
+    --chart-2: hsl(217.4076 91.3672% 59.5787%);
+    --chart-3: hsl(221.4336 86.3731% 54.0624%);
+    --chart-4: hsl(223.6587 78.7180% 47.8635%);
+    --chart-5: hsl(226.5426 70.0108% 39.9224%);
+    --sidebar: hsl(223.8136 0.0004% 98.0256%);
+    --sidebar-foreground: hsl(223.8136 0.0000% 3.9388%);
+    --sidebar-primary: hsl(223.8136 0.0000% 9.0527%);
+    --sidebar-primary-foreground: hsl(223.8136 0.0004% 98.0256%);
+    --sidebar-accent: hsl(223.8136 0.0002% 96.0587%);
+    --sidebar-accent-foreground: hsl(223.8136 0.0000% 9.0527%);
+    --sidebar-border: hsl(223.8136 0.0001% 89.8161%);
+    --sidebar-ring: hsl(223.8136 0.0000% 63.0163%);
+    
+    /* ✅ ROBOTO FONT STACK */
+    --font-sans-fallback: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+    
+    --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+    --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --radius: 0.625rem;
+    --shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+    --shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+    --shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 1px 2px -1px hsl(0 0% 0% / 0.10);
+    --shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 2px 4px -1px hsl(0 0% 0% / 0.10);
+    --shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 4px 6px -1px hsl(0 0% 0% / 0.10);
+    --shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.10), 0 8px 10px -1px hsl(0 0% 0% / 0.10);
+    --shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
 }
 
-/* Thème sombre avec .dark class */
+/* ============================================================================
+   ROOT VARIABLES - Dark Mode
+   ============================================================================ */
 .dark {
-    color-scheme: dark;
-
-    --color-primary: #10b981;
-    --color-primary-light: #34d399;
-    --color-primary-dark: #059669;
-
-    --color-secondary: #fbbf24;
-    --color-secondary-light: #fcd34d;
-    --color-secondary-dark: #f59e0b;
-
-    --color-accent: #ffffff;
-    --color-accent-content: #ffffff;
-    --color-accent-foreground: #1f2937;
+    --background: hsl(223.8136 0.0000% 3.9388%);
+    --foreground: hsl(223.8136 0.0004% 98.0256%);
+    --card: hsl(223.8136 0.0000% 9.0527%);
+    --card-foreground: hsl(223.8136 0.0004% 98.0256%);
+    --popover: hsl(223.8136 0.0000% 14.9382%);
+    --popover-foreground: hsl(223.8136 0.0004% 98.0256%);
+    --primary: hsl(150.8911 48.7923% 40.5882%);
+    --primary-foreground: hsl(223.8136 0.0000% 9.0527%);
+    --secondary: hsl(29.8824 100% 50%);
+    --secondary-foreground: hsl(223.8136 0.0004% 98.0256%);
+    --muted: hsl(223.8136 0.0000% 14.9382%);
+    --muted-foreground: hsl(223.8136 0.0000% 63.0163%);
+    --accent: hsl(223.8136 0.0000% 25.0471%);
+    --accent-foreground: hsl(223.8136 0.0004% 98.0256%);
+    --destructive: hsl(358.7594 101.8439% 69.8357%);
+    --destructive-foreground: hsl(223.8136 0.0004% 98.0256%);
+    --border: hsl(223.8136 0.0000% 15.5096%);
+    --input: hsl(223.8136 0.0000% 20.3885%);
+    --ring: hsl(223.8136 0.0000% 45.1519%);
+    --chart-1: hsl(211.7880 101.9718% 78.6759%);
+    --chart-2: hsl(217.4076 91.3672% 59.5787%);
+    --chart-3: hsl(221.4336 86.3731% 54.0624%);
+    --chart-4: hsl(223.6587 78.7180% 47.8635%);
+    --chart-5: hsl(226.5426 70.0108% 39.9224%);
+    --sidebar: hsl(223.8136 0.0000% 9.0527%);
+    --sidebar-foreground: hsl(223.8136 0.0004% 98.0256%);
+    --sidebar-primary: hsl(225.3451 84.0953% 48.9841%);
+    --sidebar-primary-foreground: hsl(223.8136 0.0004% 98.0256%);
+    --sidebar-accent: hsl(223.8136 0.0000% 14.9382%);
+    --sidebar-accent-foreground: hsl(223.8136 0.0004% 98.0256%);
+    --sidebar-border: hsl(223.8136 0.0000% 15.5096%);
+    --sidebar-ring: hsl(223.8136 0.0000% 32.1993%);
 }
 
-/* Respecter les préférences système */
-@media (prefers-color-scheme: dark) {
-    :root {
-        color-scheme: dark;
-    }
-}
-
+/* ============================================================================
+   LAYER UTILITIES - Custom Utilities
+   ============================================================================ */
 @layer utilities {
-
-    /* Texte - Simplifié */
-    .text-primary {
-        color: var(--color-primary);
-    }
-
-    .text-secondary {
-        color: var(--color-secondary);
-    }
-
-    /* Fond */
-    .bg-primary {
-        background-color: var(--color-primary);
-    }
-
-    .bg-secondary {
-        background-color: var(--color-secondary);
-    }
-
-    /* Bordure */
-    .border-primary {
-        border-color: var(--color-primary);
-    }
-
-    .border-secondary {
-        border-color: var(--color-secondary);
-    }
-
-    /* Hover */
-    .hover\:bg-primary:hover {
-        background-color: var(--color-primary-light);
-    }
-
-    .dark .hover\:bg-primary:hover {
-        background-color: var(--color-primary-dark);
-    }
-
-    .hover\:bg-secondary:hover {
-        background-color: var(--color-secondary-light);
-    }
-
-    .dark .hover\:bg-secondary:hover {
-        background-color: var(--color-secondary-dark);
-    }
-
-    /* Ring / Focus */
-    .focus\:ring-primary:focus {
-        --tw-ring-color: var(--color-primary);
-    }
-
-    .focus\:ring-secondary:focus {
-        --tw-ring-color: var(--color-secondary);
-    }
-
-    /* Dégradés */
-    .bg-gradient-primary {
-        @apply bg-gradient-to-r from-primary to-primary-light;
-    }
-
     .bg-mesh-gradient {
-        background-color: hsla(0, 0%, 100%, 1);
+        background-color: var(--background);
         background-image:
-            radial-gradient(at 0% 0%, hsla(151, 49%, 40%, 0.15) 0px, transparent 50%),
-            radial-gradient(at 100% 0%, hsla(43, 100%, 48%, 0.1) 0px, transparent 50%),
-            radial-gradient(at 100% 100%, hsla(151, 49%, 40%, 0.1) 0px, transparent 50%),
-            radial-gradient(at 0% 100%, hsla(43, 100%, 48%, 0.05) 0px, transparent 50%);
+            radial-gradient(at 0% 0%, hsla(151, 49%, 40%, 0.08) 0px, transparent 50%),
+            radial-gradient(at 100% 0%, hsla(30, 100%, 50%, 0.05) 0px, transparent 50%),
+            radial-gradient(at 100% 100%, hsla(151, 49%, 40%, 0.05) 0px, transparent 50%),
+            radial-gradient(at 0% 100%, hsla(30, 100%, 50%, 0.03) 0px, transparent 50%);
     }
 
     .dark .bg-mesh-gradient {
-        background-color: hsla(222, 47%, 11%, 1);
         background-image:
-            radial-gradient(at 0% 0%, hsla(151, 49%, 40%, 0.2) 0px, transparent 50%),
-            radial-gradient(at 100% 0%, hsla(43, 100%, 48%, 0.15) 0px, transparent 50%),
-            radial-gradient(at 100% 100%, hsla(151, 49%, 40%, 0.15) 0px, transparent 50%),
-            radial-gradient(at 0% 100%, hsla(43, 100%, 48%, 0.1) 0px, transparent 50%);
+            radial-gradient(at 0% 0%, hsla(151, 49%, 40%, 0.15) 0px, transparent 50%),
+            radial-gradient(at 100% 0%, hsla(30, 100%, 50%, 0.1) 0px, transparent 50%),
+            radial-gradient(at 100% 100%, hsla(151, 49%, 40%, 0.1) 0px, transparent 50%),
+            radial-gradient(at 0% 100%, hsla(30, 100%, 50%, 0.05) 0px, transparent 50%);
     }
 
     .glass {
-        @apply bg-white/40 dark:bg-gray-900/40 backdrop-blur-xl border border-white/20 dark:border-gray-800/30;
+        @apply bg-background/60 backdrop-blur-xl border border-border/50;
     }
 
     .glass-dark {
-        @apply bg-gray-900/60 backdrop-blur-xl border border-gray-800/50;
-    }
-
-    /* Texte avec fond */
-    .text-primary-on-secondary {
-        color: #1f2937;
-    }
-
-    .dark .text-primary-on-secondary {
-        color: #f3f4f6;
-    }
-
-    .text-secondary-on-primary {
-        color: #fff;
-    }
-
-    .dark .text-secondary-on-primary {
-        color: #1f2937;
+        @apply bg-background/80 backdrop-blur-xl border border-border/50;
     }
 }
 
+/* ============================================================================
+   LAYER BASE - Base Styles
+   ============================================================================ */
 @layer base {
-
-    *,
-    ::after,
-    ::before,
-    ::backdrop,
-    ::file-selector-button {
-        border-color: var(--color-gray-200, currentColor);
-    }
-
-    html.no-transitions,
-    html.no-transitions *,
-    html.no-transitions *::before,
-    html.no-transitions *::after {
-        transition: none !important;
+    * {
+        @apply border-border;
     }
 
     body {
-        @apply bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-50;
+        @apply bg-background text-foreground font-sans antialiased;
     }
 }
 
-[data-flux-field]:not(ui-radio, ui-checkbox) {
-    @apply grid gap-2;
+/* ============================================================================
+   FLUX FIELD STYLES
+   ============================================================================ */
+[data-flux-field] {
+    @apply space-y-2;
 }
 
 [data-flux-label] {
-    @apply !mb-0 !leading-tight;
-}
-
-/* Flux components dark mode */
-[data-flux-field] {
-    @apply dark:text-gray-100;
+    @apply text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
 }
 
 [data-flux-control] {
-    @apply dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100;
-}
-
-[data-flux-control]:focus {
-    @apply dark:ring-primary dark:border-primary;
-}
-
-input:focus[data-flux-control],
-textarea:focus[data-flux-control],
-select:focus[data-flux-control] {
-    @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground dark:ring-primary dark:ring-offset-gray-800;
+    @apply flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50;
 }
 
 [data-flux-navlist-item] {
-    @apply dark:hover:bg-gray-800 dark:text-gray-200 dark:hover:text-white;
+    @apply flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary hover:bg-muted;
 }
 
 [data-flux-navlist-item][aria-current="page"] {
-    @apply dark:bg-gray-800 dark:text-white;
+    @apply bg-muted text-primary;
 }

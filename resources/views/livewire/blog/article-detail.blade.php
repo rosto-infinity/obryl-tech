@@ -1,282 +1,245 @@
-<div class="bg-white dark:bg-gray-950 min-h-screen pb-20">
-    <!-- Hero Section -->
-    <div class="relative w-full h-[60vh] overflow-hidden bg-gray-50 dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
-        <img 
-            src="{{ $article->featured_image ?? 'https://via.placeholder.com/1920x1080/F9FAFB/F9FAFB?text=OBRYL+TECH' }}" 
-            alt="{{ $article->title }}"
-            class="w-full h-full object-cover opacity-90 transition-transform duration-[3s] hover:scale-105"
-        >
-        <div class="absolute inset-0 bg-gradient-to-t from-white dark:from-gray-950 via-white/40 dark:via-gray-950/40 to-transparent"></div>
+<div class="bg-background min-h-screen">
+    <div class="max-w-7xl mx-auto px-6 pt-16 md:pt-24 pb-24">
         
-        <div class="absolute inset-0 flex items-end">
-            <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 w-full">
-                <!-- Back Button -->
-                <a href="{{ route('blog.index') }}" wire:navigate class="inline-flex items-center text-gray-400 dark:text-gray-500 hover:text-primary mb-8 transition-all group">
-                    <div class="w-10 h-10 rounded-full border border-gray-200 dark:border-gray-700 flex items-center justify-center mr-4 group-hover:border-primary/50 group-hover:bg-primary/5 dark:group-hover:bg-primary/10 transition-all">
-                        <svg class="w-5 h-5 transform group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
-                        </svg>
-                    </div>
-                    <span class="text-[10px] font-black uppercase tracking-[0.3em]">Retour aux expertises</span>
-                </a>
-
-                <!-- Category -->
+        <!-- Header Section -->
+        <header class="flex flex-col md:flex-row items-center gap-12 lg:gap-20 mb-20 md:mb-32">
+            <div class="w-full md:w-[60%] order-2 md:order-1 flex flex-col justify-center">
                 @if($article->category)
-                    <div class="mb-6">
-                        <span class="inline-flex items-center px-5 py-2 rounded-2xl bg-primary/10 dark:bg-primary/20 backdrop-blur-xl text-primary text-[10px] font-black border border-secondary/20 dark:border-secondary/30 uppercase tracking-[0.2em] shadow-sm">
-                            <span class="mr-2 text-lg leading-none">{{ $article->category->icon() }}</span>
+                    <div class="mb-8">
+                        <span class="inline-flex items-center px-4 py-1.5 rounded-md bg-muted text-foreground text-[11px] font-bold border border-border/50">
                             {{ $article->category->label() }}
                         </span>
                     </div>
                 @endif
 
-                <h1 class="text-4xl md:text-7xl font-black text-gray-900 dark:text-white leading-[1.1] mb-8 tracking-tighter max-w-4xl">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-12 tracking-tight">
                     {{ $article->title }}
                 </h1>
 
-                <div class="flex flex-wrap items-center gap-8 text-gray-500 dark:text-gray-400 text-[10px] font-black uppercase tracking-[0.2em]">
-                    <div class="flex items-center group cursor-pointer">
-                        <div class="w-12 h-12 rounded-2xl bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 flex items-center justify-center mr-4 overflow-hidden shadow-sm transform group-hover:rotate-6 transition-transform">
-                            <span class="text-primary font-black text-lg">{{ substr($article->author->name, 0, 1) }}</span>
+                <div class="flex items-center gap-4">
+                    <img src="{{ $article->author->avatar_url }}" alt="{{ $article->author->name }}" class="w-12 h-12 rounded-md object-cover shadow-md">
+                    <div class="flex flex-col">
+                        <span class="text-base font-bold text-foreground leading-none mb-1">
+                            {{ $article->author->name }}
+                        </span>
+                        <div class="flex items-center text-xs text-muted-foreground font-medium gap-3">
+                            <span class="flex items-center transition-colors">
+                                {{ $article->published_at?->format('d M Y') ?? $article->created_at->format('d M Y') }}
+                            </span>
+                            <span class="w-1 h-1 rounded-full bg-border"></span>
+                            <span class="flex items-center transition-colors">
+                                {{ $article->reading_time }} min de lecture
+                            </span>
                         </div>
-                        <span class="group-hover:text-primary transition-colors">{{ $article->author->name }}</span>
-                    </div>
-                    <div class="flex items-center">
-                        <svg class="w-5 h-5 mr-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
-                        </svg>
-                        {{ $article->published_at?->translatedFormat('d F Y') ?? $article->created_at->translatedFormat('d F Y') }}
-                    </div>
-                    <div class="flex items-center">
-                        <svg class="w-5 h-5 mr-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        {{ $article->reading_time }} min de lecture
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Main Content -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-20 grid grid-cols-1 lg:grid-cols-4 gap-16">
-        
-        <!-- Sidebar - Left: Share & Stats -->
-        <div class="hidden lg:block lg:col-span-1 space-y-16">
-            <div class="sticky top-24 space-y-12">
-                <!-- Stats Box -->
-                <div class="bg-white dark:bg-gray-800 rounded-[2.5rem] p-8 border border-gray-100 dark:border-gray-700 shadow-xl shadow-gray-100/50 dark:shadow-gray-900/50 overflow-hidden relative group">
-                    <div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/5 dark:bg-primary/10 rounded-full blur-2xl"></div>
+            <div class="w-full md:w-[40%] order-1 md:order-2">
+                <div class="relative aspect-[4/3] overflow-hidden rounded-md shadow-lg border border-border/50">
+                    <img 
+                        src="{{ $article->featured_image_url }}" 
+                        alt="{{ $article->title }}"
+                        class="w-full h-full object-cover"
+                        loading="lazy"
+                    >
+                </div>
+            </div>
+        </header>
+
+        <div class="flex flex-col lg:flex-row gap-16 xl:gap-24">
+            <!-- Main Content -->
+            <main class="flex-1 max-w-[850px]">
+                <article class="prose prose-zinc dark:prose-invert prose-lg max-w-none
+                    prose-h2:text-3xl prose-h2:font-bold prose-h2:tracking-tight prose-h2:mt-12 prose-h2:mb-6
+                    prose-h3:text-2xl prose-h3:font-bold prose-h3:mt-8 prose-h3:mb-4
+                    prose-p:text-foreground/80 prose-p:leading-relaxed prose-p:mb-8 font-medium
+                    prose-blockquote:border-l-4 prose-blockquote:border-primary prose-blockquote:italic prose-blockquote:text-foreground/70 prose-blockquote:pl-6 prose-blockquote:my-12 prose-blockquote:bg-muted/30 prose-blockquote:rounded-r-md
+                    prose-img:rounded-md prose-img:shadow-lg prose-img:my-16 prose-img:border border-border/50
+                    prose-a:text-primary prose-a:font-bold prose-a:underline prose-a:underline-offset-4 hover:prose-a:opacity-80 transition-all
+                    prose-hr:border-border/50 prose-hr:my-20
+                    prose-pre:bg-card prose-pre:border prose-pre:border-border prose-pre:rounded-md prose-pre:p-6 shadow-sm
+                    prose-code:text-primary prose-code:font-bold prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded">
                     
-                    <div class="grid grid-cols-1 gap-6 relative z-10">
-                        <div class="p-6 bg-gray-50 dark:bg-gray-700 rounded-3xl border border-gray-100 dark:border-gray-600 flex flex-col items-center">
-                            <div class="text-primary font-black text-3xl mb-1 tracking-tighter">{{ number_format($article->views_count) }}</div>
-                            <div class="text-[8px] text-gray-400 dark:text-gray-500 uppercase tracking-[0.4em] font-black">Impact Vues</div>
-                        </div>
+                    <x-markdown-renderer>
+                        {!! $article->content ?? '' !!}
+                    </x-markdown-renderer>
+                </article>
+
+                <!-- Footer / Likes -->
+                <footer class="mt-20 pt-12 border-t border-border">
+                    <div class="py-12 px-8 bg-card rounded-md border border-border text-center">
+                        <p class="text-xs font-bold text-muted-foreground mb-8">L'intelligence est faite pour être partagée</p>
                         @auth
                             <button 
                                 wire:click="toggleLike"
-                                class="p-6 rounded-3xl transition-all flex flex-col items-center group/like {{ $hasLiked ? 'bg-primary text-white shadow-2xl shadow-primary/20 border border-primary/30' : 'bg-white dark:bg-gray-700 text-gray-400 dark:text-gray-500 hover:bg-gray-50 dark:hover:bg-gray-600 border border-gray-100 dark:border-gray-600' }}"
+                                class="inline-flex items-center gap-4 px-10 py-4 rounded-md transition-all duration-300 {{ $hasLiked ? 'bg-primary text-primary-foreground shadow-lg shadow-primary/20 scale-105' : 'bg-background border-2 border-border text-muted-foreground hover:border-primary hover:text-primary' }}"
                             >
-                                <div class="font-black text-3xl mb-1 tracking-tighter flex items-center">
-                                    <svg class="w-6 h-6 mr-3 {{ $hasLiked ? 'fill-white' : '' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                                    </svg>
-                                    {{ number_format($article->likes_count) }}
-                                </div>
-                                <div class="text-[8px] uppercase tracking-[0.4em] font-black {{ $hasLiked ? 'text-white' : 'text-gray-400 dark:text-gray-500' }}">Propulser</div>
+                                <svg class="w-6 h-6 {{ $hasLiked ? 'fill-current' : 'fill-none' }}" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
+                                </svg>
+                                <span class="font-bold text-xl tracking-tight">{{ number_format($article->likes_count) }}</span>
                             </button>
                         @else
-                            <div class="p-6 bg-white dark:bg-gray-700 rounded-3xl border border-gray-100 dark:border-gray-600 flex flex-col items-center group/like opacity-60">
-                                <div class="font-black text-3xl mb-1 tracking-tighter flex items-center text-gray-300 dark:text-gray-600">
-                                    <svg class="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                                    </svg>
-                                    {{ number_format($article->likes_count) }}
-                                </div>
-                                <div class="text-[8px] uppercase tracking-[0.4em] font-black text-gray-300 dark:text-gray-600">Connectez-vous</div>
+                            <div class="inline-flex items-center gap-4 px-10 py-4 rounded-md bg-muted border border-border text-muted-foreground opacity-50">
+                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                                </svg>
+                                <span class="font-bold text-xl tracking-tight">{{ number_format($article->likes_count) }}</span>
                             </div>
+                            <p class="mt-6 text-xs text-muted-foreground font-medium">
+                                <a href="{{ route('login') }}" class="text-foreground font-bold hover:underline transition-all">Connectez-vous</a> pour réagir.
+                            </p>
                         @endauth
                     </div>
-                </div>
+                </footer>
+            </main>
 
-                <!-- Tags -->
-                <div class="space-y-6 px-4">
-                    <h3 class="text-[10px] font-black text-gray-400 dark:text-gray-500 uppercase tracking-[0.4em]">Expertises associées</h3>
-                    <div class="flex flex-wrap gap-2">
-                        @foreach($article->tags ?? [] as $tag)
-                            <a href="#" class="px-4 py-2 bg-gray-50 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-[10px] font-bold rounded-xl border border-gray-100 dark:border-gray-700 hover:border-primary hover:text-primary dark:hover:text-primary transition-all uppercase tracking-widest">
-                                #{{ $tag }}
-                            </a>
-                        @endforeach
+            <!-- Sidebar -->
+            <aside class="w-full lg:w-[320px] shrink-0">
+                <div class="sticky top-10 space-y-16">
+                    <div class="space-y-6">
+                        <h3 class="text-[11px] font-bold text-muted-foreground tracking-wider">diffuser l'expertise</h3>
+                        <div class="flex items-center gap-3">
+                            <button class="w-12 h-12 flex items-center justify-center rounded-md bg-card border border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all shadow-sm">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
+                            </button>
+                            <button class="w-12 h-12 flex items-center justify-center rounded-md bg-card border border-border text-foreground hover:bg-primary hover:text-primary-foreground hover:border-primary transition-all shadow-sm">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                            </button>
+                        </div>
                     </div>
+
+                    @if(count($similarArticles) > 0)
+                        <div class="space-y-8">
+                            <h3 class="text-[11px] font-bold text-muted-foreground tracking-wider">explorations connexes</h3>
+                            <div class="space-y-10">
+                                @foreach($similarArticles as $similar)
+                                    <article class="group">
+                                        <a href="{{ route('blog.show', $similar->slug) }}" wire:navigate class="block space-y-4">
+                                            <div class="aspect-video overflow-hidden rounded-md bg-muted border border-border/50 transition-all duration-500">
+                                                <img 
+                                                    src="{{ $similar->featured_image_url }}" 
+                                                    alt="{{ $similar->title }}"
+                                                    class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                                >
+                                            </div>
+                                            <h4 class="text-lg font-bold text-foreground group-hover:text-primary transition-colors line-clamp-2 leading-tight tracking-tight">
+                                                {{ $similar->title }}
+                                            </h4>
+                                        </a>
+                                    </article>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
+
+                    @if($article->tags && count($article->tags) > 0)
+                        <div class="space-y-6">
+                            <h3 class="text-[11px] font-bold text-muted-foreground tracking-wider">mots clés</h3>
+                            <div class="flex flex-wrap gap-2">
+                                @foreach($article->tags as $tag)
+                                    <span class="px-3 py-1 bg-muted text-foreground text-[10px] font-bold rounded-md border border-border/50 hover:border-primary/30 transition-all cursor-default">
+                                        #{{ strtolower($tag) }}
+                                    </span>
+                                @endforeach
+                            </div>
+                        </div>
+                    @endif
                 </div>
-            </div>
+            </aside>
         </div>
 
-        <!-- Article Body & Comments -->
-        <div class="lg:col-span-3 space-y-24">
-            <!-- Prose Content -->
-            <article class="prose dark:prose-invert prose-2xl max-w-none 
-                prose-primary 
-                prose-headings:font-black prose-headings:tracking-tighter prose-headings:text-gray-900 dark:prose-headings:text-white
-                prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-p:leading-relaxed
-                prose-a:text-primary prose-a:font-bold prose-a:no-underline hover:prose-a:underline
-                prose-blockquote:border-primary prose-blockquote:bg-gray-50 dark:prose-blockquote:bg-gray-800 prose-blockquote:rounded-3xl prose-blockquote:p-10 dark:prose-blockquote:text-gray-300
-                prose-img:rounded-[3rem] prose-img:border prose-img:border-gray-100 dark:prose-img:border-gray-700
-                prose-pre:bg-gray-900 dark:prose-pre:bg-gray-950 prose-pre:rounded-[2rem] prose-pre:border prose-pre:border-gray-800 dark:prose-pre:border-gray-700
-                prose-code:text-gray-900 dark:prose-code:text-gray-100 prose-code:bg-gray-100 dark:prose-code:bg-gray-800 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:font-mono
-                prose-strong:text-gray-900 dark:prose-strong:text-white
-                prose-li:text-gray-600 dark:prose-li:text-gray-300
-                prose-hr:border-gray-100 dark:prose-hr:border-gray-800">
-                {!! \Illuminate\Support\Str::markdown($article->content ?? '') !!}
-            </article>
-
-            <div class="lg:hidden flex justify-center py-12">
-                @auth
-                    <button 
-                        wire:click="toggleLike"
-                        class="flex items-center space-x-4 px-12 py-6 rounded-[2rem] transition-all transform hover:scale-105 active:scale-95 {{ $hasLiked ? 'bg-primary text-white shadow-2xl shadow-primary/30' : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 shadow-xl' }}"
-                    >
-                        <svg class="w-8 h-8" fill="{{ $hasLiked ? 'currentColor' : 'none' }}" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                        </svg>
-                        <span class="font-black text-2xl tracking-tighter">{{ $article->likes_count }}</span>
-                    </button>
-                @else
-                    <div class="flex items-center space-x-4 px-12 py-6 rounded-[2rem] bg-gray-50 dark:bg-gray-800 border border-gray-100 dark:border-gray-700 text-gray-300 dark:text-gray-600 shadow-sm opacity-60">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
-                        </svg>
-                        <span class="font-black text-2xl tracking-tighter">{{ $article->likes_count }}</span>
-                    </div>
-                @endauth
+        <!-- Comments Section -->
+        <section id="comments" class="max-w-4xl mx-auto mt-32 lg:mt-48 pt-16 border-t border-border">
+            <div class="flex items-center justify-between mb-16">
+                <h2 class="text-3xl font-bold text-foreground tracking-tight">
+                    discours technique
+                    <span class="ml-4 text-muted-foreground font-medium text-xl">/ {{ count(array_filter($article->comments ?? [], fn($c) => $c['status'] === 'approved')) }}</span>
+                </h2>
             </div>
 
-            <hr class="border-gray-100 dark:border-gray-800 h-px w-full">
+            @auth
+                <div class="bg-card p-8 rounded-md border border-border shadow-sm mb-16">
+                    <h3 class="text-xs font-bold text-foreground tracking-wider mb-8">contribuer à l'analyse</h3>
+                    
+                    @if (session('comment_status'))
+                        <div class="mb-8 p-4 bg-primary/10 text-primary text-xs font-bold rounded-md tracking-wide">
+                            {{ session('comment_status') }}
+                        </div>
+                    @endif
 
-            <!-- Comments Section -->
-            <section id="comments" class="space-y-16">
-                <div class="flex items-center justify-between">
-                    <h2 class="text-4xl font-black text-gray-900 dark:text-white tracking-tighter">Réactions <span class="text-primary">({{ count(array_filter($article->comments ?? [], fn($c) => $c['status'] === 'approved')) }})</span></h2>
-                </div>
-
-                <!-- Add Comment Form -->
-                @auth
-                    <div class="bg-gray-50 dark:bg-gray-800 p-10 rounded-[3rem] border border-gray-100 dark:border-gray-700 shadow-xl shadow-gray-100/50 dark:shadow-gray-900/50 relative overflow-hidden group">
-                        <div class="absolute -right-20 -top-20 w-60 h-60 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl"></div>
-                        
-                        <h3 class="text-2xl font-black text-gray-900 dark:text-white mb-8 flex items-center tracking-tight">
-                            Contribuer à la discussion
-                        </h3>
-
-                        @if (session('comment_status'))
-                            <div class="mb-8 p-6 bg-primary/10 dark:bg-primary/20 text-primary text-sm font-black rounded-3xl border border-primary/20 dark:border-primary/30 animate-pulse uppercase tracking-widest">
-                                {{ session('comment_status') }}
-                            </div>
-                        @endif
-
-                        <form wire:submit.prevent="addComment" class="space-y-6">
-                            <textarea 
+                    <form wire:submit.prevent="addComment" class="space-y-8">
+                        <div class="rounded-md overflow-hidden border border-border focus-within:border-primary/50 transition-all">
+                             <livewire:markdown-editor 
                                 wire:model="commentContent"
-                                placeholder="Votre analyse ou question..." 
-                                class="w-full h-40 px-8 py-6 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 rounded-3xl focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none text-lg font-medium"
-                            ></textarea>
-                            @error('commentContent') <span class="text-red-500 text-[10px] font-black uppercase tracking-widest px-4">{{ $message }}</span> @enderror
-                            
-                            <div class="flex flex-col sm:flex-row items-center justify-between gap-8">
-                                <p class="text-[10px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-[0.2em] max-w-sm">
-                                    Votre expertise technique est partagée instantanément avec la communauté.
-                                </p>
-                                <button 
-                                    type="submit" 
-                                    class="w-full sm:w-auto px-12 py-5 bg-primary hover:bg-gray-900 dark:hover:bg-gray-700 text-white font-black rounded-2xl transition-all shadow-xl shadow-primary/20 transform hover:-rotate-1 active:scale-95 uppercase tracking-widest text-xs"
-                                    wire:loading.attr="disabled"
-                                    wire:target="addComment"
-                                >
-                                    <span wire:loading.remove wire:target="addComment">Soumettre</span>
-                                    <span wire:loading wire:target="addComment">Validation...</span>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                @else
-                    <div class="bg-gray-50 dark:bg-gray-800 p-12 rounded-[3rem] border border-gray-100 dark:border-gray-700 text-center relative overflow-hidden group">
-                        <div class="absolute -left-20 -bottom-20 w-60 h-60 bg-primary/5 dark:bg-primary/10 rounded-full blur-3xl"></div>
+                                placeholder="Partagez votre expertise..." 
+                            />
+                        </div>
+                        @error('commentContent') <p class="text-xs text-destructive font-bold px-2">{{ $message }}</p> @enderror
                         
-                        <div class="relative z-10 space-y-8">
-                            <div class="w-20 h-20 bg-white dark:bg-gray-700 rounded-3xl border border-gray-100 dark:border-gray-600 flex items-center justify-center mx-auto shadow-sm">
-                                <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                                </svg>
-                            </div>
-                            <div class="space-y-4">
-                                <h3 class="text-2xl font-black text-gray-900 dark:text-white tracking-tight">Participez à la conversation</h3>
-                                <p class="text-gray-500 dark:text-gray-400 text-sm font-medium max-w-md mx-auto leading-relaxed">
-                                    Connectez-vous à votre compte Obryl Tech pour partager votre analyse technique ou poser vos questions sur cette expertise.
-                                </p>
-                            </div>
-                            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                                <a href="{{ route('login') }}" wire:navigate class="px-10 py-4 bg-primary text-white font-black rounded-2xl transition-all shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 uppercase tracking-widest text-[10px]">
-                                    Se connecter
-                                </a>
-                                <a href="{{ route('register') }}" wire:navigate class="px-10 py-4 bg-white dark:bg-gray-700 border border-gray-200 dark:border-gray-600 text-gray-900 dark:text-gray-100 font-black rounded-2xl transition-all hover:bg-gray-50 dark:hover:bg-gray-600 hover:scale-105 active:scale-95 uppercase tracking-widest text-[10px]">
-                                    Créer un compte
-                                </a>
-                            </div>
+                        <div class="flex justify-end">
+                            <button 
+                                type="submit" 
+                                class="px-8 py-3 bg-primary text-primary-foreground text-sm font-bold rounded-md transition-all hover:translate-y-[-2px] shadow-lg shadow-primary/20"
+                                wire:loading.attr="disabled"
+                                wire:target="addComment"
+                            >
+                                <span wire:loading.remove wire:target="addComment">publier</span>
+                                <span wire:loading wire:target="addComment">compilation...</span>
+                            </button>
                         </div>
-                    </div>
-                @endauth
-
-                <!-- Comments List -->
-                <div class="space-y-8">
-                    @forelse(array_filter($article->comments ?? [], fn($c) => $c['status'] === 'approved') as $comment)
-                        <div class="bg-white dark:bg-gray-800 p-8 rounded-[2.5rem] border border-gray-100 dark:border-gray-700 hover:border-primary/20 transition-all shadow-sm">
-                            <div class="flex items-center justify-between mb-6">
-                                <div class="flex items-center">
-                                    <div class="w-12 h-12 rounded-2xl bg-gray-50 dark:bg-gray-700 border border-gray-100 dark:border-gray-600 flex items-center justify-center mr-4">
-                                        <span class="text-primary text-sm font-black uppercase">{{ substr($comment['user_name'], 0, 1) }}</span>
-                                    </div>
-                                    <div class="flex flex-col">
-                                        <span class="text-gray-900 dark:text-white font-black text-sm uppercase tracking-wider">{{ $comment['user_name'] }}</span>
-                                        <span class="text-[9px] text-gray-400 dark:text-gray-500 font-bold uppercase tracking-[0.2em] mt-1">
-                                            {{ \Illuminate\Support\Carbon::parse($comment['created_at'])->diffForHumans() }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <p class="text-gray-600 dark:text-gray-300 text-base leading-relaxed font-medium">
-                                {{ $comment['content'] }}
-                            </p>
-                        </div>
-                    @empty
-                        <!-- Sans commentaires -->
-                    @endforelse
+                    </form>
                 </div>
-            </section>
-
-            <!-- Similar Articles -->
-            @if(count($similarArticles) > 0)
-                <section class="space-y-12">
-                    <h2 class="text-4xl font-black text-gray-900 dark:text-white tracking-tighter">Continuer <span class="text-primary italic">l'exploration</span></h2>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        @foreach($similarArticles as $similar)
-                            <a href="{{ route('blog.show', $similar->slug) }}" wire:navigate class="group block bg-gray-50 dark:bg-gray-800 rounded-[2.5rem] overflow-hidden border border-gray-100 dark:border-gray-700 hover:border-primary/20 hover:bg-white dark:hover:bg-gray-700 transition-all p-6 shadow-sm hover:shadow-xl">
-                                <div class="aspect-video relative overflow-hidden rounded-[2rem] mb-6">
-                                    <img 
-                                        src="{{ $similar->featured_image ?? 'https://via.placeholder.com/600x400/F9FAFB/111827?text=OBRYL+TECH' }}" 
-                                        alt="{{ $similar->title }}"
-                                        class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-110"
-                                    >
-                                </div>
-                                <h3 class="text-gray-900 dark:text-white font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2 text-lg tracking-tight">
-                                    {{ $similar->title }}
-                                </h3>
-                            </a>
-                        @endforeach
+            @else
+                <div class="p-12 border-2 border-dashed border-border rounded-md text-center mb-16 bg-muted/10">
+                    <p class="text-base text-muted-foreground mb-8 font-bold">Veuillez vous authentifier pour contribuer.</p>
+                    <div class="flex items-center justify-center gap-4">
+                        <a href="{{ route('login') }}" class="px-8 py-3 bg-primary text-primary-foreground text-sm font-bold rounded-md transition-all hover:translate-y-[-2px] shadow-lg shadow-primary/20">
+                            Connexion
+                        </a>
+                        <a href="{{ route('register') }}" class="px-8 py-3 bg-background border border-border text-foreground text-sm font-bold rounded-md transition-all hover:border-primary hover:text-primary">
+                            S'inscrire
+                        </a>
                     </div>
-                </section>
-            @endif
-        </div>
+                </div>
+            @endauth
+
+            <!-- Comments List -->
+            <div class="space-y-16">
+                @php
+                    $approvedComments = collect($article->comments ?? [])
+                        ->filter(fn($c) => ($c['status'] ?? '') === 'approved')
+                        ->sortByDesc('created_at');
+                @endphp
+
+                @forelse($approvedComments as $comment)
+                    <div class="group border-l-2 border-border/50 pl-8 py-2 hover:border-primary transition-all duration-500">
+                        <div class="flex items-center gap-4 mb-4">
+                            <div class="w-10 h-10 rounded-md bg-muted flex items-center justify-center text-sm font-bold text-muted-foreground border border-border">
+                                {{ substr($comment['user_name'] ?? 'U', 0, 1) }}
+                            </div>
+                            <div class="flex flex-col">
+                                <span class="text-base font-bold text-foreground">{{ $comment['user_name'] ?? 'Anonyme' }}</span>
+                                <span class="text-[10px] font-medium text-muted-foreground mt-0.5">
+                                    {{ \Illuminate\Support\Carbon::parse($comment['created_at'])->diffForHumans() }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="pl-14">
+                            <div class="prose prose-zinc dark:prose-invert max-w-none text-base text-foreground/80 leading-relaxed font-medium">
+                                <x-markdown-renderer>
+                                    {!! $comment['content'] !!}
+                                </x-markdown-renderer>
+                            </div>
+                        </div>
+                    </div>
+                @empty
+                    <div class="py-16 text-center opacity-40">
+                        <p class="text-xs font-bold text-muted-foreground tracking-[0.2em] italic">Aucune contribution technique pour le moment.</p>
+                    </div>
+                @endforelse
+            </div>
+        </section>
     </div>
 </div>

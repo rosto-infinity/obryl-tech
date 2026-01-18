@@ -1,11 +1,11 @@
-<div class="min-h-screen bg-gray-50 dark:bg-gray-900">
+<div class="min-h-screen bg-background">
     {{-- Header --}}
     <x-project.header :project="$project" />
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="max-w-7xl mx-auto px-6 py-12 lg:py-16">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {{-- Main Content --}}
-            <div class="lg:col-span-2 space-y-6">
+            <div class="lg:col-span-2 space-y-12">
                 {{-- Informations principales --}}
                 <x-project.project-info :project="$project" />
 
@@ -27,9 +27,9 @@
             </div>
 
             {{-- Sidebar --}}
-            <div>
+            <aside>
                 <x-project.sidebar-info :project="$project" :stats="$stats" />
-            </div>
+            </aside>
         </div>
     </div>
     

@@ -83,8 +83,11 @@ class ArticleForm
                                     ->image()
                                     ->imageEditor()
                                     ->directory('articles/featured')
+                                    ->disk('public') // Explicitly use public disk
                                     ->visibility('public')
-                                    ->columnSpanFull(),
+                                    ->maxSize(2048) // 2MB limit
+                                    ->columnSpanFull()
+                                    ->helperText('Format recommandé: 1200x800px. Maximum 2Mo.'),
 
                                 Select::make('category')
                                     ->label('Catégorie')

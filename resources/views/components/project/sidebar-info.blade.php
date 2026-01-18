@@ -1,23 +1,22 @@
-{{-- Sidebar - Informations du projet --}}
-<div class="space-y-6">
+<div class="space-y-8">
     {{-- Project Info --}}
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Informations du projet</h3>
-        <div class="space-y-4">
+    <div class="bg-card rounded-md border border-border p-8 shadow-sm">
+        <h3 class="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-6">Investissement & temps</h3>
+        <div class="space-y-6">
             <div>
-                <p class="text-sm text-gray-500">Budget</p>
-                <p class="text-xl font-bold text-primary">{{ number_format($project->budget ?? 0, 0, ',', ' ') }} XAF</p>
+                <p class="text-[10px] font-bold text-muted-foreground mb-1 uppercase">Budget</p>
+                <p class="text-2xl font-bold text-primary tracking-tight">{{ number_format($project->budget ?? 0, 0, ',', ' ') }} <span class="text-xs">XAF</span></p>
             </div>
             @if($project->deadline)
                 <div>
-                    <p class="text-sm text-gray-500">Date limite</p>
-                    <p class="text-lg font-medium text-gray-900 dark:text-white">{{ $project->deadline->format('d/m/Y') }}</p>
+                    <p class="text-[10px] font-bold text-muted-foreground mb-1 uppercase">Date limite</p>
+                    <p class="text-base font-bold text-foreground">{{ $project->deadline->format('d/m/Y') }}</p>
                 </div>
             @endif
             @if($project->priority)
                 <div>
-                    <p class="text-sm text-gray-500">Priorité</p>
-                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $project->priority->color() }}">
+                    <p class="text-[10px] font-bold text-muted-foreground mb-1 uppercase">Priorité</p>
+                    <span class="inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-bold {{ $project->priority->color() }}">
                         {{ $project->priority->label() }}
                     </span>
                 </div>
@@ -25,104 +24,78 @@
         </div>
     </div>
 
-    {{-- Developer Info --}}
-    @if($project->developer && $project->developer->profile)
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Développeur</h3>
-            <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center">
-                    <span class="text-primary font-semibold text-lg">{{ $project->developer->initials() }}</span>
-                </div>
-                <div>
-                    <p class="font-medium text-gray-900 dark:text-white">{{ $project->developer->name }}</p>
-                    @if($project->developer->profile->specialization)
-                        <p class="text-sm text-gray-500">{{ $project->developer->profile->specialization->label() }}</p>
-                    @endif
+    {{-- Actor Info (Dev & Client) --}}
+    <div class="bg-card rounded-md border border-border p-8 shadow-sm space-y-8">
+        {{-- Developer --}}
+        @if($project->developer)
+            <div>
+                <h3 class="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-4">L'expert</h3>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-muted rounded-md border border-border flex items-center justify-center shrink-0">
+                        <span class="text-primary font-bold text-base">{{ $project->developer?->initials() ?? '?' }}</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-foreground leading-tight">{{ $project->developer?->name }}</p>
+                        <p class="text-[10px] font-bold text-muted-foreground mt-0.5">{{ $project->developer?->profile?->specialization?->label() ?? 'Ingénieur Fullstack' }}</p>
+                    </div>
                 </div>
             </div>
-            <div class="mt-4 space-y-2">
-                @if($project->developer->profile->availability)
-                    <div class="flex justify-between text-sm">
-                        <span class="text-gray-500">Disponibilité</span>
-                        <span class="text-green-500 font-medium">{{ $project->developer->profile->availability->label() }}</span>
-                    </div>
-                @endif
-                @if($project->developer->profile->skill_level)
-                    <div class="flex justify-between text-sm">
-                        <span class="text-gray-500">Niveau</span>
-                        <span class="text-primary font-medium">{{ $project->developer->profile->skill_level->label() }}</span>
-                    </div>
-                @endif
-            </div>
-        </div>
-    @endif
+        @endif
 
-    {{-- Client Info --}}
-    @if($project->client)
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-            <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Client</h3>
-            <div class="flex items-center space-x-4">
-                <div class="w-12 h-12 bg-secondary/20 rounded-full flex items-center justify-center">
-                    <span class="text-secondary font-semibold text-lg">{{ $project->client->initials() }}</span>
-                </div>
-                <div>
-                    <p class="font-medium text-gray-900 dark:text-white">{{ $project->client->name }}</p>
-                    
+        {{-- Client --}}
+        @if($project->client)
+            <div class="pt-6 border-t border-border/50">
+                <h3 class="text-[10px] font-bold text-muted-foreground uppercase tracking-wider mb-4">Le partenaire</h3>
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 bg-muted rounded-md border border-border flex items-center justify-center shrink-0">
+                        <span class="text-secondary font-bold text-base">{{ $project->client?->initials() ?? '?' }}</span>
+                    </div>
+                    <div>
+                        <p class="text-sm font-bold text-foreground leading-tight">{{ $project->client?->name }}</p>
+                        <p class="text-[10px] font-bold text-muted-foreground mt-0.5">Partenaire client</p>
+                    </div>
                 </div>
             </div>
-        </div>
-    @endif
+        @endif
+    </div>
 
     {{-- Stats --}}
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Statistiques</h3>
-        <div class="space-y-3">
-            <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-500">Vues</span>
-                <span class="font-medium text-gray-900 dark:text-white">{{ $stats['views'] }}</span>
+    <div class="bg-card rounded-md border border-border p-8 shadow-sm">
+        <h3 class="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-6">Visibilité</h3>
+        <div class="space-y-4">
+            <div class="flex items-center justify-between py-2 border-b border-border/30 last:border-0">
+                <span class="text-xs font-bold text-muted-foreground">Vues</span>
+                <span class="text-xs font-bold text-foreground">{{ $stats['views'] }}</span>
             </div>
-            <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-500">Likes</span>
-                <span class="font-medium text-gray-900 dark:text-white">{{ $stats['likes'] }}</span>
+            <div class="flex items-center justify-between py-2 border-b border-border/30 last:border-0">
+                <span class="text-xs font-bold text-muted-foreground">Likes</span>
+                <span class="text-xs font-bold text-foreground">{{ $stats['likes'] }}</span>
             </div>
-            <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-500">Avis</span>
-                <span class="font-medium text-gray-900 dark:text-white">{{ $stats['reviews'] }}</span>
+            <div class="flex items-center justify-between py-2 border-b border-border/30 last:border-0">
+                <span class="text-xs font-bold text-muted-foreground">Avis</span>
+                <span class="text-xs font-bold text-foreground">{{ $stats['reviews'] }}</span>
             </div>
-            <div class="flex items-center justify-between">
-                <span class="text-sm text-gray-500">Note moyenne</span>
-                <div class="flex items-center">
-                    @for($i = 1; $i <= 5; $i++)
-                        @if($i <= floor($stats['rating']))
-                            <svg class="w-4 h-4 text-yellow-400 fill-current" viewBox="0 0 24 24">
-                                <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538 1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-1.838-.197-1.538 1.118l1.518-4.674a1 1 0 00.951-.69l1.519-4.674z"/>
-                            </svg>
-                        @else
-                            <svg class="w-4 h-4 text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538 1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-1.838-.197-1.538 1.118l1.518-4.674a1 1 0 00.951-.69l1.519-4.674z"/>
-                            </svg>
-                        @endif
-                    @endfor
-                    <span class="ml-2 text-sm text-gray-900 dark:text-white">{{ number_format($stats['rating'], 1) }}</span>
+            <div class="flex items-center justify-between pt-2">
+                <span class="text-xs font-bold text-muted-foreground">Note moyenne</span>
+                <div class="flex items-center gap-1">
+                    <span class="text-secondary mr-1">★</span>
+                    <span class="text-xs font-bold text-foreground">{{ number_format($stats['rating'], 1) }}</span>
                 </div>
             </div>
         </div>
     </div>
 
     {{-- Actions --}}
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
-        <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-4">Actions</h3>
-        <div class="space-y-3">
-            <a href="{{ route('projects.progress', $project->slug) }}" 
-               class="block w-full bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary/80 transition-colors duration-200 text-center">
-                Suivre la progression
-            </a>
-            <button class="w-full border border-primary text-primary px-4 py-2 rounded-lg hover:bg-primary/10 transition-colors duration-200">
-                Signaler un problème
-            </button>
-            <button class="w-full border border-gray-300 text-gray-700 dark:border-gray-600 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors duration-200">
-                Partager le projet
-            </button>
-        </div>
+    <div class="space-y-3">
+        <a href="{{ route('projects.progress', $project->slug) }}" 
+           class="block w-full bg-primary text-primary-foreground font-bold px-6 py-3 rounded-md hover:translate-y-[-2px] transition-all text-center shadow-lg shadow-primary/20 text-sm">
+            Suivre la progression
+        </a>
+        <button class="w-full bg-card border border-border text-foreground font-bold px-6 py-3 rounded-md hover:bg-muted transition-all text-sm">
+            Signaler un problème
+        </button>
+        <button class="w-full bg-card border border-border text-foreground font-bold px-6 py-3 rounded-md hover:bg-muted transition-all text-sm">
+            Partager l'analyse
+        </button>
     </div>
 </div>

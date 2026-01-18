@@ -28,15 +28,30 @@ class ProjectLike extends Component
      */
     public function toggleLike(): void
     {
-        $this->isLiked = ! $this->isLiked;
+        $sessionKey = 'liked_projects';
+        $likedProjects = session()->get($sessionKey, []);
 
         if ($this->isLiked) {
-            $this->project->increment('likes_count');
-            $this->likeCount++;
-        } else {
+            // Remove like
             $this->project->decrement('likes_count');
             $this->likeCount--;
+            $this->isLiked = false;
+            
+            if (($key = array_search($this->project->id, $likedProjects)) !== false) {
+                unset($likedProjects[$key]);
+            }
+        } else {
+            // Add like
+            $this->project->increment('likes_count');
+            $this->likeCount++;
+            $this->isLiked = true;
+            
+            if (!in_array($this->project->id, $likedProjects)) {
+                $likedProjects[] = $this->project->id;
+            }
         }
+
+        session()->put($sessionKey, array_values($likedProjects));
 
         $this->dispatch('projectLiked', [
             'projectId' => $this->project->id,
@@ -50,8 +65,9 @@ class ProjectLike extends Component
      */
     private function checkIfLiked(): bool
     {
-        // Simulated logic - replace with actual user like check
-        return false;
+        $likedProjects = session()->get('liked_projects', []);
+        
+        return in_array($this->project->id, $likedProjects);
     }
 
     public function render(): View

@@ -1,216 +1,199 @@
-<div class="space-y-6">
-    {{-- Header avec statistiques --}}
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Développeurs</h2>
-            <div class="flex space-x-4 text-sm">
-                <div class="bg-secondary/50 dark:bg-secondary/20 px-3 py-1 rounded-full">
-                    <span class="text-primary font-medium">{{ $stats['total'] }}</span>
-                    <span class="text-blue-500 dark:text-blue-400">Total</span>
+<div class="space-y-8">
+    {{-- Header with statistics --}}
+    <div class="bg-card rounded-md border border-border p-8 shadow-sm">
+        <div class="flex flex-col lg:flex-row justify-between lg:items-center mb-10 gap-8">
+            <div class="space-y-1">
+                <h2 class="text-3xl font-bold text-foreground tracking-tight">réseau d'<span class="text-primary italic">excellence</span></h2>
+                <p class="text-muted-foreground font-medium text-base">Sélection rigoureuse des meilleurs talents en ingénierie.</p>
+            </div>
+            
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                <div class="bg-muted/50 px-5 py-3 rounded-md border border-border">
+                    <p class="text-[10px] font-bold text-muted-foreground mb-1">architectes</p>
+                    <span class="text-foreground font-bold text-xl">{{ $stats['total'] }}</span>
                 </div>
-                <div class="bg-green-50 dark:bg-green-900/30 px-3 py-1 rounded-full">
-                    <span class="text-green-600 dark:text-green-400 font-medium">{{ $stats['verified'] }}</span>
-                    <span class="text-green-500 dark:text-green-400">Vérifiés</span>
+                <div class="bg-primary/5 px-5 py-3 rounded-md border border-primary/10">
+                    <p class="text-[10px] font-bold text-primary mb-1">vérifiés</p>
+                    <span class="text-primary font-bold text-xl">{{ $stats['verified'] }}</span>
                 </div>
-                <div class="bg-purple-50 dark:bg-purple-900/30 px-3 py-1 rounded-full">
-                    <span class="text-purple-600 dark:text-purple-400 font-medium">{{ $stats['available'] }}</span>
-                    <span class="text-purple-500 dark:text-purple-400">Disponibles</span>
+                <div class="bg-secondary/5 px-5 py-3 rounded-md border border-secondary/10">
+                    <p class="text-[10px] font-bold text-secondary mb-1">actifs</p>
+                    <span class="text-secondary font-bold text-xl">{{ $stats['available'] }}</span>
                 </div>
             </div>
         </div>
         
-        {{-- Filtres --}}
-        <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Recherche</label>
-                <input
-                    type="text"
-                    wire:model.live="search"
-                    placeholder="Nom, email, bio..."
-                    class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-                />
+        {{-- Filters --}}
+        <div class="space-y-8 pt-8 border-t border-border/50">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div class="lg:col-span-2 space-y-2">
+                    <label class="block text-xs font-bold text-muted-foreground px-1">Identification</label>
+                    <div class="relative">
+                        <input
+                            type="text"
+                            wire:model.live="search"
+                            placeholder="Nom, technologie, expertise..."
+                            class="w-full pl-10 pr-4 py-2 bg-muted border border-transparent rounded-md focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm font-medium text-foreground placeholder-muted-foreground"
+                        />
+                        <svg class="w-4 h-4 text-muted-foreground absolute left-3.5 top-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                </div>
+                
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-muted-foreground px-1">Spécialisation</label>
+                    <div class="relative">
+                        <select wire:model.live="specializationFilter" class="appearance-none w-full px-4 py-2 bg-muted border border-transparent rounded-md focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm font-bold text-foreground">
+                            <option value="all">Toutes disciplines</option>
+                            @foreach($specializations as $spec)
+                                <option value="{{ $spec['value'] }}">{{ $spec['label'] ?? $spec['value'] }}</option>
+                            @endforeach
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-muted-foreground">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-muted-foreground px-1">Flux d'Activité</label>
+                    <div class="relative">
+                        <select wire:model.live="availabilityFilter" class="appearance-none w-full px-4 py-2 bg-muted border border-transparent rounded-md focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm font-bold text-foreground">
+                            <option value="all">Tous statuts</option>
+                            @foreach($availabilityOptions as $option)
+                                <option value="{{ $option['value'] }}">{{ $option['label'] }}</option>
+                            @endforeach
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-muted-foreground">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="space-y-2">
+                    <label class="block text-xs font-bold text-muted-foreground px-1">Classement</label>
+                    <div class="relative">
+                        <select wire:model.live="sortBy" class="appearance-none w-full px-4 py-2 bg-muted border border-transparent rounded-md focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-sm font-bold text-foreground">
+                            <option value="name">Lexique</option>
+                            <option value="rating">Évaluation</option>
+                            <option value="experience">Ancienneté</option>
+                            <option value="projects">Volume de projets</option>
+                        </select>
+                        <div class="absolute inset-y-0 right-0 flex items-center px-3 pointer-events-none text-muted-foreground">
+                            <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Spécialisation</label>
-                <select wire:model.live="specializationFilter" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                    <option value="all">Toutes</option>
-                    @foreach($specializations as $spec)
-                        <option value="{{ $spec['value'] }}">{{ $spec['label'] }}</option>
-                    @endforeach
-                </select>
-            </div>
-            
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Disponibilité</label>
-                <select wire:model.live="availabilityFilter" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                    <option value="all">Toutes</option>
-                    @foreach($availabilityOptions as $option)
-                        <option value="{{ $option['value'] }}">{{ $option['label'] }}</option>
-                    @endforeach
-                </select>
-            </div>
-            
-            <div>
-                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Trier par</label>
-                <select wire:model.live="sortBy" class="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white">
-                    <option value="name">Nom</option>
-                    <option value="rating">Note</option>
-                    <option value="experience">Expérience</option>
-                    <option value="projects">Projets</option>
-                    <option value="created_at">Date d'inscription</option>
-                </select>
-            </div>
-            
-            <div class="flex items-end">
-                <label class="flex items-center">
-                    <input type="checkbox" wire:model.live="showVerifiedOnly" class="rounded border-gray-300 dark:border-gray-600 text-primary focus:ring-blue-500">
-                    <span class="ml-2 text-sm text-gray-700 dark:text-gray-300">Vérifiés seulement</span>
+            <div class="pt-2">
+                <label class="flex items-center cursor-pointer group">
+                    <div class="relative">
+                        <input type="checkbox" wire:model.live="showVerifiedOnly" class="sr-only peer">
+                        <div class="w-9 h-5 bg-muted rounded-full peer peer-checked:bg-primary after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-card after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-full"></div>
+                    </div>
+                    <span class="ml-3 text-xs font-bold text-muted-foreground group-hover:text-foreground transition-colors">Développeurs certifiés</span>
                 </label>
             </div>
         </div>
     </div>
 
-    {{-- Liste des développeurs --}}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {{-- Maestro Grid --}}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         @forelse($developers as $developer)
-            <div wire:key="developer-{{ $developer->id }}" class="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition-shadow duration-200">
-                {{-- Header --}}
-                <div class="p-6">
-                    <div class="flex items-start justify-between mb-4">
-                        <div class="flex items-center">
-                            <div class="w-12 h-12 bg-gray-200 dark:bg-gray-700 rounded-full flex items-center justify-center text-gray-600 dark:text-gray-300 font-bold">
-                                {{ $developer->initials() }}
-                            </div>
-                            <div class="ml-3">
-                                <h3 class="text-lg font-medium text-gray-900 dark:text-white">{{ $developer->name }}</h3>
-                                @if($developer->profile?->is_verified)
-                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-300">
-                                        ✓ Vérifié
-                                    </span>
+            <div wire:key="developer-{{ $developer->id }}" class="group bg-card rounded-md p-8 border border-border hover:border-primary/20 hover:shadow-lg transition-all duration-500 flex flex-col h-full">
+                <div class="flex items-start justify-between mb-8">
+                    <div class="flex items-center gap-4">
+                        <div class="relative">
+                            <div class="w-16 h-16 bg-muted rounded-md flex items-center justify-center border border-border overflow-hidden transition-transform duration-500 group-hover:scale-105">
+                                @if($developer->avatar_url)
+                                    <img src="{{ $developer->avatar_url }}" alt="{{ $developer->name }}" class="w-full h-full object-cover">
+                                @else
+                                    <span class="text-xl font-bold text-primary">{{ $developer->initials() }}</span>
                                 @endif
                             </div>
-                        </div>
-                        
-                        @if($developer->profile?->availability)
-                            <div class="flex items-center">
-                                @switch($developer->profile->availability)
-                                    @case('available')
-                                        <span class="w-2 h-2 bg-green-400 rounded-full"></span>
-                                        <span class="ml-1 text-xs text-green-600 dark:text-green-400">Disponible</span>
-                                        @break
-                                    @case('busy')
-                                        <span class="w-2 h-2 bg-yellow-400 rounded-full"></span>
-                                        <span class="ml-1 text-xs text-yellow-600 dark:text-yellow-400">Occupé</span>
-                                        @break
-                                    @case('unavailable')
-                                        <span class="w-2 h-2 bg-red-400 rounded-full"></span>
-                                        <span class="ml-1 text-xs text-red-600 dark:text-red-400">Indisponible</span>
-                                        @break
-                                @endswitch
-                            </div>
-                        @endif
-                    </div>
-                    
-                    {{-- Spécialisation et expérience --}}
-                    <div class="mb-4">
-                        @if($developer->profile?->specialization)
-                            <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">
-                                <span class="font-medium">Spécialisation:</span> {{ $developer->profile->specialization }}
-                            </div>
-                        @endif
-                        
-                        @if($developer->profile?->years_experience)
-                            <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">
-                                <span class="font-medium">Expérience:</span> {{ $developer->profile->years_experience }} an(s)
-                            </div>
-                        @endif
-                        
-                        @if($developer->profile?->hourly_rate)
-                            <div class="text-sm text-gray-600 dark:text-gray-400">
-                                <span class="font-medium">Taux horaire:</span> {{ number_format($developer->profile->hourly_rate, 0, ',', ' ') }} FCFA
-                            </div>
-                        @endif
-                    </div>
-                    
-                    {{-- Bio --}}
-                    @if($developer->profile?->bio)
-                        <div class="mb-4">
-                            <p class="text-sm text-gray-700 dark:text-gray-300 line-clamp-3">{{ Str::limit($developer->profile->bio, 150) }}</p>
-                        </div>
-                    @endif
-                    
-                    {{-- Statistiques --}}
-                    <div class="flex justify-between items-center text-sm text-gray-600 dark:text-gray-400 mb-4">
-                        <div class="flex items-center">
-                            @if($developer->profile?->average_rating > 0)
-                                <div class="flex items-center">
-                                    <span class="text-yellow-400">★</span>
-                                    <span class="ml-1">{{ number_format($developer->profile->average_rating, 1) }}</span>
-                                    <span class="text-gray-400 dark:text-gray-500 ml-1">({{ $developer->profile->total_reviews_count ?? 0 }})</span>
-                                </div>
-                            @else
-                                <span class="text-gray-400 dark:text-gray-500">Pas encore noté</span>
+                            @if($developer->profile?->availability === 'available')
+                                <span class="absolute -bottom-1 -right-1 w-3.5 h-3.5 bg-primary border-2 border-card rounded-full shadow-sm"></span>
                             @endif
                         </div>
-                        
-                        <div>
-                            <span class="font-medium">{{ $developer->profile->completed_projects_count ?? 0 }}</span> projets
+                        <div class="space-y-1">
+                            <h3 class="text-lg font-bold text-foreground leading-tight tracking-tight">{{ $developer->name }}</h3>
+                            @if($developer->profile?->is_verified)
+                                <span class="px-2 py-0.5 bg-primary/10 text-primary text-[10px] font-bold rounded border border-primary/10">
+                                    Certifié
+                                </span>
+                            @endif
                         </div>
-                        
+                    </div>
+                </div>
+                
+                <div class="space-y-6 flex-grow">
+                    <div class="grid grid-cols-2 gap-4 pb-6 border-b border-border/50">
                         <div>
-                            <span class="font-medium">{{ number_format($developer->profile->total_earned ?? 0, 0, ',', ' ') }}</span> FCFA
+                            <p class="text-[10px] font-bold text-muted-foreground mb-1">Expertise</p>
+                            <p class="text-xs font-bold text-foreground truncate">{{ $developer->profile?->specialization ?? 'Ingénieur Fullstack' }}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-[10px] font-bold text-muted-foreground mb-1">Expérience</p>
+                            <p class="text-xs font-bold text-foreground">{{ $developer->profile?->years_experience ?? 0 }} an(s)</p>
                         </div>
                     </div>
                     
-                    {{-- Compétences --}}
+                    @if($developer->profile?->bio)
+                        <p class="text-muted-foreground text-sm leading-relaxed font-medium line-clamp-3 italic">
+                            "{{ $developer->profile->bio }}"
+                        </p>
+                    @endif
+
                     @if($developer->profile?->skills)
-                        <div class="mb-4">
-                            <div class="flex flex-wrap gap-1">
-                                @php
-                                    // $skills = json_decode($developer->profile->skills, true) ?? [];
-                                    $skills = $developer->profile->skills;
-                                    $displayedSkills = array_slice($skills, 0, 3);
-                                @endphp
-                                @foreach($displayedSkills as $skill)
-                                    <span class="inline-block px-2 py-1 text-xs bg-secondary/10 dark:bg-secondary/20 text-black dark:text-white rounded">
-                                        {{ $skill['name'] ?? $skill }}
-                                    </span>
-                                @endforeach
-                                @if(count($skills) > 3)
-                                    <span class="inline-block px-2 py-1 text-xs bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded">
-                                        +{{ count($skills) - 3 }}
-                                    </span>
-                                @endif
-                            </div>
+                        <div class="flex flex-wrap gap-2">
+                            @foreach(array_slice($developer->profile->skills, 0, 4) as $skill)
+                                <span class="px-2.5 py-1 bg-muted text-foreground text-[10px] font-bold rounded border border-border">
+                                    {{ $skill['name'] ?? $skill }}
+                                </span>
+                            @endforeach
+                            @if(count($developer->profile->skills) > 4)
+                                <span class="px-2.5 py-1 bg-muted text-muted-foreground text-[10px] font-bold rounded border border-border">
+                                    +{{ count($developer->profile->skills) - 4 }}
+                                </span>
+                            @endif
                         </div>
                     @endif
+                </div>
+                
+                <div class="mt-8 pt-6 border-t border-border/50 flex items-center justify-between">
+                    <div class="flex items-center gap-6">
+                        @if($developer->profile?->average_rating > 0)
+                            <div class="flex items-center text-xs font-bold text-foreground">
+                                <span class="text-secondary mr-1.5 text-base leading-none">★</span>
+                                {{ number_format($developer->profile->average_rating, 1) }}
+                            </div>
+                        @endif
+                        <div class="flex flex-col">
+                            <span class="text-[9px] font-bold text-muted-foreground">Livrables</span>
+                            <span class="text-xs font-bold text-foreground">{{ $developer->profile?->completed_projects_count ?? 0 }}</span>
+                        </div>
+                    </div>
                     
-                    {{-- Actions --}}
-                    
-                    <div class="flex space-x-2">
-                        <a href="{{ route('developers.profile', $developer->slug) }}"  wire:navigate class="flex-1 bg-primary text-white text-center px-4 py-2 rounded-md hover:bg-primary/70 transition-colors duration-200">
-                            Voir le profil
+                    <div class="flex items-center gap-3">
+                         <a href="{{ route('developers.profile', $developer->slug) }}" wire:navigate class="px-4 py-2 bg-foreground dark:bg-muted text-background dark:text-foreground text-[11px] font-bold rounded-md hover:bg-primary hover:text-primary-foreground transition-all duration-300">
+                            Profil
                         </a>
-                        <a href="#" class="flex-1 border border-primary text-primary text-center px-4 py-2 rounded-md hover:bg-secondary/50 dark:hover:bg-secondary/20 transition-colors duration-200">
-                            Contacter
+                        <a href="#" class="w-10 h-10 flex items-center justify-center rounded-md bg-muted border border-border text-foreground hover:border-primary hover:text-primary transition-all duration-300">
+                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                         </a>
                     </div>
-
-
                 </div>
             </div>
         @empty
-            <div class="col-span-full text-center py-12">
-                <div class="text-gray-400 dark:text-gray-500 text-lg mb-2">Aucun développeur trouvé</div>
-                <div class="text-gray-500 dark:text-gray-400">Essayez d'ajuster vos filtres de recherche</div>
+            <div class="col-span-full py-20 text-center border-2 border-dashed border-border rounded-md opacity-60 bg-muted/10">
+                <h3 class="text-xl font-bold text-foreground mb-1">Aucun maestro trouvé</h3>
+                <p class="text-muted-foreground text-xs font-medium">Le talent est en cours d'indexation.</p>
             </div>
         @endforelse
     </div>
 
-    {{-- Pagination --}}
     @if($developers->hasPages())
-        <div class="bg-white dark:bg-gray-800 px-4 py-3 flex items-center justify-between border-t border-gray-200 dark:border-gray-700 rounded-lg shadow">
+        <div class="mt-16 flex justify-center">
             {{ $developers->links() }}
         </div>
     @endif

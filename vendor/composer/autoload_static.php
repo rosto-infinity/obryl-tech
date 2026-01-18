@@ -24,11 +24,11 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
         'e125f489d647ae664b0af7b573079de7' => __DIR__ . '/..' . '/filament/support/src/helpers.php',
         '35a6ad97d21e794e7e22a17d806652e4' => __DIR__ . '/..' . '/nunomaduro/termwind/src/Functions.php',
         '7b11c4dc42b3b3023073cb14e519683c' => __DIR__ . '/..' . '/ralouphie/getallheaders/src/getallheaders.php',
+        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
+        'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
         '2203a247e6fda86070a5e4e07aed533a' => __DIR__ . '/..' . '/symfony/clock/Resources/now.php',
         '09f6b20656683369174dd6fa83b7e5fb' => __DIR__ . '/..' . '/symfony/polyfill-uuid/bootstrap.php',
         'a1105708a18b76903365ca1c4aa61b02' => __DIR__ . '/..' . '/symfony/translation/Resources/functions.php',
-        '37a3dc5111fe8f707ab4c132ef1dbc62' => __DIR__ . '/..' . '/guzzlehttp/guzzle/src/functions_include.php',
-        'e39a8b23c42d4e1452234d762b03835a' => __DIR__ . '/..' . '/ramsey/uuid/src/functions.php',
         '662a729f963d39afe703c9d9b7ab4a8c' => __DIR__ . '/..' . '/symfony/polyfill-php83/bootstrap.php',
         '9d2b9fc6db0f153a0a149fefb182415e' => __DIR__ . '/..' . '/symfony/polyfill-php84/bootstrap.php',
         '476ca15b8d69b04665cd879be9cb4c68' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/Collections/functions.php',
@@ -85,6 +85,8 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
         ),
         'T' => 
         array (
+            'Torchlight\\Commonmark\\' => 22,
+            'Torchlight\\' => 11,
             'Tiptap\\' => 7,
             'TijsVerkoyen\\CssToInlineStyles\\' => 31,
             'Tests\\' => 6,
@@ -126,7 +128,9 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
             'Spatie\\ShikiPhp\\' => 16,
             'Spatie\\Permission\\' => 18,
             'Spatie\\LaravelPackageTools\\' => 27,
+            'Spatie\\LaravelMarkdown\\' => 23,
             'Spatie\\Invade\\' => 14,
+            'Spatie\\CommonMarkShikiHighlighter\\' => 34,
         ),
         'R' => 
         array (
@@ -175,6 +179,7 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
         array (
             'Monolog\\' => 8,
             'Mockery\\' => 8,
+            'Mckenziearts\\LivewireMarkdownEditor\\' => 36,
             'Masterminds\\' => 12,
         ),
         'L' => 
@@ -254,6 +259,7 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
         'C' => 
         array (
             'Cron\\' => 5,
+            'Codeat3\\BladePhosphorIcons\\' => 27,
             'Carbon\\Doctrine\\' => 16,
             'Carbon\\' => 7,
         ),
@@ -301,6 +307,14 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
         'Webmozart\\Assert\\' => 
         array (
             0 => __DIR__ . '/..' . '/webmozart/assert/src',
+        ),
+        'Torchlight\\Commonmark\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/torchlight/torchlight-commonmark/src',
+        ),
+        'Torchlight\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/torchlight/torchlight-laravel/src',
         ),
         'Tiptap\\' => 
         array (
@@ -454,9 +468,17 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
         array (
             0 => __DIR__ . '/..' . '/spatie/laravel-package-tools/src',
         ),
+        'Spatie\\LaravelMarkdown\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/laravel-markdown/src',
+        ),
         'Spatie\\Invade\\' => 
         array (
             0 => __DIR__ . '/..' . '/spatie/invade/src',
+        ),
+        'Spatie\\CommonMarkShikiHighlighter\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/spatie/commonmark-shiki-highlighter/src',
         ),
         'RyanChandler\\BladeCaptureDirective\\Database\\Factories\\' => 
         array (
@@ -592,6 +614,10 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
         'Mockery\\' => 
         array (
             0 => __DIR__ . '/..' . '/mockery/mockery/library/Mockery',
+        ),
+        'Mckenziearts\\LivewireMarkdownEditor\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mckenziearts/livewire-markdown-editor/src',
         ),
         'Masterminds\\' => 
         array (
@@ -808,6 +834,10 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
         array (
             0 => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron',
         ),
+        'Codeat3\\BladePhosphorIcons\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/codeat3/blade-phosphor-icons/src',
+        ),
         'Carbon\\Doctrine\\' => 
         array (
             0 => __DIR__ . '/..' . '/carbonphp/carbon-doctrine-types/src/Carbon/Doctrine',
@@ -883,6 +913,27 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
         'App\\Actions\\Fortify\\CreateNewUser' => __DIR__ . '/../..' . '/app/Actions/Fortify/CreateNewUser.php',
         'App\\Actions\\Fortify\\PasswordValidationRules' => __DIR__ . '/../..' . '/app/Actions/Fortify/PasswordValidationRules.php',
         'App\\Actions\\Fortify\\ResetUserPassword' => __DIR__ . '/../..' . '/app/Actions/Fortify/ResetUserPassword.php',
+        'App\\Console\\Commands\\ApplyAdminConfigCommand' => __DIR__ . '/../..' . '/app/Console/Commands/ApplyAdminConfigCommand.php',
+        'App\\Console\\Commands\\DebugHomeCommand' => __DIR__ . '/../..' . '/app/Console/Commands/DebugHomeCommand.php',
+        'App\\Console\\Commands\\FilamentLinksCommand' => __DIR__ . '/../..' . '/app/Console/Commands/FilamentLinksCommand.php',
+        'App\\Console\\Commands\\FilamentShieldCommand' => __DIR__ . '/../..' . '/app/Console/Commands/FilamentShieldCommand.php',
+        'App\\Console\\Commands\\FixFilamentCommand' => __DIR__ . '/../..' . '/app/Console/Commands/FixFilamentCommand.php',
+        'App\\Console\\Commands\\FixProductionCommand' => __DIR__ . '/../..' . '/app/Console/Commands/FixProductionCommand.php',
+        'App\\Console\\Commands\\FixProductionRolesCommand' => __DIR__ . '/../..' . '/app/Console/Commands/FixProductionRolesCommand.php',
+        'App\\Console\\Commands\\FixSuperAdminCommand' => __DIR__ . '/../..' . '/app/Console/Commands/FixSuperAdminCommand.php',
+        'App\\Console\\Commands\\ForceSecureAdminCommand' => __DIR__ . '/../..' . '/app/Console/Commands/ForceSecureAdminCommand.php',
+        'App\\Console\\Commands\\GenerateAvatarsCommand' => __DIR__ . '/../..' . '/app/Console/Commands/GenerateAvatarsCommand.php',
+        'App\\Console\\Commands\\ProductionFixCommand' => __DIR__ . '/../..' . '/app/Console/Commands/ProductionFixCommand.php',
+        'App\\Console\\Commands\\PublishFilamentCommand' => __DIR__ . '/../..' . '/app/Console/Commands/PublishFilamentCommand.php',
+        'App\\Console\\Commands\\RegenerateSlugsCommand' => __DIR__ . '/../..' . '/app/Console/Commands/RegenerateSlugsCommand.php',
+        'App\\Console\\Commands\\RestoreFilamentCommand' => __DIR__ . '/../..' . '/app/Console/Commands/RestoreFilamentCommand.php',
+        'App\\Console\\Commands\\SecureAdminCommand' => __DIR__ . '/../..' . '/app/Console/Commands/SecureAdminCommand.php',
+        'App\\Console\\Commands\\SetupErrorPagesCommand' => __DIR__ . '/../..' . '/app/Console/Commands/SetupErrorPagesCommand.php',
+        'App\\Console\\Commands\\ShieldCommand' => __DIR__ . '/../..' . '/app/Console/Commands/ShieldCommand.php',
+        'App\\Console\\Commands\\TestFilamentImagesCommand' => __DIR__ . '/../..' . '/app/Console/Commands/TestFilamentImagesCommand.php',
+        'App\\Console\\Commands\\TestHomeCommand' => __DIR__ . '/../..' . '/app/Console/Commands/TestHomeCommand.php',
+        'App\\Console\\Commands\\UserRoleCommand' => __DIR__ . '/../..' . '/app/Console/Commands/UserRoleCommand.php',
+        'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Enums\\Auth\\Country' => __DIR__ . '/../..' . '/app/Enums/Auth/Country.php',
         'App\\Enums\\Auth\\UserStatus' => __DIR__ . '/../..' . '/app/Enums/Auth/UserStatus.php',
         'App\\Enums\\Auth\\UserType' => __DIR__ . '/../..' . '/app/Enums/Auth/UserType.php',
@@ -957,6 +1008,11 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
         'App\\Filament\\Resources\\Reviews\\Schemas\\ReviewForm' => __DIR__ . '/../..' . '/app/Filament/Resources/Reviews/Schemas/ReviewForm.php',
         'App\\Filament\\Resources\\Reviews\\Schemas\\ReviewInfolist' => __DIR__ . '/../..' . '/app/Filament/Resources/Reviews/Schemas/ReviewInfolist.php',
         'App\\Filament\\Resources\\Reviews\\Tables\\ReviewsTable' => __DIR__ . '/../..' . '/app/Filament/Resources/Reviews/Tables/ReviewsTable.php',
+        'App\\Filament\\Resources\\Roles\\Pages\\CreateRole' => __DIR__ . '/../..' . '/app/Filament/Resources/Roles/Pages/CreateRole.php',
+        'App\\Filament\\Resources\\Roles\\Pages\\EditRole' => __DIR__ . '/../..' . '/app/Filament/Resources/Roles/Pages/EditRole.php',
+        'App\\Filament\\Resources\\Roles\\Pages\\ListRoles' => __DIR__ . '/../..' . '/app/Filament/Resources/Roles/Pages/ListRoles.php',
+        'App\\Filament\\Resources\\Roles\\Pages\\ViewRole' => __DIR__ . '/../..' . '/app/Filament/Resources/Roles/Pages/ViewRole.php',
+        'App\\Filament\\Resources\\Roles\\RoleResource' => __DIR__ . '/../..' . '/app/Filament/Resources/Roles/RoleResource.php',
         'App\\Filament\\Resources\\Settings\\Pages\\CreateSetting' => __DIR__ . '/../..' . '/app/Filament/Resources/Settings/Pages/CreateSetting.php',
         'App\\Filament\\Resources\\Settings\\Pages\\EditSetting' => __DIR__ . '/../..' . '/app/Filament/Resources/Settings/Pages/EditSetting.php',
         'App\\Filament\\Resources\\Settings\\Pages\\ListSettings' => __DIR__ . '/../..' . '/app/Filament/Resources/Settings/Pages/ListSettings.php',
@@ -1029,6 +1085,9 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
         'App\\Livewire\\Support\\TicketChat' => __DIR__ . '/../..' . '/app/Livewire/Support/TicketChat.php',
         'App\\Livewire\\Support\\TicketCreate' => __DIR__ . '/../..' . '/app/Livewire/Support/TicketCreate.php',
         'App\\Livewire\\Support\\TicketList' => __DIR__ . '/../..' . '/app/Livewire/Support/TicketList.php',
+        'App\\Markdown\\BaseExtension' => __DIR__ . '/../..' . '/app/Markdown/BaseExtension.php',
+        'App\\Markdown\\Extensions\\TorchlightExtension' => __DIR__ . '/../..' . '/app/Markdown/Extensions/TorchlightExtension.php',
+        'App\\Markdown\\MarkdownHelper' => __DIR__ . '/../..' . '/app/Markdown/MarkdownHelper.php',
         'App\\Models\\Article' => __DIR__ . '/../..' . '/app/Models/Article.php',
         'App\\Models\\AuditLog' => __DIR__ . '/../..' . '/app/Models/AuditLog.php',
         'App\\Models\\Commission' => __DIR__ . '/../..' . '/app/Models/Commission.php',
@@ -1341,6 +1400,7 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
         'Carbon\\Unit' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/Unit.php',
         'Carbon\\WeekDay' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/WeekDay.php',
         'Carbon\\WrapperClock' => __DIR__ . '/..' . '/nesbot/carbon/src/Carbon/WrapperClock.php',
+        'Codeat3\\BladePhosphorIcons\\BladePhosphorIconsServiceProvider' => __DIR__ . '/..' . '/codeat3/blade-phosphor-icons/src/BladePhosphorIconsServiceProvider.php',
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'Cron\\AbstractField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/AbstractField.php',
         'Cron\\CronExpression' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/CronExpression.php',
@@ -1376,9 +1436,11 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
         'Database\\Seeders\\ArticleSeeder' => __DIR__ . '/../..' . '/database/seeders/ArticleSeeder.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
         'Database\\Seeders\\NotificationSeeder' => __DIR__ . '/../..' . '/database/seeders/NotificationSeeder.php',
+        'Database\\Seeders\\ProductionRoleSeeder' => __DIR__ . '/../..' . '/database/seeders/ProductionRoleSeeder.php',
         'Database\\Seeders\\ProjectSeeder' => __DIR__ . '/../..' . '/database/seeders/ProjectSeeder.php',
         'Database\\Seeders\\RoleSeeder' => __DIR__ . '/../..' . '/database/seeders/RoleSeeder.php',
         'Database\\Seeders\\SupportTicketSeeder' => __DIR__ . '/../..' . '/database/seeders/SupportTicketSeeder.php',
+        'Database\\Seeders\\TestRoleSeeder' => __DIR__ . '/../..' . '/database/seeders/TestRoleSeeder.php',
         'Database\\Seeders\\UserSeeder' => __DIR__ . '/../..' . '/database/seeders/UserSeeder.php',
         'Database\\Seeders\\UserSlugSeeder' => __DIR__ . '/../..' . '/database/seeders/UserSlugSeeder.php',
         'Database\\Seeders\\WorkloadTestDataSeeder' => __DIR__ . '/../..' . '/database/seeders/WorkloadTestDataSeeder.php',
@@ -5885,6 +5947,8 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
         'Masterminds\\HTML5\\Serializer\\OutputRules' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Serializer/OutputRules.php',
         'Masterminds\\HTML5\\Serializer\\RulesInterface' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Serializer/RulesInterface.php',
         'Masterminds\\HTML5\\Serializer\\Traverser' => __DIR__ . '/..' . '/masterminds/html5/src/HTML5/Serializer/Traverser.php',
+        'Mckenziearts\\LivewireMarkdownEditor\\LivewireMarkdownEditorServiceProvider' => __DIR__ . '/..' . '/mckenziearts/livewire-markdown-editor/src/LivewireMarkdownEditorServiceProvider.php',
+        'Mckenziearts\\LivewireMarkdownEditor\\Livewire\\MarkdownEditor' => __DIR__ . '/..' . '/mckenziearts/livewire-markdown-editor/src/Livewire/MarkdownEditor.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegration' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegration.php',
         'Mockery\\Adapter\\Phpunit\\MockeryPHPUnitIntegrationAssertPostConditions' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryPHPUnitIntegrationAssertPostConditions.php',
         'Mockery\\Adapter\\Phpunit\\MockeryTestCase' => __DIR__ . '/..' . '/mockery/mockery/library/Mockery/Adapter/Phpunit/MockeryTestCase.php',
@@ -9051,8 +9115,16 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
         'SebastianBergmann\\Type\\UnknownType' => __DIR__ . '/..' . '/sebastian/type/src/type/UnknownType.php',
         'SebastianBergmann\\Type\\VoidType' => __DIR__ . '/..' . '/sebastian/type/src/type/VoidType.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
+        'Spatie\\CommonMarkShikiHighlighter\\HighlightCodeExtension' => __DIR__ . '/..' . '/spatie/commonmark-shiki-highlighter/src/HighlightCodeExtension.php',
+        'Spatie\\CommonMarkShikiHighlighter\\Renderers\\FencedCodeRenderer' => __DIR__ . '/..' . '/spatie/commonmark-shiki-highlighter/src/Renderers/FencedCodeRenderer.php',
+        'Spatie\\CommonMarkShikiHighlighter\\Renderers\\IndentedCodeRenderer' => __DIR__ . '/..' . '/spatie/commonmark-shiki-highlighter/src/Renderers/IndentedCodeRenderer.php',
+        'Spatie\\CommonMarkShikiHighlighter\\ShikiHighlighter' => __DIR__ . '/..' . '/spatie/commonmark-shiki-highlighter/src/ShikiHighlighter.php',
         'Spatie\\Invade\\Invader' => __DIR__ . '/..' . '/spatie/invade/src/Invader.php',
         'Spatie\\Invade\\StaticInvader' => __DIR__ . '/..' . '/spatie/invade/src/StaticInvader.php',
+        'Spatie\\LaravelMarkdown\\MarkdownBladeComponent' => __DIR__ . '/..' . '/spatie/laravel-markdown/src/MarkdownBladeComponent.php',
+        'Spatie\\LaravelMarkdown\\MarkdownRenderer' => __DIR__ . '/..' . '/spatie/laravel-markdown/src/MarkdownRenderer.php',
+        'Spatie\\LaravelMarkdown\\MarkdownServiceProvider' => __DIR__ . '/..' . '/spatie/laravel-markdown/src/MarkdownServiceProvider.php',
+        'Spatie\\LaravelMarkdown\\Renderers\\AnchorHeadingRenderer' => __DIR__ . '/..' . '/spatie/laravel-markdown/src/Renderers/AnchorHeadingRenderer.php',
         'Spatie\\LaravelPackageTools\\Commands\\Concerns\\AskToRunMigrations' => __DIR__ . '/..' . '/spatie/laravel-package-tools/src/Commands/Concerns/AskToRunMigrations.php',
         'Spatie\\LaravelPackageTools\\Commands\\Concerns\\AskToStarRepoOnGitHub' => __DIR__ . '/..' . '/spatie/laravel-package-tools/src/Commands/Concerns/AskToStarRepoOnGitHub.php',
         'Spatie\\LaravelPackageTools\\Commands\\Concerns\\PublishesResources' => __DIR__ . '/..' . '/spatie/laravel-package-tools/src/Commands/Concerns/PublishesResources.php',
@@ -10260,6 +10332,25 @@ class ComposerStaticInite17a0a4e560400d10555d5679f1d1d32
         'Tiptap\\Utils\\HTML' => __DIR__ . '/..' . '/ueberdosis/tiptap-php/src/Utils/HTML.php',
         'Tiptap\\Utils\\InlineStyle' => __DIR__ . '/..' . '/ueberdosis/tiptap-php/src/Utils/InlineStyle.php',
         'Tiptap\\Utils\\Minify' => __DIR__ . '/..' . '/ueberdosis/tiptap-php/src/Utils/Minify.php',
+        'Torchlight\\Blade\\BladeManager' => __DIR__ . '/..' . '/torchlight/torchlight-laravel/src/Blade/BladeManager.php',
+        'Torchlight\\Blade\\CodeComponent' => __DIR__ . '/..' . '/torchlight/torchlight-laravel/src/Blade/CodeComponent.php',
+        'Torchlight\\Blade\\EngineDecorator' => __DIR__ . '/..' . '/torchlight/torchlight-laravel/src/Blade/EngineDecorator.php',
+        'Torchlight\\Block' => __DIR__ . '/..' . '/torchlight/torchlight-laravel/src/Block.php',
+        'Torchlight\\Client' => __DIR__ . '/..' . '/torchlight/torchlight-laravel/src/Client.php',
+        'Torchlight\\Commands\\Install' => __DIR__ . '/..' . '/torchlight/torchlight-laravel/src/Commands/Install.php',
+        'Torchlight\\Commonmark\\BaseExtension' => __DIR__ . '/..' . '/torchlight/torchlight-commonmark/src/BaseExtension.php',
+        'Torchlight\\Commonmark\\TorchlightExtension' => __DIR__ . '/..' . '/torchlight/torchlight-commonmark/src/TorchlightExtension.php',
+        'Torchlight\\Commonmark\\V1\\TorchlightExtension' => __DIR__ . '/..' . '/torchlight/torchlight-commonmark/src/V1/TorchlightExtension.php',
+        'Torchlight\\Commonmark\\V2\\TorchlightExtension' => __DIR__ . '/..' . '/torchlight/torchlight-commonmark/src/V2/TorchlightExtension.php',
+        'Torchlight\\Contracts\\PostProcessor' => __DIR__ . '/..' . '/torchlight/torchlight-laravel/src/Contracts/PostProcessor.php',
+        'Torchlight\\Exceptions\\ConfigurationException' => __DIR__ . '/..' . '/torchlight/torchlight-laravel/src/Exceptions/ConfigurationException.php',
+        'Torchlight\\Exceptions\\RequestException' => __DIR__ . '/..' . '/torchlight/torchlight-laravel/src/Exceptions/RequestException.php',
+        'Torchlight\\Exceptions\\TorchlightException' => __DIR__ . '/..' . '/torchlight/torchlight-laravel/src/Exceptions/TorchlightException.php',
+        'Torchlight\\Manager' => __DIR__ . '/..' . '/torchlight/torchlight-laravel/src/Manager.php',
+        'Torchlight\\Middleware\\RenderTorchlight' => __DIR__ . '/..' . '/torchlight/torchlight-laravel/src/Middleware/RenderTorchlight.php',
+        'Torchlight\\PostProcessors\\SimpleSwapProcessor' => __DIR__ . '/..' . '/torchlight/torchlight-laravel/src/PostProcessors/SimpleSwapProcessor.php',
+        'Torchlight\\Torchlight' => __DIR__ . '/..' . '/torchlight/torchlight-laravel/src/Torchlight.php',
+        'Torchlight\\TorchlightServiceProvider' => __DIR__ . '/..' . '/torchlight/torchlight-laravel/src/TorchlightServiceProvider.php',
         'UnhandledMatchError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/UnhandledMatchError.php',
         'ValueError' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/ValueError.php',
         'Webmozart\\Assert\\Assert' => __DIR__ . '/..' . '/webmozart/assert/src/Assert.php',

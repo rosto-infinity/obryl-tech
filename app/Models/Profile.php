@@ -193,12 +193,16 @@ class Profile extends Model
         ]);
     }
 
-    public function getAvatarUrlAttribute()
+    public function getAvatarUrlAttribute(): string
     {
-        if (! $this->avatar) {
-            return null;
+        if ($this->avatar) {
+            if (filter_var($this->avatar, FILTER_VALIDATE_URL)) {
+                return $this->avatar;
+            }
+
+            return Storage::disk('public')->url($this->avatar);
         }
 
-        return Storage::url($this->avatar);
+        return $this->user ? $this->user->avatar_url : 'https://ui-avatars.com/api/?name='.urlencode($this->company ?? 'User').'&color=7F9CF5&background=EBF4FF';
     }
 }

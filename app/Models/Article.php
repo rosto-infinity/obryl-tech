@@ -136,29 +136,21 @@ class Article extends Model
     }
 
     /**
-     * Get the featured image URL.
-     */
-    protected function featuredImage(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value ? Storage::disk('public')->url($value) : null,
-        );
-    }
-
-    /**
      * Get the featured image URL (helper for blade/templates).
      */
     public function getFeaturedImageUrlAttribute(): string
     {
         if ($this->featured_image) {
-            // Si c'est déjà une URL complète (via l'accesseur), on la retourne
+            // Check if it's already a full URL (e.g. from a seeder or external source)
             if (filter_var($this->featured_image, FILTER_VALIDATE_URL)) {
                 return $this->featured_image;
             }
 
+            // Return the URL from the public disk
             return Storage::disk('public')->url($this->featured_image);
         }
 
+        // Fallback to a placeholder
         return asset('images/placeholder-blog.jpg');
     }
 
