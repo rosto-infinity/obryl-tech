@@ -7,33 +7,36 @@
     <div class="relative h-full flex items-center justify-center p-4">
         <!-- Close button -->
         <button onclick="closeImageModal()"
-            class="absolute top-4 right-4 text-white/80 hover:text-white transition-colors duration-200 z-10">
-            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            class="fixed top-4 right-4 z-50 text-white/80 hover:text-white transition-colors duration-200 bg-black/50 backdrop-blur-sm rounded-full p-2">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
         </button>
 
-        <!-- Image container -->
-        <div class="relative max-w-7xl max-h-full">
+        <!-- Image container - centré et responsive -->
+        <div class="relative flex items-center justify-center w-full h-full max-w-7xl max-h-[90vh]">
             <img id="modalImage" src="" alt=""
-                class="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl">
+                class="max-w-full max-h-[90vh] object-contain rounded-lg transition-all duration-300 cursor-pointer"
+                onclick="closeImageModal()">
 
             <!-- Image info -->
-            <div class="absolute bottom-4 left-4 right-4 bg-black/50 backdrop-blur-sm text-white p-4 rounded-lg">
-                <p id="modalImageTitle" class="text-lg font-medium"></p>
-                <div class="flex items-center justify-between mt-2">
-                    <p class="text-sm text-white/80">Cliquez sur l'image pour fermer</p>
-                    <div class="flex space-x-2">
+            <div class="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-sm text-white p-4">
+                <div class="max-w-4xl mx-auto flex items-center justify-between">
+                    <div>
+                        <p id="modalImageTitle" class="text-lg font-medium"></p>
+                        <p class="text-sm text-white/70">Cliquez sur l'image pour fermer</p>
+                    </div>
+                    <div class="flex items-center space-x-2">
                         <!-- Navigation buttons -->
-                        <button onclick="navigateImage(-1)"
-                            class="bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors duration-200">
+                        <button onclick="event.stopPropagation(); navigateImage(-1)"
+                            class="bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-colors duration-200">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M15 19l-7-7 7-7" />
                             </svg>
                         </button>
-                        <button onclick="navigateImage(1)"
-                            class="bg-white/20 hover:bg-white/30 text-white p-2 rounded-full transition-colors duration-200">
+                        <button onclick="event.stopPropagation(); navigateImage(1)"
+                            class="bg-white/20 hover:bg-white/30 text-white p-3 rounded-full transition-colors duration-200">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                     d="M9 5l7 7-7 7" />
@@ -59,7 +62,7 @@
             modalTitleElement = document.getElementById('modalImageTitle');
 
             // Récupérer les images de la galerie
-            galleryImages = @json($project->gallery_images ?? []);
+            galleryImages = @json($project->gallery_image_urls ?? []);
 
             // Gestion des touches du clavier
             document.addEventListener('keydown', function(e) {
@@ -120,10 +123,10 @@
             // Focus sur l'image pour accessibilité
             modalImageElement.focus();
 
-            // Animation d'entrée
-            setTimeout(() => {
+            // Animation d'entrée fluide
+            requestAnimationFrame(() => {
                 modalElement.classList.add('opacity-100');
-            }, 10);
+            });
         }
 
         /**
@@ -132,7 +135,7 @@
         function closeImageModal() {
             if (!modalElement) return;
 
-            // Animation de sortie
+            // Animation de sortie fluide
             modalElement.classList.remove('opacity-100');
 
             setTimeout(() => {
@@ -145,6 +148,10 @@
                 // Nettoyer l'image
                 modalImageElement.src = '';
                 modalTitleElement.textContent = '';
+                
+                // Réinitialiser le zoom
+                modalImageElement.style.scale = 1;
+                modalImageElement.style.transform = '';
             }, 300);
         }
 
@@ -164,18 +171,20 @@
                 currentImageIndex = 0;
             }
 
-            // Mettre à jour l'image avec animation
+            // Mettre à jour l'image avec animation fluide
             const newImageSrc = galleryImages[currentImageIndex];
             const newTitle = `{{ $project->title }} - Image ${currentImageIndex + 1}`;
 
-            // Animation de transition
+            // Animation de transition fluide
             modalImageElement.style.opacity = '0';
+            modalImageElement.style.transform = 'scale(0.95)';
 
             setTimeout(() => {
                 modalImageElement.src = newImageSrc;
                 modalTitleElement.textContent = newTitle;
                 modalImageElement.style.opacity = '1';
-            }, 200);
+                modalImageElement.style.transform = 'scale(1)';
+            }, 150);
         }
 
         /**

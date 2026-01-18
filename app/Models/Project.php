@@ -70,13 +70,12 @@ class Project extends Model
         'milestones' => 'json',
         'tasks' => 'json',
         'collaborators' => 'json',
-        'gallery_images' => 'array', // On caste en array directement, pas besoin de getter complexe
+        'gallery_images' => 'array',
         'is_published' => 'boolean',
         'is_featured' => 'boolean',
         'deadline' => 'datetime',
         'started_at' => 'datetime',
         'completed_at' => 'datetime',
-        // 'featured_image' => 'json',
     ];
 
     /**
@@ -252,21 +251,9 @@ class Project extends Model
     }
 
     /**
-     * Set the featured image attribute.
-     */
-    public function setFeaturedImageAttribute($value): void
-    {
-        if (is_array($value)) {
-            $this->attributes['featured_image'] = $value[0] ?? null;
-        } else {
-            $this->attributes['featured_image'] = $value;
-        }
-    }
-
-    /**
      * Get the featured image URL.
      */
-    public function getFeaturedImageUrlAttribute(): string
+    public function getFeaturedImageUrlAttribute(): ?string
     {
         if ($this->featured_image) {
             return Storage::disk('public')->url($this->featured_image);
@@ -455,37 +442,15 @@ class Project extends Model
     }
 
     /**
-     * ACCESSOR POUR LA GALERIE
-     * Comme 'gallery_images' est casté en 'array' plus haut,
-     * Laravel nous donne déjà un tableau. On doit juste convertir chaque chemin en URL.
+     * Get the gallery image URLs.
      */
-    protected function galleryImages(): Attribute
+    public function getGalleryImageUrlsAttribute(): array
     {
-        return Attribute::make(
-            get: function ($value) {
-                // 1. Si la valeur est vide ou nulle, on retourne un tableau vide
-                if (empty($value)) {
-                    return [];
-                }
+        if (empty($this->gallery_images) || ! is_array($this->gallery_images)) {
+            return [];
+        }
 
-                // 2. Si c'est déjà un tableau (ex: cast 'json' a fonctionné), on l'utilise
-                if (is_array($value)) {
-                    return array_map(fn ($item) => Storage::disk('public')->url($item), $value);
-                }
-
-                // 3. Si c'est une chaîne (JSON brut de la base de données), on la décode
-                if (is_string($value)) {
-                    $decoded = json_decode($value, true);
-                    // Si le décodage réussit et donne un tableau, on mappe les URLs
-                    if (is_array($decoded)) {
-                        return array_map(fn ($item) => Storage::disk('public')->url($item), $decoded);
-                    }
-                }
-
-                // 4. Fallback : si ça a échoué, on retourne un tableau vide
-                return [];
-            },
-        );
+        return array_map(fn ($item) => Storage::disk('public')->url($item), $this->gallery_images);
     }
 
     public function getSimilarProjects(int $limit = 6)
@@ -503,14 +468,5 @@ class Project extends Model
             ->get();
     }
 
-    /**
-     * ACCESSOR MODERNE (Laravel 9/10/11+)
-     * Transforme le chemin de la base de données en URL complète accessible.
-     */
-    protected function featuredImage(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value ? Storage::disk('public')->url($value) : null,
-        );
-    }
+
 }

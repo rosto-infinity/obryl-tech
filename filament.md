@@ -354,3 +354,5 @@ You should also consider optimizing your Laravel app for production by running p
 During the Filament installation process, Filament adds the php artisan filament:upgrade command to the composer.json file, in the post-autoload-dump script. This command will ensure that your assets are up to date whenever you download the package.
 
 We strongly suggest that this script remains in your composer.json file, otherwise you may run into issues with missing or outdated assets in your production environment. However, if you must remove it, make sure that the command is run manually in your deployment process.
+
+

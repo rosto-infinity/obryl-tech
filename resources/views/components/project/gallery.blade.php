@@ -1,9 +1,9 @@
 {{-- Galerie d'images du projet --}}
 <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm overflow-hidden">
     {{-- Featured Image --}}
-    @if($project->featured_image)
+    @if($project->featured_image_url)
         <div class="relative">
-            <img src="{{ $project->featured_image }}" 
+            <img src="{{ $project->featured_image_url }}" 
                  alt="{{ $project->title }}" 
                  class="w-full h-96 object-cover">
             @if($project->is_featured)
@@ -26,12 +26,12 @@
     @endif
     
     {{-- Gallery --}}
-    @if($project->gallery_images && count($project->gallery_images) > 0)
+    @if($project->gallery_image_urls && count($project->gallery_image_urls) > 0)
         <div class="border-t border-gray-200 dark:border-gray-700">
             <div class="p-4">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Galerie d'images</h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                    @foreach($project->gallery_images as $index => $image)
+                    @foreach($project->gallery_image_urls as $index => $image)
                         <div class="relative group cursor-pointer" onclick="openImageModal('{{ $image }}', '{{ $project->title }} - Image {{ $index + 1 }}')">
                             <img src="{{ $image }}" 
                                  alt="{{ $project->title }} - Image {{ $index + 1 }}" 

@@ -120,8 +120,8 @@
                     <article class="group relative flex flex-col bg-white dark:bg-gray-900 rounded-[2rem] overflow-hidden border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
                         <!-- Image Container -->
                         <div class="relative aspect-[4/3] overflow-hidden">
-                            @if ($project->featured_image)
-                                <img src="{{ $project->featured_image }}" alt="{{ $project->title }}"
+                            @if ($project->featured_image_url)
+                                <img src="{{ $project->featured_image_url }}" alt="{{ $project->title }}"
                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                             @else
                                 <div class="w-full h-full flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-300">
@@ -316,8 +316,8 @@
                     <article class="group flex flex-col h-full bg-white dark:bg-gray-900 p-4 rounded-[2rem] border border-slate-100 dark:border-slate-800 hover:shadow-xl transition-all duration-500">
                         <!-- Image -->
                         <div class="aspect-video overflow-hidden rounded-[1.5rem] mb-6">
-                            @if ($article->featured_image)
-                                <img src="{{ $article->featured_image }}" alt="{{ $article->title }}"
+                            @if ($article->featured_image_url)
+                                <img src="{{ $article->featured_image_url }}" alt="{{ $article->title }}"
                                     class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">
                             @else
                                 <div class="w-full h-full flex items-center justify-center bg-slate-50 dark:bg-slate-800 text-slate-300">

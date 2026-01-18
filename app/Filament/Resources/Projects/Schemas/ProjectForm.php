@@ -291,29 +291,27 @@ class ProjectForm
                                     ->columns(2)
                                     ->schema([
                                         FileUpload::make('featured_image')
-                                            ->disk('public')
-                                            ->directory('projects')
                                             ->label('Image principale')
-                                            ->placeholder('Télécharger l\'image principale')
                                             ->image()
+                                            ->disk('public')
+                                            ->directory('projects/featured')
+                                            ->visibility('public')
                                             ->maxSize(2048)
                                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                                            ->helperText('Image principale du projet (max 2MB, formats: JPG, PNG, WebP)')
-                                            ->visibility('public'),
+                                            ->helperText('Image principale du projet (max 2MB, formats: JPG, PNG, WebP)'),
 
                                         FileUpload::make('gallery_images')
                                             ->label('Galerie d\'images')
-                                            ->placeholder('Télécharger les images de la galerie')
+                                            ->image()
                                             ->multiple()
                                             ->reorderable()
-                                            ->image()
+                                            ->appendFiles()
                                             ->disk('public')
                                             ->directory('projects/gallery')
+                                            ->visibility('public')
                                             ->maxSize(1024)
                                             ->acceptedFileTypes(['image/jpeg', 'image/png', 'image/webp'])
-                                            ->default([])
-                                            ->helperText('Images additionnelles pour la galerie (max 1MB par image)')
-                                            ->visibility('public'),
+                                            ->helperText('Images additionnelles pour la galerie (max 1MB par image)'),
                                     ]),
 
                                 Section::make('Visibilité et Promotion')
@@ -406,6 +404,7 @@ class ProjectForm
             ])
             ->columns(1);
     }
+
 
     /**
      * Validation personnalisée pour le formulaire
