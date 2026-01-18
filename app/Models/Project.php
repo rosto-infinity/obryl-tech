@@ -467,6 +467,4 @@ class Project extends Model
             ->limit($limit)
             ->get();
     }
-
-
 }

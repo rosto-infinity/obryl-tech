@@ -405,7 +405,6 @@ class ProjectForm
             ->columns(1);
     }
 
-
     /**
      * Validation personnalisée pour le formulaire
      */
