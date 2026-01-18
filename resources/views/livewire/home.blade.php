@@ -18,56 +18,65 @@
 
                     <div class="space-y-4">
                         <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight leading-tight">
-                            <span class="text-foreground">obryl</span>
-                            <span class="text-primary italic">tech</span>
+                            <span class="text-foreground">Obryl</span>
+                            <span class="text-primary italic">Tech</span>
                         </h1>
                         <p class="text-lg md:text-xl text-muted-foreground font-medium max-w-xl">
-                            l'ingénierie d'élite au service de vos ambitions numériques les plus audacieuses.
+                            L'ingénierie d'élite au service de vos ambitions numériques les plus audacieuses.
                         </p>
                     </div>
 
                     <div class="flex flex-wrap gap-4">
                         <a href="{{ route('projects.list') }}" wire:navigate
                             class="inline-flex items-center justify-center px-8 py-3.5 font-bold text-primary-foreground bg-primary rounded-md hover:translate-y-[-2px] transition-all duration-300 shadow-lg shadow-primary/20">
-                            découvrir le portfolio
+                            Découvrir le portfolio
                         </a>
                         <a href="{{ route('developers.list') }}" wire:navigate
                             class="inline-flex items-center justify-center px-8 py-3.5 font-bold text-foreground border-2 border-border hover:border-primary hover:text-primary rounded-md transition-all duration-300">
-                            nos experts
+                            Nos experts
                         </a>
                     </div>
 
                     <div class="pt-8 flex gap-10 items-center border-t border-border/50">
                         <div class="flex flex-col">
                             <span class="text-3xl font-bold text-foreground">500+</span>
-                            <span class="text-xs font-medium text-muted-foreground">projets livrés</span>
+                            <span class="text-xs font-medium text-muted-foreground">Projets livrés</span>
                         </div>
                         <div class="flex flex-col">
                             <span class="text-3xl font-bold text-primary">98%</span>
-                            <span class="text-xs font-medium text-muted-foreground">satisfaction</span>
+                            <span class="text-xs font-medium text-muted-foreground">Satisfaction</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="hidden lg:block relative">
-                    <div class="relative z-10 bg-card/50 backdrop-blur-xl rounded-md p-8 border border-border shadow-xl">
-                        <div class="flex items-center justify-between mb-8">
-                            <div class="flex gap-1.5">
-                                <div class="w-2.5 h-2.5 rounded-full bg-destructive/50"></div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-secondary/50"></div>
-                                <div class="w-2.5 h-2.5 rounded-full bg-primary/50"></div>
+                <div class="lg:block relative bg-zinc-900/30 p-2 rounded-2xl">
+                    <div class="glass-ice group">
+                        <!-- Glow effects are handled by .glass-ice::before/after in CSS -->
+                        <div class="glass-ice-glow"></div>
+                        
+                        <div class="glass-ice-content">
+                            <!-- BARRE DE TITRE (Boutons) -->
+                            <div class="flex items-center justify-between mb-8">
+                                <div class="flex gap-1.5">
+                                    <div class="w-2.5 h-2.5 rounded-full bg-destructive/50 shadow-lg shadow-destructive/20"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-secondary/50 shadow-lg shadow-secondary/20"></div>
+                                    <div class="w-2.5 h-2.5 rounded-full bg-primary/50 shadow-lg shadow-primary/20"></div>
+                                </div>
+                                <div class="text-[10px] font-mono text-white/40 tracking-widest">obryl-tech.dev_core</div>
                             </div>
-                            <div class="text-[10px] font-mono text-muted-foreground">obryl-tech.dev_core</div>
-                        </div>
-                        <div class="space-y-4 font-mono text-sm leading-relaxed">
-                            <p class="text-primary font-bold">const obryl = {</p>
-                            <p class="pl-4 text-foreground/80">vision: <span class="text-secondary">"elite"</span>,</p>
-                            <p class="pl-4 text-foreground/80">stack: <span class="text-secondary">["laravel", "ai", "cloud"]</span>,</p>
-                            <p class="pl-4 text-foreground/80">output: <span class="text-secondary">"excellence"</span></p>
-                            <p class="text-primary font-bold">};</p>
+                            
+                            <!-- CODE -->
+                            <div class="space-y-4 font-mono text-sm leading-relaxed">
+                                <p class="text-primary font-bold">const <span class="text-white">obryl</span> = {</p>
+                                <p class="pl-4 text-white/80">vision: <span class="text-secondary">"elite"</span>,</p>
+                                <p class="pl-4 text-white/80">stack: <span class="text-secondary">["laravel", "ai", "cloud"]</span>,</p>
+                                <p class="pl-4 text-white/80">output: <span class="text-secondary">"excellence"</span></p>
+                                <p class="text-primary font-bold">};</p>
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
     </section>

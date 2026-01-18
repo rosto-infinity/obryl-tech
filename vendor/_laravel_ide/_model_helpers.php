@@ -22,6 +22,7 @@ namespace App\Models {
      * @property string $email
      * @property string $name
      * @property int $id
+     * @property-read mixed $avatar_url
      * @property-read \App\Models\Profile $profile
      * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Project> $projects
      * @property-read int|null $projects_count
@@ -384,13 +385,13 @@ namespace App\Models {
      * @property array|null $seo
      * @property \App\Enums\Blog\ArticleCategory|null $category
      * @property \App\Enums\Blog\ArticleStatus $status
+     * @property string|null $featured_image
      * @property string $content
      * @property string|null $excerpt
      * @property string $slug
      * @property string $title
      * @property int $author_id
      * @property int $id
-     * @property-read mixed $featured_image
      * @property-read mixed $tags
      * @property-read mixed $comments
      * @property-read mixed $url
@@ -404,6 +405,7 @@ namespace App\Models {
      * @method static \Illuminate\Database\Eloquent\Builder<Article>|Article whereSlug($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Article>|Article whereExcerpt($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Article>|Article whereContent($value)
+     * @method static \Illuminate\Database\Eloquent\Builder<Article>|Article whereFeaturedImage($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Article>|Article whereStatus($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Article>|Article whereCategory($value)
      * @method static \Illuminate\Database\Eloquent\Builder<Article>|Article whereSeo($value)

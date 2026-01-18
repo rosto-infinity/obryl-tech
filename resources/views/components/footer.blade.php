@@ -7,10 +7,10 @@
             <!-- Logo et À propos -->
             <div class="space-y-6 md:col-span-1">
                 <a href="{{ route('home') }}" wire:navigate class="inline-block transition-transform hover:scale-105">                
-                    <img src="/Obryl.com.png" alt="Obryl Tech" class="h-8 brightness-0 invert">
+                    <img src="/Obryl.com.png" alt="Obryl Tech" class="h-8 ">
                 </a>
                 <p class="text-background/60 text-sm font-medium leading-relaxed">
-                    ingénierie d'élite & solutions numériques sur mesure. nous transformons vos visions complexes en réalités technologiques performantes.
+                    Ingénierie d'élite & solutions numériques sur mesure. Nous transformons vos visions complexes en réalités technologiques performantes.
                 </p>
                 <div class="flex space-x-4">
                     <a href="#" class="text-background/40 hover:text-primary transition-colors">
@@ -28,33 +28,33 @@
 
             <!-- Services -->
             <div class="space-y-6">
-                <h3 class="text-xs font-bold text-primary tracking-wider">expertises</h3>
+                <h3 class="text-xs font-bold text-primary tracking-wider">Expertises</h3>
                 <ul class="space-y-3">
-                    <li><a href="{{ route('projects.list') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">développement</a></li>
-                    <li><a href="#" class="text-sm font-medium text-background/60 hover:text-primary transition-colors">design système</a></li>
-                    <li><a href="#" class="text-sm font-medium text-background/60 hover:text-primary transition-colors">infrastructures</a></li>
-                    <li><a href="{{ route('developers.list') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">talents</a></li>
+                    <li><a href="{{ route('projects.list') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">Développement</a></li>
+                    <li><a href="#" class="text-sm font-medium text-background/60 hover:text-primary transition-colors">Design système</a></li>
+                    <li><a href="#" class="text-sm font-medium text-background/60 hover:text-primary transition-colors">Infrastructures</a></li>
+                    <li><a href="{{ route('developers.list') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">Talents</a></li>
                 </ul>
             </div>
 
             <!-- Navigation -->
             <div class="space-y-6">
-                <h3 class="text-xs font-bold text-primary tracking-wider">navigation</h3>
+                <h3 class="text-xs font-bold text-primary tracking-wider">Navigation</h3>
                 <ul class="space-y-3">
-                    <li><a href="{{ route('home') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">accueil</a></li>
-                    <li><a href="{{ route('projects.list') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">portfolio</a></li>
-                    <li><a href="{{ route('blog.index') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">blog</a></li>
-                    <li><a href="{{ route('portfolio.gallery') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">galerie</a></li>
+                    <li><a href="{{ route('home') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">Accueil</a></li>
+                    <li><a href="{{ route('projects.list') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">Portfolio</a></li>
+                    <li><a href="{{ route('blog.index') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">Blog</a></li>
+                    <li><a href="{{ route('portfolio.gallery') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">Galerie</a></li>
                 </ul>
             </div>
 
             <!-- Legal -->
             <div class="space-y-6">
-                <h3 class="text-xs font-bold text-primary tracking-wider">protocoles</h3>
+                <h3 class="text-xs font-bold text-primary tracking-wider">Protocoles</h3>
                 <ul class="space-y-3">
-                    <li><a href="{{ route('legal.mentions') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">mentions légales</a></li>
-                    <li><a href="{{ route('legal.privacy') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">confidentialité</a></li>
-                    <li><a href="{{ route('legal.cgu') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">conditions</a></li>
+                    <li><a href="{{ route('legal.mentions') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">Mentions légales</a></li>
+                    <li><a href="{{ route('legal.privacy') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">Confidentialité</a></li>
+                    <li><a href="{{ route('legal.cgu') }}" wire:navigate class="text-sm font-medium text-background/60 hover:text-primary transition-colors">Conditions</a></li>
                 </ul>
             </div>
         </div>
@@ -63,14 +63,14 @@
         <div class="mt-20 pt-8 border-t border-background/10">
             <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                 <p class="text-background/40 text-[10px] font-bold">
-                    © {{ date('Y') }} obryl tech. élite en génie informatique.
+                    © {{ date('Y') }} Obryl Tech. Élite en génie informatique.
                 </p>
                 <div class="flex items-center gap-8">
                     <p class="text-background/40 text-[10px] font-bold flex items-center">
-                        fait avec <span class="text-primary mx-1.5">♥</span> au cameroun
+                        fait avec <span class="text-primary mx-1.5">♥</span> au Cameroun
                     </p>
                     <a href="{{ route('legal.mentions') }}" wire:navigate class="text-[10px] font-bold text-background/40 hover:text-primary transition-colors">
-                        protocole légal
+                        Protocole légal
                     </a>
                 </div>
             </div>
